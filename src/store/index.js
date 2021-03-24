@@ -1,11 +1,11 @@
 import userModel from './userModel'
-import tabModel from './tabModel'
+// import tabModel from './tabModel'
 import { toJS as tojs } from 'mobx'
 import { inject, observer } from 'mobx-react'
 
 const store = {
   userModel,
-  tabModel,
+  // tabModel,
 }
 
 export const withModel = (Component, ...models) => {

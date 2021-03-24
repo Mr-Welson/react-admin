@@ -4,7 +4,7 @@ import Utils from '@/utils';
 
 class UserModel {
 
-  @observable routeList = [] // 有权限的路由(不包含跟路由 '/')
+  @observable routeList = [] // 有权限的路由
   @observable menuList = [] // 可见菜单
   @observable matchRoutes = [] // 当前路径匹配的路由
 
@@ -12,7 +12,7 @@ class UserModel {
   @computed
   get flatRoutes() {
     let routes = Utils.flattenRoutes(toJS(this.routeList));
-    routes = routes.filter(v => v.key && v.path);
+    // routes = routes.filter(v => v.key && v.path);
     return routes
   }
 
@@ -26,7 +26,7 @@ class UserModel {
       });
       return matchInfo
     })
-    // console.log('== matchRoutes ==', matchRoutes);
+    console.log('== matchRoutes ==', matchRoutes);
     if (matchRoutes[matchRoutes.length - 1]?.needRedirect) {
       // 当匹配到的路由为重定向路由时，直接跳过
       return
@@ -35,7 +35,7 @@ class UserModel {
   }
 
   // 过滤隐藏菜单
-  filterHiddenRoute(routeList) {
+  filterHiddenRoute = (routeList) => {
     let list = [];
     list = routeList.filter(v => {
       if (v.routes?.length) {
@@ -53,13 +53,11 @@ class UserModel {
     return routes
   }
 
-  generateMenuList(pageRoutes) {
+  generateMenuList = (pageRoutes) => {
     const authRoutes = this.filterNoAuthRoute(pageRoutes);
     const menuList = this.filterHiddenRoute(authRoutes);
     this.setMenuList(menuList)
   }
-
-
 
   @action
   setRouteList = (routeList = []) => {
@@ -75,7 +73,6 @@ class UserModel {
   setMatchRoutes = (matchRoutes) => {
     this.matchRoutes = matchRoutes
   }
-
 }
 
 export default new UserModel()

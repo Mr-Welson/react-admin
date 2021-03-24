@@ -2,7 +2,7 @@ import React from 'react';
 
 const SystemDict = () => {
   return (
-    <h2>测试文件</h2>
+    <h2>字典管理</h2>
   )
 }
 

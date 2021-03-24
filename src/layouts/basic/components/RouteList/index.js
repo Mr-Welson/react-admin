@@ -14,19 +14,26 @@ const renderRoutes = (routes) => {
 
 const renderSubRoutes = (route) => {
   const subRoutes = route.routes;
-  const Layout = route.component;
-  if (!Layout) {
-    return renderRoutes(subRoutes)
-  }
+  const Layout = route.component || null;
+
+  // console.log('== from ==', route.path);
+  // console.log('== to ==', subRoutes[0].path);
+
+  const Routes = (
+    <Switch>
+      {renderRoutes(subRoutes)}
+      <Redirect exact from={route.path} to={subRoutes[0].path} />
+      <Redirect to='/404' />
+      {/* <Route path={`${route.path === '/' ? '' : route.path}/*`} component={P404} /> */}
+    </Switch>
+  )
+
   return (
     <Route key={route.path} path={route.path}>
-      <Layout>
-        <Switch>
-          {renderRoutes(subRoutes)}
-          <Redirect exact from={route.path} to={subRoutes[0].path} />
-          <Route path={`${route.path === '/' ? '' : route.path}/*`} component={P404} />
-        </Switch>
-      </Layout>
+      {Layout
+        ? <Layout>{Routes}</Layout>
+        : Routes
+      }
     </Route>
   )
 }
@@ -38,9 +45,10 @@ const renderRouteItem = (route) => {
 }
 
 const RouteList = ({ routes = [] }) => {
+  const indexRoute = routes.find(v => !v.hideInMenu)
   return (
     <Switch>
-      {/* <Redirect exact from='/' to={routes[0].path} /> */}
+      <Redirect exact from='/' to={indexRoute.path} />
       {renderRoutes(routes)}
     </Switch>
   )

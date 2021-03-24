@@ -3,7 +3,7 @@ import { createBrowserHistory, createHashHistory } from "history";
 import Utils from '@/utils';
 import _ from 'lodash';
 
-const historyType = 'hash';
+const historyType = 'browser';
 const history = historyType === 'hash' ? createHashHistory() : createBrowserHistory();
 
 const indexRoute = {
@@ -38,6 +38,7 @@ class TabModel {
 
   initTabList = () => {
     const list = this.getCacheTabList();
+    !list.length && list.unshift({ ...indexRoute })
     this.setTabList(list)
   }
 
@@ -100,10 +101,7 @@ class TabModel {
   // 关闭其他
   closeOther = (tabItem) => {
     const newTabList = [tabItem];
-    console.log(tabItem);
     if (tabItem.pathname !== this.activeTab.pathname) {
-      console.log(tabItem.location.pathname);
-
       history.push(tabItem.location.pathname)
     }
     this.updateTabList(newTabList);
@@ -114,9 +112,6 @@ class TabModel {
     this.updateTabList([{ ...indexRoute }]);
     history.push('/home')
   }
-
-
-
 }
 
 export default new TabModel()

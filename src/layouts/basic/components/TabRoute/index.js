@@ -1,18 +1,18 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Tabs, Dropdown, Button } from 'antd';
-import { withModel } from '@/store'
+import useTabModel from './model';
+import { withModel, toJS } from '@/store'
 import { CloseOutlined } from '@ant-design/icons';
-
 const { TabPane } = Tabs;
 
 
-const TabsNav = ({ userModel, tabModel }) => {
+const TabRoute = ({ userModel }) => {
 
   const location = useLocation()
   const contextMenuRef = useRef();
   const { matchRoutes } = userModel;
-  const { tabList, activeTab, setActiveTab, initTabList, addTab, updateTabItem, closeTab, closeOther, closeAll } = tabModel;
+  const { tabList, activeTab, setActiveTab, initTabList, addTab, updateTabItem, closeTab, closeOther, closeAll } = useTabModel();
 
   useEffect(() => {
     initTabList()
@@ -20,10 +20,11 @@ const TabsNav = ({ userModel, tabModel }) => {
 
   // 监听地址栏变化
   useEffect(() => {
-    if (!matchRoutes.length) {
+    const matchs = toJS(matchRoutes)
+    if (!matchs.length) {
       return
     }
-    const { icon, key, name } = matchRoutes[matchRoutes.length - 1];
+    const { icon, key, name } = matchs[matchs.length - 1];
     const tabItem = {
       icon, key,
       name: name + (location?.state?.pageTitle || ''),
@@ -31,9 +32,9 @@ const TabsNav = ({ userModel, tabModel }) => {
       pathname: location.pathname,
       location
     }
-    addTab(tabItem)
+    addTab(tabItem, tabList)
     setActiveTab(tabItem)
-  }, [matchRoutes])
+  }, [matchRoutes, tabList])
 
   const onTabClose = useCallback((e, tabItem) => {
     e.stopPropagation();
@@ -46,6 +47,7 @@ const TabsNav = ({ userModel, tabModel }) => {
     contextMenuRef.current = item;
   }
   const onRefresh = (e) => {
+    // TODO: 刷新数据
     e.stopPropagation();
     const item = contextMenuRef.current;
     contextMenuRef.current = null;
@@ -55,14 +57,15 @@ const TabsNav = ({ userModel, tabModel }) => {
       ...item.location,
       key: item.location.key + 1
     }
-    console.log(location);
     history.replace(location)
   }
+
   const onClose = () => {
     const item = contextMenuRef.current;
     contextMenuRef.current = null;
     closeTab(item)
   }
+
   const onCloseOther = () => {
     const item = contextMenuRef.current;
     contextMenuRef.current = null;
@@ -107,5 +110,5 @@ const TabsNav = ({ userModel, tabModel }) => {
   );
 };
 
-export default withModel(TabsNav, 'userModel', 'tabModel');
+export default withModel(TabRoute, 'userModel');
 
