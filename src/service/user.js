@@ -1,8 +1,20 @@
+import { requestInstance } from './request';
+import { pageRoutes } from '@/routes'
 
+const baseUrl = 'mock';
+
+const URL = {
+  login: `${baseUrl}/sysLogin`,
+  getUserPermissionByToken: `${baseUrl}/getUserPermissionByToken`,
+}
+
+@requestInstance
 class UserService {
 
   login() {
-    return fetch('/api/sysLogin').then(res => res.json()).then(res => {
+    return this.$http({
+      url: URL.login
+    }).then(res => {
       return [res, null]
     }).catch(err => {
       return [undefined, err]
@@ -10,10 +22,20 @@ class UserService {
   }
 
   getUserPermissionByToken() {
-    return fetch('/api/getUserPermissionByToken').then(res => res.json()).then(res => {
+    return this.$http({
+      url: URL.getUserPermissionByToken
+    }).then(res => {
       return [res, null]
     }).catch(err => {
       return [undefined, err]
+    })
+  }
+
+  getMenuList() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve([pageRoutes, false])
+      }, 300)
     })
   }
 }

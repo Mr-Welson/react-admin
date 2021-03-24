@@ -1,5 +1,5 @@
 //用于修改webpack默认配置
-const { override, overrideDevServer, addWebpackAlias, fixBabelImports, addLessLoader, addDecoratorsLegacy, useBabelRc } = require('customize-cra')
+const { override, overrideDevServer, addWebpackAlias, fixBabelImports, addLessLoader, addDecoratorsLegacy } = require('customize-cra')
 
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
@@ -67,7 +67,7 @@ const addOptimization = () => (config) => {
 const addProxy = () => (config) => {
   config.proxy = {
     '/mock/': {
-      target: 'https://127.0.0.1:5000/mock',
+      target: 'https://127.0.0.1:4000/mock',
       changeOrigin: true,
       pathRewrite: { '^/mock': '/' },
     },
@@ -101,7 +101,6 @@ module.exports = {
     }),
     addAntdDayjsWebpackPlugin(),
     addDecoratorsLegacy(),
-    useBabelRc(),
     // setWebpackPublicPath(),
   ),
   devServer: overrideDevServer(

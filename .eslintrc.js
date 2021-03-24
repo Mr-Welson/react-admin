@@ -4,6 +4,7 @@ module.exports = {
     "node": true,
     "es2021": true
   },
+  "parser": "babel-eslint",
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended"
@@ -49,7 +50,7 @@ module.exports = {
       1, 45
     ],
     // 禁止使用多个空格
-    "no-multi-spaces": 1,
+    "no-multi-spaces": 0,
     // 要求 IIFE 使用括号括起来
     "wrap-iife": 2,
     // 禁止不必要的分号
@@ -76,6 +77,6 @@ module.exports = {
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1,
     "react/prop-types": 0,
-    "no-case-declarations": 0
+    "no-case-declarations": 0,
   }
 };

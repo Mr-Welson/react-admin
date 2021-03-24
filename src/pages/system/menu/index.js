@@ -2,7 +2,7 @@ import React from 'react';
 
 const SystemMenu = () => {
   return (
-    <h2>测试文件</h2>
+    <h2>菜单管理</h2>
   )
 }
 

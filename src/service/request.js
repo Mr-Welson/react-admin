@@ -31,6 +31,7 @@ const contentTypeMap = {
 }
 
 export const $http = ({ method = 'GET', url, data, type = 'json', ...rest }) => {
+  method = method.toLocaleUpperCase();
   return http({
     baseURL: url.startsWith('/mock') ? "" : process.env.base,
     url,
@@ -49,3 +50,7 @@ export const $http = ({ method = 'GET', url, data, type = 'json', ...rest }) => 
       return Promise.resolve({ success: false, message: "请求失败" });
     });
 };
+
+export const requestInstance = (fn) => {
+  fn.prototype.$http = $http
+}

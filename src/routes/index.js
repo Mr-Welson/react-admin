@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 // 路由配置项
 /**
     path 前端路由访问地址
@@ -22,9 +23,22 @@ import SystemLayout from '@/layouts/system'
 import Home from '@/pages/home'
 import Test from '@/pages/test'
 import User from '@/pages/system/user'
-import Role from '@/pages/system/role'
+import Menu from '@/pages/system/menu'
+import Dict from '@/pages/system/dict'
+import Depart from '@/pages/system/depart'
 
-export const routes = [
+
+
+
+import AddUser from '@/pages/system/user/addUser'
+import ViewUser from '@/pages/system/user/viewUser'
+import Role from '@/pages/system/role'
+import Menu_1_1 from '@/pages/nested/menu-1/menu-1-1'
+import Menu_1_2 from '@/pages/nested/menu-1/menu-1-2'
+import Menu_2 from '@/pages/nested/menu-2'
+
+
+export const staticRoutes = [
   {
     path: '/login',
     key: 'login',
@@ -32,234 +46,132 @@ export const routes = [
     hideInMenu: true,
     component: Login,
   },
-  {
-    path: '/',
-    key: 'login',
-    name: '布局',
-    // hideInMenu: true,
-    component: Layout,
-    routes: [
-      {
-        path: '/home',
-        key: 'home',
-        name: '首页',
-        icon: 'UserOutlined',
-        component: Home,
-      },
-      {
-        path: '/test',
-        key: 'test',
-        isLocal: true,
-        name: '关于',
-        icon: 'VideoCameraOutlined',
-        component: Test,
-      },
-      {
-        path: '/system',
-        key: 'system',
-        name: '系统管理',
-        icon: 'UserOutlined',
-        component: SystemLayout,
-        routes: [
-          {
-            path: '/system/user',
-            key: 'systemUser',
-            name: '用户管理',
-            icon: 'UserOutlined',
-            component: User,
-          },
-          {
-            path: '/system/role',
-            key: 'systemRole',
-            name: '角色管理',
-            icon: 'UserOutlined',
-            component: Role,
-          },
-          // {
-          //   path: '/system/menu',
-          //   key: 'systemMenu',
-          //   component: '@/pages/system/menu',
-          //   name: '菜单管理',
-          //   icon: 'UserOutlined',
-          // },
-          // {
-          //   path: '/system/depart',
-          //   key: 'systemDepart',
-          //   component: '@/pages/system/depart',
-          //   name: '部门管理',
-          //   icon: 'UserOutlined',
-          // },
-          // {
-          //   path: '/system/dict',
-          //   key: 'systemDict',
-          //   component: '@/pages/system/dict',
-          //   name: '字典管理',
-          //   icon: 'UserOutlined',
-          // },
-        ]
-      },
-    ]
-  }
 ]
-
 export const pageRoutes = [
-  {
-    path: '/',
-    redirect: '/home',
-    exact: true,
-  },
   {
     path: '/home',
     key: 'home',
-    component: '@/pages/home',
     name: '首页',
     icon: 'UserOutlined',
+    component: Home,
+  },
+  {
+    path: '/test',
+    key: 'test',
+    isLocal: true,
+    name: '测试',
+    icon: 'VideoCameraOutlined',
+    component: Test,
   },
   {
     path: '/system',
     key: 'system',
-    // component: '@/pages/system',
     name: '系统管理',
     icon: 'UserOutlined',
-    needRedirect: true,
+    component: SystemLayout,
     routes: [
-      // {
-      //   path: '/system',
-      //   redirect: '/system/user',
-      //   exact: true,
-      // },
       {
         path: '/system/user',
         key: 'systemUser',
-        component: '@/pages/system/user',
         name: '用户管理',
         icon: 'UserOutlined',
+        component: User,
+      },
+      {
+        path: '/system/user/add',
+        key: 'userAdd',
+        name: '添加用户',
+        icon: 'UserOutlined',
+        hideInMenu: true,
+        component: AddUser,
+      },
+      {
+        path: '/system/user/view/:id',
+        key: 'userView',
+        name: '查看用户',
+        icon: 'UserOutlined',
+        hideInMenu: true,
+        component: ViewUser,
       },
       {
         path: '/system/role',
         key: 'systemRole',
-        component: '@/pages/system/role',
         name: '角色管理',
         icon: 'UserOutlined',
+        component: Role,
       },
       {
         path: '/system/menu',
         key: 'systemMenu',
-        component: '@/pages/system/menu',
+        component: Menu,
         name: '菜单管理',
         icon: 'UserOutlined',
       },
       {
         path: '/system/depart',
         key: 'systemDepart',
-        component: '@/pages/system/depart',
+        component: Depart,
         name: '部门管理',
         icon: 'UserOutlined',
       },
       {
         path: '/system/dict',
         key: 'systemDict',
-        component: '@/pages/system/dict',
+        component: Dict,
         name: '字典管理',
         icon: 'UserOutlined',
-      },
-      {
-        // component: '@/pages/404',
-        redirect: '/system/user',
-        hideInMenu: true,
       },
     ]
   },
   {
-    path: '/test',
-    key: 'test',
-    isLocal: true,
-    component: '@/pages/test',
-    name: '关于',
-    icon: 'VideoCameraOutlined',
-  },
-  {
     path: '/nested',
-    component: '@/layouts/nested',
     key: 'nested',
-    name: '嵌套',
-    icon: 'UploadOutlined',
-    needRedirect: true,
+    name: '一级菜单',
+    icon: 'UserOutlined',
     routes: [
-      {
-        path: '/nested',
-        redirect: '/nested/menu-1/menu-1-1',
-        exact: true,
-      },
       {
         path: '/nested/menu-1',
         key: 'menu-1',
-        name: 'menu-1',
-        icon: 'VideoCameraOutlined',
-        needRedirect: true,
+        name: '二级菜单01',
+        icon: 'UserOutlined',
         routes: [
-          {
-            path: '/nested/menu-1',
-            redirect: '/nested/menu-1/menu-1-1',
-            exact: true,
-          },
           {
             path: '/nested/menu-1/menu-1-1',
             key: 'menu-1-1',
-            component: '@/pages/nested/menu-1/menu-1-1',
-            name: 'menu-1-1',
-            icon: 'VideoCameraOutlined',
-            // routes: [
-            //   {
-            //     此种配置暂不生效，待完善
-            //     path: '/nested/menu-1/menu-1-1/:id',
-            //     key: 'menu-1-1-detail',
-            //     component: '@/pages/nested/menu-1/menu-1-1-detail',
-            //     name: 'menu-1-1 详情',
-            //     icon: 'VideoCameraOutlined',
-            //     hideInMenu: true,
-            //   },
-            // ],
-          },
-          {
-            path: '/nested/menu-1/menu-1-1/:id',
-            key: 'menu-1-1-detail',
-            component: '@/pages/nested/menu-1/menu-1-1-detail',
-            name: 'menu-1-1 详情',
-            icon: 'VideoCameraOutlined',
-            hideInMenu: true
+            name: '三级菜单01',
+            icon: 'UserOutlined',
+            component: Menu_1_1,
           },
           {
             path: '/nested/menu-1/menu-1-2',
             key: 'menu-1-2',
-            component: '@/pages/nested/menu-1/menu-1-2',
-            name: 'menu-1-2',
-            icon: 'VideoCameraOutlined',
-          },
+            name: '三级菜单02',
+            icon: 'UserOutlined',
+            component: Menu_1_2,
+          }
         ]
       },
       {
         path: '/nested/menu-2',
         key: 'menu-2',
-        component: '@/pages/nested/menu-2',
-        name: 'menu-2',
-        icon: 'VideoCameraOutlined',
+        name: '二级菜单02',
+        icon: 'UserOutlined',
+        component: Menu_2,
       },
-      {
-        path: '/nested/menu-2-detail/:id?',
-        key: 'menu-2-detail',
-        component: '@/pages/nested/menu-2/menu-2-detail',
-        name: 'menu 2 详情页',
-        icon: 'VideoCameraOutlined',
-        hideInMenu: true,
-        activeMenuName: 'menu-2'
-      }
-    ],
+    ]
   },
+]
+
+const routes = [
+  ...staticRoutes,
   {
-    component: '@/pages/404',
+    path: '/',
+    key: 'login',
+    name: '布局',
     hideInMenu: true,
-  },
+    component: Layout,
+    routes: pageRoutes
+  }
 ]
 
 export default routes

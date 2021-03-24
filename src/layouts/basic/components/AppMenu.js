@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
+import { withModel, toJS } from '@/store'
 import * as AntIcon from '@ant-design/icons';
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
-// @withRouter 
-// @inject('user') 
-// @observer
-const AppMenu = ({ theme }) => {
+const AppMenu = ({ theme, userModel }) => {
   const [activeKeys, setActiveKeys] = useState([]);
-  // const { menuList, matchRoutes } = useModel('permission');
+  const { menuList, matchRoutes } = userModel;
 
   // 监听地址栏变化
-  // useEffect(() => {
-  //   if (!matchRoutes.length) {
-  //     return
-  //   }
-  //   const activeKeys = matchRoutes.map(v => v.activeMenuKey || v.key)
-  //   setActiveKeys(activeKeys)
-  // }, [matchRoutes])
+  useEffect(() => {
+    const matchs = toJS(matchRoutes)
+    console.log(matchs);
+    if (!matchs.length) {
+      return
+    }
+    const activeKeys = matchs.map(v => v.activeMenuKey || v.key)
+    setActiveKeys(activeKeys)
+  }, [matchRoutes])
 
   const renderSubMenu = (menu) => {
     let MenuIcon = AntIcon[menu.icon];
@@ -62,9 +62,9 @@ const AppMenu = ({ theme }) => {
       // defaultOpenKeys={activeKeys}
       selectedKeys={activeKeys}
     >
-      {/* {!!menuList.length && renderMenu(menuList)} */}
+      {!!menuList.length && renderMenu(menuList)}
     </Menu>
   );
 };
 
-export default AppMenu;
+export default withModel(AppMenu, 'userModel');

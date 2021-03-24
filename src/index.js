@@ -16,13 +16,13 @@ import App from './App';
 dayjs.locale('zh-cn')
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <ConfigProvider locale={zhCN}>
       <Provider {...store}>
         <App />
       </Provider>
-    </ConfigProvider>
-  </React.StrictMode>,
+    </ConfigProvider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 
