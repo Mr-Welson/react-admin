@@ -1,9 +1,10 @@
 import { observable, action } from 'mobx'
+import { createBrowserHistory, createHashHistory } from "history";
 import Utils from '@/utils';
 import _ from 'lodash';
-import createHistory from 'history/createBrowserHistory';
 
-const history = createHistory();
+const historyType = 'hash';
+const history = historyType === 'hash' ? createHashHistory() : createBrowserHistory();
 
 const indexRoute = {
   icon: 'UserOutlined',
