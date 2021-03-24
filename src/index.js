@@ -1,12 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
+
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/lib/locale/zh_CN';
+import 'antd/dist/antd.css';
+import './index.css';
+import { Provider } from 'mobx-react'
+import store from './store'
+import App from './App';
+
+
+dayjs.locale('zh-cn')
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ConfigProvider locale={zhCN}>
+      <Provider {...store}>
+        <App />
+      </Provider>
+    </ConfigProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
