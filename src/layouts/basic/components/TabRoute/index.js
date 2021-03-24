@@ -32,9 +32,9 @@ const TabRoute = ({ userModel }) => {
       pathname: location.pathname,
       location
     }
-    addTab(tabItem, tabList)
+    addTab(tabItem)
     setActiveTab(tabItem)
-  }, [matchRoutes, tabList])
+  }, [matchRoutes])
 
   const onTabClose = useCallback((e, tabItem) => {
     e.stopPropagation();
