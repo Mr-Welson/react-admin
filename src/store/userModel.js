@@ -4,9 +4,20 @@ import Utils from '@/utils';
 
 class UserModel {
 
-  @observable routeList = [] // 有权限的路由
-  @observable menuList = [] // 可见菜单
-  @observable matchRoutes = [] // 当前路径匹配的路由
+  // 保存路由的 history 对象
+  history = {} 
+
+
+  @observable token = {} 
+  @observable userInfo = {} 
+  // 跟路由
+  @observable indexRoute = {} 
+  // 有权限的路由
+  @observable routeList = [] 
+  // 可见菜单
+  @observable menuList = [] 
+  // 当前路径匹配的路由
+  @observable matchRoutes = [] 
 
   // 展开后的路由
   @computed
@@ -14,6 +25,10 @@ class UserModel {
     let routes = Utils.flattenRoutes(toJS(this.routeList));
     // routes = routes.filter(v => v.key && v.path);
     return routes
+  }
+  
+  setHistory = (history) => {
+    this.history = history
   }
 
   // 根据 pathname 匹配路由
@@ -26,10 +41,8 @@ class UserModel {
       });
       return matchInfo
     })
-    console.log('== matchRoutes ==', matchRoutes);
-    if (matchRoutes[matchRoutes.length - 1]?.needRedirect) {
-      // 当匹配到的路由为重定向路由时，直接跳过
-      return
+    if(matchRoutes.length === 1 && pathname !== '/') {
+      return this.history.replace('/404')
     }
     this.setMatchRoutes(matchRoutes)
   }
@@ -65,6 +78,11 @@ class UserModel {
   }
 
   @action
+  setIndexRoute = (indexRoute = {}) => {
+    this.indexRoute = indexRoute
+  }
+
+  @action
   setMenuList = (menuList = []) => {
     this.menuList = menuList
   }
@@ -72,6 +90,14 @@ class UserModel {
   @action
   setMatchRoutes = (matchRoutes) => {
     this.matchRoutes = matchRoutes
+  }
+  @action
+  setToken = (token) => {
+    this.token = token
+  }
+  @action
+  setUserInfo = (userInfo) => {
+    this.userInfo = userInfo
   }
 }
 

@@ -4,9 +4,10 @@ import { Form, Input, Button, message } from 'antd'
 import './login.less'
 import Service from '@/service'
 import Utils from '@/utils';
+import { withModel } from '@/store';
 
 
-const LoginForm = ({ dispatch, history }) => {
+const LoginForm = ({ history, userModel }) => {
 
   useEffect(() => {
     Utils.setCache('zf_token', undefined, 'session')
@@ -20,12 +21,10 @@ const LoginForm = ({ dispatch, history }) => {
       return
     }
     const [result] = await Service.user.login(values)
-    console.log(result.data);
-    Utils.setCache('zf_token', result.data.token, 'session')
-    dispatch({
-      type: 'app/setUsrInfo',
-      payload: result.data.userInfo,
-    })
+    console.log(result);
+    Utils.setCache('zf_token', result.token, 'session')
+    userModel.setToken(result.token)
+    userModel.setUserInfo(result.userInfo)
     history.push('/')
   }
 
@@ -69,4 +68,4 @@ const LoginForm = ({ dispatch, history }) => {
   )
 }
 
-export default LoginForm
+export default withModel(LoginForm, 'userModel')

@@ -39,11 +39,13 @@ class TabModel {
   initTabList = () => {
     const list = this.getCacheTabList();
     !list.length && list.unshift({ ...indexRoute })
+    console.log('==== list', list);
     this.setTabList(list)
   }
 
   // 同时更新本地缓存和页面数据
   updateTabList = (list) => {
+    console.log('=== updateTabList ===');
     this.setTabList(list)
     this.setCacheTabList(list)
   }
@@ -68,6 +70,7 @@ class TabModel {
 
   // 新增 Tab 
   addTab = (tabItem) => {
+    console.log('== tabList ==', this.tabList);
     const index = this.tabList.findIndex(v => v.pathname === tabItem.pathname);
     if (index === -1) {
       // 新增
