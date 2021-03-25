@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom'
-import P404 from '@/pages/404'
+// import P404 from '@/pages/404'
 
 const renderRoutes = (routes) => {
   return routes.map(v => {
@@ -18,12 +18,11 @@ const renderSubRoutes = (route) => {
 
   // console.log('== from ==', route.path);
   // console.log('== to ==', subRoutes[0].path);
-
   const Routes = (
     <Switch>
       {renderRoutes(subRoutes)}
       <Redirect exact from={route.path} to={subRoutes[0].path} />
-      <Redirect to='/404' />
+      <Redirect to={'/404'} />
       {/* <Route path={`${route.path === '/' ? '' : route.path}/*`} component={P404} /> */}
     </Switch>
   )
