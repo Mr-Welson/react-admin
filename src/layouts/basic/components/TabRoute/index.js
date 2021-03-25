@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { Tabs, Dropdown, Button } from 'antd';
 import useTabModel from './model';
 import { withModel, toJS } from '@/store'
@@ -9,24 +9,39 @@ const { TabPane } = Tabs;
 
 const TabRoute = ({ userModel }) => {
 
-  const location = useLocation()
+  const location = useLocation();
+  const history = useHistory();
   const contextMenuRef = useRef();
-  const { matchRoutes } = userModel;
-  const { tabList, activeTab, setActiveTab, initTabList, addTab, updateTabItem, closeTab, closeOther, closeAll } = useTabModel();
+  const [matchs, setMatchs] = useState([]);
+  const { matchRoutes, indexRoute } = userModel;
+  const { tabList, activeTab, setActiveTab, initTabList, addTab, updateTabItem, closeTab, closeOther, closeAll } = useTabModel({
+    icon: indexRoute.icon,
+    key: indexRoute.key,
+    name: indexRoute.name,
+    pathname: indexRoute.path,
+    location: {
+      pathname: indexRoute.path
+    }
+  });
+  // const { tabList, activeTab, setActiveTab, initTabList, addTab, updateTabItem, closeTab, closeOther, closeAll } = tabModel;
 
   useEffect(() => {
     initTabList()
   }, [])
 
+  useEffect(() => {
+    setMatchs(toJS(matchRoutes))
+  }, [matchRoutes])
+
   // 监听地址栏变化
   useEffect(() => {
-    const matchs = toJS(matchRoutes)
     if (!matchs.length) {
       return
     }
     const { icon, key, name } = matchs[matchs.length - 1];
     const tabItem = {
-      icon, key,
+      icon,
+      key,
       name: name + (location?.state?.pageTitle || ''),
       // name: location?.state?.pageTitle || name,
       pathname: location.pathname,
@@ -34,7 +49,7 @@ const TabRoute = ({ userModel }) => {
     }
     addTab(tabItem)
     setActiveTab(tabItem)
-  }, [matchRoutes])
+  }, [matchs])
 
   const onTabClose = useCallback((e, tabItem) => {
     e.stopPropagation();
@@ -75,7 +90,7 @@ const TabRoute = ({ userModel }) => {
   return (
     <Tabs activeKey={activeTab.pathname} className="app-tab-list">
       {tabList.map((v) => {
-        const isHomePage = v.key === 'home';
+        const isHomePage = v.key === indexRoute.key;
         const closeAble = tabList.length > 1;
         return (
           <TabPane
@@ -84,7 +99,7 @@ const TabRoute = ({ userModel }) => {
               <Dropdown
                 overlay={
                   <div className="tab-context-menu">
-                    <Button type="link" block className="context-item" disabled={activeTab.pathname !== v.pathname} onClick={onRefresh}>刷新</Button>
+                    {/* <Button type="link" block className="context-item" disabled={activeTab.pathname !== v.pathname} onClick={onRefresh}>刷新</Button> */}
                     <Button type="link" block className="context-item" disabled={isHomePage || !closeAble} onClick={onClose}>关闭</Button>
                     <Button type="link" className="context-item" disabled={!closeAble} onClick={onCloseOther}>关闭其他</Button>
                     <Button type="link" className="context-item" disabled={isHomePage || !closeAble} onClick={closeAll}>关闭所有</Button>
@@ -110,5 +125,5 @@ const TabRoute = ({ userModel }) => {
   );
 };
 
-export default withModel(TabRoute, 'userModel');
+export default withModel(TabRoute, 'userModel', 'tabModel');
 

@@ -3,21 +3,21 @@ import { useHistory } from 'react-router-dom';
 import Utils from '@/utils'
 import _ from 'lodash';
 
-const indexRoute = {
-  icon: 'UserOutlined',
-  key: 'home',
-  name: '首页',
-  pathname: '/home',
-  location: {
-    pathname: '/home',
-    query: {},
-    search: '',
-    state: undefined,
-    hash: ''
-  }
-}
+// const indexRoute = {
+//   icon: 'UserOutlined',
+//   key: 'home',
+//   name: '首页',
+//   pathname: '/home',
+//   location: {
+//     pathname: '/home',
+//     query: {},
+//     search: '',
+//     state: undefined,
+//     hash: ''
+//   }
+// }
 
-const useTabModel = () => {
+const useTabModel = (indexRoute) => {
 
   const history = useHistory();
   const [tabList, setTabList] = useState([]);
@@ -27,13 +27,11 @@ const useTabModel = () => {
   function initTabList() {
     const list = getCacheTabList();
     !list.length && list.unshift({ ...indexRoute })
-    console.log('==== list', list);
     setTabList(list)
   }
 
   // 同时更新本地缓存和页面数据
   function updateTabList(list) {
-    console.log('=== updateTabList ===');
     setTabList(list)
     setCacheTabList(list)
   }
@@ -58,10 +56,12 @@ const useTabModel = () => {
 
   // 新增 Tab 
   function addTab(tabItem) {
-    console.log('== tabList ==', tabList);
     const index = tabList.findIndex(v => v.pathname === tabItem.pathname);
     if (index === -1) {
       // 新增
+      if(tabItem.pathname === indexRoute.pathname) {
+        return updateTabList([tabItem, ...tabList])
+      }
       return updateTabList([...tabList, tabItem])
     }
     const item = tabList[index];
@@ -92,6 +92,9 @@ const useTabModel = () => {
   // 关闭其他
   function closeOther(tabItem) {
     const newTabList = [tabItem];
+    if(tabItem.pathname !== indexRoute.pathname) {
+      newTabList.unshift({...indexRoute})
+    }
     if (tabItem.pathname !== activeTab.pathname) {
       history.push(tabItem.location.pathname)
     }
@@ -100,7 +103,8 @@ const useTabModel = () => {
 
   // 关闭所有
   function closeAll() {
-    updateTabList([indexRoute]);
+    console.log(indexRoute);
+    updateTabList([{ ...indexRoute }]);
     history.push('/home')
   }
 

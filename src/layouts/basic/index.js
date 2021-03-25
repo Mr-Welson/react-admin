@@ -2,26 +2,35 @@ import React, { useEffect, useState } from 'react';
 import './index.less';
 import { Layout, Spin } from 'antd';
 import GlobalHeader from './components/GlobalHeader';
+import Logo from './components/Logo'
 import AppMenu from './components/AppMenu';
 import TabRoute from './components/TabRoute';
-import RouteList from './components/RouteList';
-import { withRouter } from 'react-router-dom';
+import PageRouter from './components/PageRouter';
+import { withRouter, useHistory } from 'react-router-dom';
 import { withModel } from '@/store'
 import Service from '@/service';
 
 const { Sider, Content } = Layout;
 
-const BasicLayout = ({ theme, location, userModel, ...rest }) => {
+const BasicLayout = ({ appModel, location, userModel }) => {
   // console.log('=== BasicLayout ===', rest);
 
   const [loading, setLoading] = useState(true);
   const [collapsed, setCollapsed] = useState(false);
-  const { onPathNameChange, flatRoutes, setRouteList, generateMenuList } = userModel;
+  const { routeList, onPathNameChange, flatRoutes, setRouteList, generateMenuList, setIndexRoute } = userModel;
+  const { theme } = appModel;
+
+  // 暂时使用这种方式在 mobx 中访问 history 对象
+  const history = useHistory();
+  useEffect(() => {
+    userModel.setHistory(history);
+  }, [])
 
   useEffect(() => {
-    // 根据后台权限过滤路由及菜单
     const fetchMenuList = async () => {
       const [data] = await Service.user.getMenuList();
+      const indexRoute = data.find(v => !v.hideInMenu);
+      setIndexRoute(indexRoute)
       setRouteList(data)
       generateMenuList(data)
       setLoading(false)
@@ -29,6 +38,7 @@ const BasicLayout = ({ theme, location, userModel, ...rest }) => {
     fetchMenuList();
   }, [])
 
+  // 监听 pathname 
   useEffect(() => {
     onPathNameChange(location.pathname, flatRoutes)
   }, [location.pathname, flatRoutes])
@@ -47,14 +57,14 @@ const BasicLayout = ({ theme, location, userModel, ...rest }) => {
           collapsible
           collapsed={collapsed}
         >
-          <div className="logo" />
-          <AppMenu {...rest} theme={theme} />
+          <Logo collapsed={collapsed} />
+          <AppMenu theme={theme} />
         </Sider>
         <Layout className="app-content-layout">
           <GlobalHeader collapsed={collapsed} setCollapsed={setCollapsed} />
-          <TabRoute {...rest} />
+          <TabRoute />
           <Content className="app-content">
-            <RouteList routes={userModel.routeList} />
+            <PageRouter routes={routeList} />
           </Content>
           {/* <Footer /> */}
         </Layout>
@@ -64,4 +74,4 @@ const BasicLayout = ({ theme, location, userModel, ...rest }) => {
   );
 };
 
-export default withRouter(withModel(BasicLayout, 'userModel'));
+export default withRouter(withModel(BasicLayout, 'userModel', 'appModel'));
