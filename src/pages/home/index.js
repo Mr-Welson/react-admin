@@ -2,23 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, DatePicker } from 'antd';
 
-const Home = (props) => {
-
-  console.log('=== Home ===', props);
-
+const Home = () => {
   return (
     <div className='home-container'>
       首页
       <Button>
-        <Link to="/about"> 关于 </Link>
-      </Button>
-      <Button>
-        <Link to="/post/frontEnd"> 文章列表 </Link>
+        <Link to="/about"> 无效路由 </Link>
       </Button>
       <DatePicker />
       <br />
       <br />
-      <img src="static/avatar.jpg"></img>
+      <img src="assets/avatar.jpg"></img>
     </div>
   );
 };

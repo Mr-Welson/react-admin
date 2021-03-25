@@ -48,7 +48,7 @@ export const pageRoutes = [
   {
     path: '/',
     key: 'index',
-    name: '布局',
+    name: '首页',
     hideInMenu: true,
   },
   {

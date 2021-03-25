@@ -12,13 +12,14 @@ const URL = {
 class UserService {
 
   login() {
-    return this.$http({
-      url: URL.login
-    }).then(res => {
-      return [res, null]
-    }).catch(err => {
-      return [undefined, err]
-    })
+    return Promise.resolve([{token: '111', userInfo: {}}])
+    // return this.$http({
+    //   url: URL.login
+    // }).then(res => {
+    //   return [res, null]
+    // }).catch(err => {
+    //   return [undefined, err]
+    // })
   }
 
   getUserPermissionByToken() {

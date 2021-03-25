@@ -1,11 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import { withModel, toJS } from '@/store'
 import * as AntIcon from '@ant-design/icons';
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
+
+const AppMenu = ({ theme, userModel }) => {
+
+  const [activeKeys, setActiveKeys] = useState([]);
+  const { menuList, matchRoutes } = userModel;
+  const [matchs, setMatchs] = useState([]);
+
+  useEffect(() => {
+    setMatchs(toJS(matchRoutes))
+  }, [matchRoutes])
+
+  // 监听地址栏变化
+  useEffect(() => {
+    if (!matchs.length) {
+      return
+    }
+    const activeKeys = matchs.map(v => v.activeMenuKey || v.key)
+    setActiveKeys(activeKeys)
+  }, [matchs])
+
+  return (
+    <Menu
+      className="app-menu"
+      mode="inline"
+      theme={theme}
+      defaultOpenKeys={activeKeys}
+      selectedKeys={activeKeys}
+    >
+      {!!menuList.length && renderMenu(menuList)}
+    </Menu>
+  );
+};
 
 const renderSubMenu = (menu) => {
   let MenuIcon = AntIcon[menu.icon];
@@ -38,37 +70,5 @@ const renderMenu = (menuList) => {
     }
   })
 }
-
-const AppMenu = ({ theme, userModel }) => {
-  const history = useHistory();
-  const location = useLocation()
-
-  const [activeKeys, setActiveKeys] = useState([]);
-
-  const { menuList, matchRoutes } = userModel;
-
-  // 监听地址栏变化
-  useEffect(() => {
-    const matchs = toJS(matchRoutes)
-    if (!matchs.length) {
-      history.replace('/404')
-      return
-    }
-    const activeKeys = matchs.map(v => v.activeMenuKey || v.key)
-    setActiveKeys(activeKeys)
-  }, [matchRoutes])
-
-  return (
-    <Menu
-      className="app-menu"
-      mode="inline"
-      theme={theme}
-      // defaultOpenKeys={activeKeys}
-      selectedKeys={activeKeys}
-    >
-      {!!menuList.length && renderMenu(menuList)}
-    </Menu>
-  );
-};
 
 export default withModel(AppMenu, 'userModel');
