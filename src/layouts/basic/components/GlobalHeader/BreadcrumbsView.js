@@ -1,35 +1,33 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
+import { withModel, toJS } from '@/store'
 import { Breadcrumb } from 'antd';
 import * as AntIcon from '@ant-design/icons';
 
-const indexRoute = {
-  name: '首页',
-  path: '/home',
-  icon: 'HomeOutlined',
-  key: 'home'
-}
 
-const BreadcrumbsView = () => {
+const BreadcrumbsView = ({ userModel }) => {
 
-  // const { matchRoutes } = useModel('permission')
-  const IndexIcon = AntIcon[indexRoute.icon]
+  const { matchRoutes, indexRoute } = userModel;
+
+  const IndexIcon = AntIcon[indexRoute.icon];
+  const routes = toJS(matchRoutes);
+  routes.shift()
 
   return (
     <Breadcrumb>
       <Breadcrumb.Item>
         <Link to={indexRoute.path}><IndexIcon />{indexRoute.name}</Link>
       </Breadcrumb.Item>
-      {/* {!!matchRoutes.length && matchRoutes[0].key !== 'home' && matchRoutes.map((v, k) => {
-        const linkable = !v.needRedirect && v.path && k !== (matchRoutes.length - 1)
+      {routes.length && routes[0].key !== 'home' && routes.map((v, k) => {
+        const linkable = !v.routes && v.path && k !== (routes.length - 1)
         return (
           <Breadcrumb.Item key={v.key}>
             {linkable ? <Link to={v.path}>{v.name}</Link> : v.name}
           </Breadcrumb.Item>
         )
-      })} */}
+      })}
     </Breadcrumb>
   )
 }
 
-export default BreadcrumbsView;
+export default withModel(BreadcrumbsView, 'userModel');

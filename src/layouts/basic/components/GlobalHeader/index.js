@@ -1,14 +1,12 @@
 import React from 'react';
-import { inject, observer } from 'mobx-react'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { Layout } from 'antd';
 import style from './index.module.less';
-// import BreadcrumbsView from './BreadcrumbsView';
+import BreadcrumbsView from './BreadcrumbsView';
 import ThemeMenu from './ThemeMenu'
 import AvatarDropdown from './AvatarDropdown';
 
 const GlobalHeader = ({ collapsed, setCollapsed }) => {
-
 
   return (
     <Layout.Header className={style['global-header']}>
@@ -16,7 +14,7 @@ const GlobalHeader = ({ collapsed, setCollapsed }) => {
         <span className={style["trigger"]} onClick={() => setCollapsed(collapsed => !collapsed)}>
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </span>
-        {/* <BreadcrumbsView></BreadcrumbsView> */}
+        <BreadcrumbsView></BreadcrumbsView>
       </div>
       <div className={style['right-content']}>
         <div className={style['header-action']}>
@@ -30,4 +28,4 @@ const GlobalHeader = ({ collapsed, setCollapsed }) => {
   )
 }
 
-export default inject('userModel')(observer(GlobalHeader));
+export default GlobalHeader;
