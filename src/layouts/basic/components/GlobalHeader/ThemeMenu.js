@@ -1,24 +1,20 @@
 import React from 'react';
 import { Menu, Dropdown, Button } from 'antd';
+import { withModel } from '@/store'
 
-const ThemeMenu = ({ dispatch }) => {
-  const setTheme = (theme) => {
-    dispatch({
-      type: 'settings/setTheme',
-      payload: { theme }
-    })
-  }
+const ThemeMenu = ({ appModel }) => {
+
   return (
     <Dropdown
       overlay={
         <Menu>
           <Menu.Item>
-            <div onClick={() => setTheme('dark')}>
+            <div onClick={() => appModel.setTheme('dark')}>
               暗黑
           </div>
           </Menu.Item>
           <Menu.Item>
-            <div onClick={() => setTheme('light')}>
+            <div onClick={() => appModel.setTheme('light')}>
               亮白
           </div>
           </Menu.Item>
@@ -33,4 +29,4 @@ const ThemeMenu = ({ dispatch }) => {
 };
 
 
-export default ThemeMenu;
+export default withModel(ThemeMenu, 'appModel');
