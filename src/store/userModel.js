@@ -1,23 +1,23 @@
-import { observable, action, computed, toJS } from 'mobx'
+import { observable, action, computed, toJS, autorun } from 'mobx'
 import { matchPath } from 'react-router-dom';
 import Utils from '@/utils';
 
 class UserModel {
 
   // 保存路由的 history 对象
-  history = {} 
+  history = {}
 
 
-  @observable token = {} 
-  @observable userInfo = {} 
+  @observable token = false
+  @observable userInfo = {}
   // 跟路由
-  @observable indexRoute = {} 
+  @observable indexRoute = {}
   // 有权限的路由
-  @observable routeList = [] 
+  @observable routeList = []
   // 可见菜单
-  @observable menuList = [] 
+  @observable menuList = []
   // 当前路径匹配的路由
-  @observable matchRoutes = [] 
+  @observable matchRoutes = []
 
   // 展开后的路由
   @computed
@@ -26,7 +26,7 @@ class UserModel {
     // routes = routes.filter(v => v.key && v.path);
     return routes
   }
-  
+
   setHistory = (history) => {
     this.history = history
   }
@@ -41,7 +41,7 @@ class UserModel {
       });
       return matchInfo
     })
-    if(matchRoutes.length === 1 && pathname !== '/') {
+    if (matchRoutes.length === 1 && pathname !== '/') {
       return this.history.replace('/404')
     }
     this.setMatchRoutes(matchRoutes)
@@ -93,11 +93,22 @@ class UserModel {
   }
   @action
   setToken = (token) => {
-    this.token = token
+    this.token = token;
+    Utils.setCache('token', token, 'session')
   }
+
   @action
   setUserInfo = (userInfo) => {
     this.userInfo = userInfo
+  }
+
+  constructor() {
+    autorun(() => {
+      const token = Utils.getCache('token', 'session')
+      const userInfo = Utils.getCache('userInfo', 'session') || {}
+      this.setToken(token)
+      this.setUserInfo(userInfo)
+    })
   }
 }
 

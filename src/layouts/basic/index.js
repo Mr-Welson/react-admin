@@ -17,7 +17,7 @@ const BasicLayout = ({ appModel, location, userModel }) => {
 
   const [loading, setLoading] = useState(true);
   const [collapsed, setCollapsed] = useState(false);
-  const { routeList, onPathNameChange, flatRoutes, setRouteList, generateMenuList, setIndexRoute } = userModel;
+  const { token, routeList, onPathNameChange, flatRoutes, setRouteList, generateMenuList, setIndexRoute } = userModel;
   const { theme } = appModel;
 
   // 暂时使用这种方式在 mobx 中访问 history 对象
@@ -26,7 +26,14 @@ const BasicLayout = ({ appModel, location, userModel }) => {
     userModel.setHistory(history);
   }, [])
 
+  // 验证 token
   useEffect(() => {
+    console.log(token);
+    if (!token) {
+      console.log('== token 失效 ==');
+      userModel.setToken(undefined)
+      return history.replace('/login')
+    }
     const fetchMenuList = async () => {
       const [data] = await Service.user.getMenuList();
       const indexRoute = data.find(v => !v.hideInMenu);
@@ -36,7 +43,7 @@ const BasicLayout = ({ appModel, location, userModel }) => {
       setLoading(false)
     }
     fetchMenuList();
-  }, [])
+  }, [token])
 
   // 监听 pathname 
   useEffect(() => {

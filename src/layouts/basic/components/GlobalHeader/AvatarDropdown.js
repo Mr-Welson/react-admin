@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router'
 import { Menu, Dropdown, Avatar } from 'antd';
-import Utils from '@/utils';
+import { withModel } from '@/store';
 
-const MenuHeaderDropdown = () => {
+const MenuHeaderDropdown = ({ userModel }) => {
   const history = useHistory()
-  const loginOut = () => {
-    Utils.setCache('zf_token', undefined, 'session')
-    history.push('/login')
-  }
+  const loginOut = useCallback(() => {
+    userModel.setToken(undefined);
+    history.replace('/login')
+  }, [])
   return (
     <Menu>
       <Menu.Item key="center">
@@ -29,9 +29,11 @@ const MenuHeaderDropdown = () => {
   )
 };
 
+const MenuHeaderDropdownWithModel = withModel(MenuHeaderDropdown, 'userModel')
+
 const AvatarDropdown = () => {
   return (
-    <Dropdown overlay={<MenuHeaderDropdown />}>
+    <Dropdown overlay={<MenuHeaderDropdownWithModel />}>
       <span>
         <Avatar size="small" src={'assets/avatar.jpg'} alt="avatar" />
         <span> 测试 </span>

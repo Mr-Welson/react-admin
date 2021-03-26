@@ -3,14 +3,13 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Form, Input, Button, message } from 'antd'
 import './login.less'
 import Service from '@/service'
-import Utils from '@/utils';
 import { withModel } from '@/store';
 
 
 const LoginForm = ({ history, userModel }) => {
 
   useEffect(() => {
-    Utils.setCache('zf_token', undefined, 'session')
+    userModel.setToken(undefined);
   }, [])
 
   // 触发登录方法
@@ -22,8 +21,7 @@ const LoginForm = ({ history, userModel }) => {
     }
     const [result] = await Service.user.login(values)
     console.log(result);
-    Utils.setCache('zf_token', result.token, 'session')
-    userModel.setToken(result.token)
+    userModel.setToken(result.token);
     userModel.setUserInfo(result.userInfo)
     history.push('/')
   }
