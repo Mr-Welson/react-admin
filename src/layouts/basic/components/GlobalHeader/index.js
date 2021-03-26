@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 import style from './index.module.less';
 import BreadcrumbsView from './BreadcrumbsView';
 import ThemeMenu from './ThemeMenu'
-import AvatarDropdown from './AvatarDropdown';
+import HeaderDropdown from './HeaderDropdown';
 
 const GlobalHeader = ({ collapsed, setCollapsed }) => {
 
@@ -21,7 +21,7 @@ const GlobalHeader = ({ collapsed, setCollapsed }) => {
           <ThemeMenu />
         </div>
         <div className={style['header-action']}>
-          <AvatarDropdown />
+          <HeaderDropdown />
         </div>
       </div>
     </Layout.Header>

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import { Menu, Dropdown, Avatar } from 'antd';
 import { withModel } from '@/store';
 
@@ -23,23 +23,23 @@ const MenuHeaderDropdown = ({ userModel }) => {
       <Menu.Divider />
       <Menu.Item key="logout" onClick={loginOut}>
         <LogoutOutlined />
-      退出登录
-    </Menu.Item>
+        退出登录
+      </Menu.Item>
     </Menu>
   )
 };
 
 const MenuHeaderDropdownWithModel = withModel(MenuHeaderDropdown, 'userModel')
 
-const AvatarDropdown = () => {
+const HeaderDropdown = () => {
   return (
     <Dropdown overlay={<MenuHeaderDropdownWithModel />}>
       <span>
         <Avatar size="small" src={'assets/avatar.jpg'} alt="avatar" />
-        <span> 测试 </span>
+        <span> 管理员 </span>
       </span>
     </Dropdown>
   )
 }
 
-export default AvatarDropdown;
+export default HeaderDropdown;
