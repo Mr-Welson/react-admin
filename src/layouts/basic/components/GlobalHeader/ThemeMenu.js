@@ -3,18 +3,19 @@ import { Menu, Dropdown, Button } from 'antd';
 import { withModel } from '@/store'
 
 const ThemeMenu = ({ appModel }) => {
+  const { setAppStore } = appModel
 
   return (
     <Dropdown
       overlay={
         <Menu>
           <Menu.Item>
-            <div onClick={() => appModel.setTheme('dark')}>
+            <div onClick={() => setAppStore({ theme: 'dark' })}>
               暗黑
           </div>
           </Menu.Item>
           <Menu.Item>
-            <div onClick={() => appModel.setTheme('light')}>
+            <div onClick={() => setAppStore({ theme: 'light' })}>
               亮白
           </div>
           </Menu.Item>

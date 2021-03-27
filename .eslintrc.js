@@ -78,5 +78,6 @@ module.exports = {
     "react/jsx-uses-vars": 1,
     "react/prop-types": 0,
     "no-case-declarations": 0,
+    "no-prototype-builtins": 0,
   }
 };

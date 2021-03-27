@@ -9,7 +9,7 @@ import { withModel } from '@/store';
 const LoginForm = ({ history, userModel }) => {
 
   useEffect(() => {
-    userModel.setToken(undefined);
+    userModel.setUserStore({ token: undefined });
   }, [])
 
   // 触发登录方法
@@ -21,9 +21,11 @@ const LoginForm = ({ history, userModel }) => {
     }
     const [result] = await Service.user.login(values)
     console.log(result);
-    userModel.setToken(result.token);
-    userModel.setUserInfo(result.userInfo)
-    history.push('/')
+    userModel.setUserStore({
+      toekn: result.token,
+      userInfo: result.userInfo
+    });
+    history.replace('/')
   }
 
   return (

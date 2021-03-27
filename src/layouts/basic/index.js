@@ -6,10 +6,11 @@ import { Layout, Spin } from 'antd';
 import { withModel } from '@/store'
 import Service from '@/service';
 import GlobalHeader from './components/GlobalHeader';
+import SiderTrigger from './components/SiderTrigger';
+import SiderMenu from './components/SiderMenu';
 import TabRoute from './components/TabRoute';
 import PageRouter from './components/PageRouter';
-import SiderMenu from './components/SiderMenu';
-import SiderTrigger from './components/SiderTrigger';
+import GlobalFooter from './components/GlobalFooter';
 import './index.less';
 
 const { Content } = Layout;
@@ -18,7 +19,7 @@ const BasicLayout = ({ location, userModel, appModel }) => {
   // console.log('=== BasicLayout ===', rest);
 
   const { theme, loading, disableMobile } = appModel;
-  const { token, routeList, onPathNameChange, flatRoutes, setRouteList, generateMenuList, setIndexRoute } = userModel;
+  const { token, routeList, flatRoutes, onPathNameChange, generateMenuList, setUserStore } = userModel;
 
   const colSize = useAntdMediaQuery();
   const isMobile = (colSize === 'sm' || colSize === 'xs') && !disableMobile;
@@ -41,14 +42,16 @@ const BasicLayout = ({ location, userModel, appModel }) => {
   // 暂时使用这种方式在 mobx 中访问 history 对象
   const history = useHistory();
   useEffect(() => {
-    userModel.setHistory(history);
+    setUserStore({ history });
   }, [])
 
-  const initAppData = useCallback(async () => {
+  const initAsyncData = useCallback(async () => {
     const [data] = await Service.user.getMenuList();
     const indexRoute = data.find(v => !v.hideInMenu) || {};
-    setIndexRoute(indexRoute)
-    setRouteList(data)
+    setUserStore({
+      indexRoute,
+      routeList: data,
+    })
     generateMenuList(data)
     setCanRender(true)
   }, [])
@@ -60,7 +63,7 @@ const BasicLayout = ({ location, userModel, appModel }) => {
       userModel.setToken(undefined)
       return history.replace('/login')
     }
-    initAppData()
+    initAsyncData()
   }, [token])
 
   if (!canRender) {
@@ -88,7 +91,7 @@ const BasicLayout = ({ location, userModel, appModel }) => {
           <Content className="app-content">
             <PageRouter routes={routeList} />
           </Content>
-          {/* <Footer /> */}
+          <GlobalFooter />
         </Layout>
       </Layout>
     </Spin >

@@ -38,6 +38,33 @@
 
 ### Store
 
+` StoreEnhancer `: 数据持久化及自动缓存
+
+```
+// appStore 示例
+import { observable } from 'mobx'
+import StoreEnhancer from './StoreEnhancer';
+
+class AppModel extends StoreEnhancer {
+
+  constructor() {
+    // 定义需要缓存的数据
+    const cacheList = [
+      { key: 'theme', type: 'localStorage', default: 'dark' },
+    ];
+    super(cacheList)
+  }
+
+  @observable theme = 'dark'
+
+  setAppStore = (object) => {
+    this.setData(object)
+  }
+}
+
+export default new AppModel();
+```
+
 `withModel`
 
 `toJS`

@@ -125,5 +125,5 @@ const TabRoute = ({ userModel }) => {
   );
 };
 
-export default withModel(TabRoute, 'userModel', 'tabModel');
+export default withModel(TabRoute, 'userModel');
 

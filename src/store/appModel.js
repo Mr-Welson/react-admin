@@ -1,21 +1,24 @@
-import { observable, action } from 'mobx'
+import { observable } from 'mobx'
+import StoreEnhancer from './StoreEnhancer';
 
-class AppModel {
+class AppModel extends StoreEnhancer {
+
+  constructor() {
+    // 定义需要缓存的数据
+    const cacheList = [
+      { key: 'theme', type: 'localStorage', default: 'dark' },
+    ];
+    super(cacheList)
+  }
 
   // 主题 light/dark
   @observable theme = 'dark'
   @observable loading = false;
   @observable disableMobile = false;
-  
-  @action
-  setTheme = (theme) => {
-    this.theme = theme
-  } 
-  
-  @action
-  setLoading = (loading) => {
-    this.loading = loading
-  } 
+
+  setAppStore = (object) => {
+    this.setData(object)
+  }
 }
 
 export default new AppModel()

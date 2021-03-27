@@ -1,16 +1,24 @@
-import { observable, action, computed, toJS, autorun } from 'mobx'
+import { observable, computed, toJS } from 'mobx'
 import { matchPath } from 'react-router-dom';
+import StoreEnhancer from './StoreEnhancer';
 import Utils from '@/utils';
 
-class UserModel {
+class UserModel extends StoreEnhancer {
+
+  constructor() {
+    // 定义需要缓存的数据
+    const cacheList = [
+      { key: 'token', type: 'session', default: undefined },
+      { key: 'userInfo', type: 'session', default: {} },
+    ];
+    super(cacheList)
+  }
 
   // 保存路由的 history 对象
   history = {}
-
-
   @observable token = false
   @observable userInfo = {}
-  // 跟路由
+  // 主页路由
   @observable indexRoute = {}
   // 有权限的路由
   @observable routeList = []
@@ -18,17 +26,12 @@ class UserModel {
   @observable menuList = []
   // 当前路径匹配的路由
   @observable matchRoutes = []
-
   // 展开后的路由
   @computed
   get flatRoutes() {
     let routes = Utils.flattenRoutes(toJS(this.routeList));
     // routes = routes.filter(v => v.key && v.path);
     return routes
-  }
-
-  setHistory = (history) => {
-    this.history = history
   }
 
   // 根据 pathname 匹配路由
@@ -44,7 +47,7 @@ class UserModel {
     if (matchRoutes.length === 1 && pathname !== '/') {
       return this.history.replace('/404')
     }
-    this.setMatchRoutes(matchRoutes)
+    this.setData({ matchRoutes })
   }
 
   // 过滤隐藏菜单
@@ -69,46 +72,11 @@ class UserModel {
   generateMenuList = (pageRoutes) => {
     const authRoutes = this.filterNoAuthRoute(pageRoutes);
     const menuList = this.filterHiddenRoute(authRoutes);
-    this.setMenuList(menuList)
+    this.setData({ menuList })
   }
 
-  @action
-  setRouteList = (routeList = []) => {
-    this.routeList = routeList
-  }
-
-  @action
-  setIndexRoute = (indexRoute = {}) => {
-    this.indexRoute = indexRoute
-  }
-
-  @action
-  setMenuList = (menuList = []) => {
-    this.menuList = menuList
-  }
-
-  @action
-  setMatchRoutes = (matchRoutes) => {
-    this.matchRoutes = matchRoutes
-  }
-  @action
-  setToken = (token) => {
-    this.token = token;
-    Utils.setCache('token', token, 'session')
-  }
-
-  @action
-  setUserInfo = (userInfo) => {
-    this.userInfo = userInfo
-  }
-
-  constructor() {
-    autorun(() => {
-      const token = Utils.getCache('token', 'session')
-      const userInfo = Utils.getCache('userInfo', 'session') || {}
-      this.setToken(token)
-      this.setUserInfo(userInfo)
-    })
+  setUserStore = (object) => {
+    this.setData(object)
   }
 }
 

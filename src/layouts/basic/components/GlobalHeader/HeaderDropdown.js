@@ -7,7 +7,7 @@ import { withModel } from '@/store';
 const MenuHeaderDropdown = ({ userModel }) => {
   const history = useHistory()
   const loginOut = useCallback(() => {
-    userModel.setToken(undefined);
+    userModel.setUserStore({ token: undefined });
     history.replace('/login')
   }, [])
   return (
@@ -35,7 +35,7 @@ const HeaderDropdown = () => {
   return (
     <Dropdown overlay={<MenuHeaderDropdownWithModel />}>
       <span>
-        <Avatar size="small" src={'assets/avatar.jpg'} alt="avatar" />
+        <Avatar size="small" src={'/assets/avatar.jpg'} alt="avatar" />
         <span> 管理员 </span>
       </span>
     </Dropdown>
