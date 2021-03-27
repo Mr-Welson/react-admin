@@ -2,8 +2,6 @@
 
 **多标签页后台管理模板**
 
-## 特点
-
 - tab 页签➕右键菜单，提升效率
 - Mobx 状态管理➕持久化
 - 封装实用 axios 请求
@@ -14,9 +12,11 @@
 
 
 
-## 功能说明
+使用 ` use-media-antd-query ` 实现响应式菜单
 
-### 路由
+## Docs
+
+### Route
 
 根据 src/routes 生成路由及菜单
 
@@ -29,10 +29,6 @@
 
 
 ### Components
-
-
-
-### Route
 
 
 
@@ -101,13 +97,15 @@ class Model {
 
 
 
-## 资源
+## Resources
 
 ### 水印组件 
 
 https://procomponents.ant.design/components/water-mark
 
-## Create React App 文档
+
+
+## Create-React-App Docs
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 

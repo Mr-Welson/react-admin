@@ -1,24 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import './index.less';
-import { Layout, Spin } from 'antd';
-import GlobalHeader from './components/GlobalHeader';
-import Logo from './components/Logo'
-import AppMenu from './components/AppMenu';
-import TabRoute from './components/TabRoute';
-import PageRouter from './components/PageRouter';
+import React, { useCallback, useEffect, useState } from 'react';
+import useAntdMediaQuery from 'use-media-antd-query';
+import classNames from 'classnames';
 import { withRouter, useHistory } from 'react-router-dom';
+import { Layout, Spin } from 'antd';
 import { withModel } from '@/store'
 import Service from '@/service';
+import GlobalHeader from './components/GlobalHeader';
+import TabRoute from './components/TabRoute';
+import PageRouter from './components/PageRouter';
+import SiderMenu from './components/SiderMenu';
+import SiderTrigger from './components/SiderTrigger';
+import './index.less';
 
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 
-const BasicLayout = ({ appModel, location, userModel }) => {
+const BasicLayout = ({ location, userModel, appModel }) => {
   // console.log('=== BasicLayout ===', rest);
 
-  const [loading, setLoading] = useState(true);
-  const [collapsed, setCollapsed] = useState(false);
+  const { loading, disableMobile } = appModel;
   const { token, routeList, onPathNameChange, flatRoutes, setRouteList, generateMenuList, setIndexRoute } = userModel;
-  const { theme } = appModel;
+
+  const colSize = useAntdMediaQuery();
+  const isMobile = (colSize === 'sm' || colSize === 'xs') && !disableMobile;
+
+  const [canRender, setCanRender] = useState(false);
+  const [collapsed, setCollapsed] = useState(isMobile ? true : false);
+
+  // 监听 resize 
+  useEffect(() => {
+    // colSize: "xs" | "sm" | "md" | "lg" | "xl" | "xxl"
+    ['xs', 'sm', 'md'].includes(colSize) && setCollapsed(true);
+    ['lg', 'xl', 'xxl'].includes(colSize) && setCollapsed(false)
+  }, [colSize])
+
+  // 监听 pathname 
+  useEffect(() => {
+    onPathNameChange(location.pathname, flatRoutes)
+  }, [location.pathname, flatRoutes])
 
   // 暂时使用这种方式在 mobx 中访问 history 对象
   const history = useHistory();
@@ -26,49 +44,45 @@ const BasicLayout = ({ appModel, location, userModel }) => {
     userModel.setHistory(history);
   }, [])
 
+  const initAppData = useCallback(async () => {
+    const [data] = await Service.user.getMenuList();
+    const indexRoute = data.find(v => !v.hideInMenu) || {};
+    setIndexRoute(indexRoute)
+    setRouteList(data)
+    generateMenuList(data)
+    setCanRender(true)
+  }, [])
+
   // 验证 token
   useEffect(() => {
-    console.log(token);
     if (!token) {
       console.log('== token 失效 ==');
       userModel.setToken(undefined)
       return history.replace('/login')
     }
-    const fetchMenuList = async () => {
-      const [data] = await Service.user.getMenuList();
-      const indexRoute = data.find(v => !v.hideInMenu);
-      setIndexRoute(indexRoute)
-      setRouteList(data)
-      generateMenuList(data)
-      setLoading(false)
-    }
-    fetchMenuList();
+    initAppData()
   }, [token])
 
-  // 监听 pathname 
-  useEffect(() => {
-    onPathNameChange(location.pathname, flatRoutes)
-  }, [location.pathname, flatRoutes])
-
-  if (loading) {
-    return <Spin spinning={loading} size="large" wrapperClassName="global-spinning"></Spin>
+  if (!canRender) {
+    return <Spin spinning={canRender} size="large" wrapperClassName="global-spinning"></Spin>
   }
+
   return (
     <Spin spinning={loading} size="large" wrapperClassName="global-spinning">
-      <Layout className="app-layout sider-layout">
-        <Sider
-          className="app-sider"
-          width={240}
-          theme={theme}
-          trigger={null}
-          collapsible
+      <Layout className={classNames("app-layout", "screen-".concat(colSize))}>
+        <SiderMenu
+          siderWidth={256}
+          isMobile={isMobile}
           collapsed={collapsed}
-        >
-          <Logo collapsed={collapsed} />
-          <AppMenu theme={theme} />
-        </Sider>
+          setCollapsed={setCollapsed}
+        />
         <Layout className="app-content-layout">
-          <GlobalHeader collapsed={collapsed} setCollapsed={setCollapsed} />
+          <GlobalHeader
+            leftExtraContent={
+              <SiderTrigger collapsed={collapsed} setCollapsed={setCollapsed} />
+            }
+          >
+          </GlobalHeader>
           <TabRoute />
           <Content className="app-content">
             <PageRouter routes={routeList} />

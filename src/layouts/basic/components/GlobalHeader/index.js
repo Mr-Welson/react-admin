@@ -1,19 +1,16 @@
 import React from 'react';
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { Layout } from 'antd';
 import style from './index.module.less';
 import BreadcrumbsView from './BreadcrumbsView';
 import ThemeMenu from './ThemeMenu'
 import HeaderDropdown from './HeaderDropdown';
 
-const GlobalHeader = ({ collapsed, setCollapsed }) => {
+const GlobalHeader = ({ leftExtraContent = null }) => {
 
   return (
     <Layout.Header className={style['global-header']}>
       <div className={style["left-content"]}>
-        <span className={style["trigger"]} onClick={() => setCollapsed(collapsed => !collapsed)}>
-          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        </span>
+        {leftExtraContent}
         <BreadcrumbsView></BreadcrumbsView>
       </div>
       <div className={style['right-content']}>

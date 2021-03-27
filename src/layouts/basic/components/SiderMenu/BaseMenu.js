@@ -1,31 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
-import { withModel, toJS } from '@/store'
 import * as AntIcon from '@ant-design/icons';
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
-const AppMenu = ({ theme, userModel }) => {
-
-  const [activeKeys, setActiveKeys] = useState([]);
-  const { menuList, matchRoutes } = userModel;
-  const [matchs, setMatchs] = useState([]);
-
-  useEffect(() => {
-    setMatchs(toJS(matchRoutes))
-  }, [matchRoutes])
-
-  // 监听地址栏变化
-  useEffect(() => {
-    if (!matchs.length) {
-      return
-    }
-    const activeKeys = matchs.map(v => v.activeMenuKey || v.key)
-    setActiveKeys(activeKeys)
-  }, [matchs])
-
+const BaseMenu = ({ theme = 'dark', menuList = [], activeKeys }) => {
   return (
     <Menu
       className="app-menu"
@@ -40,21 +21,21 @@ const AppMenu = ({ theme, userModel }) => {
 };
 
 const renderSubMenu = (menu) => {
-  let MenuIcon = AntIcon[menu.icon];
+  const MenuIcon = menu.icon && AntIcon[menu.icon];
   const subMenuList = menu.routes.filter((v) => !v.hideInMenu && v.name);
   return (
-    <SubMenu key={menu.key} icon={<MenuIcon />} title={menu.name}>
+    <SubMenu key={menu.key} icon={menu.icon ? <MenuIcon /> : undefined} title={menu.name}>
       {renderMenu(subMenuList)}
     </SubMenu>
   );
 }
 
 const renderMenuItem = (menu) => {
-  let MenuIcon = AntIcon[menu.icon];
+  const MenuIcon = menu.icon && AntIcon[menu.icon];
   return (
     <MenuItem
       key={menu.key}
-      icon={<MenuIcon />}
+      icon={menu.icon ? <MenuIcon /> : undefined}
     >
       <Link to={menu.path}>{menu.name}</Link>
     </MenuItem>
@@ -71,4 +52,4 @@ const renderMenu = (menuList) => {
   })
 }
 
-export default withModel(AppMenu, 'userModel');
+export default BaseMenu;

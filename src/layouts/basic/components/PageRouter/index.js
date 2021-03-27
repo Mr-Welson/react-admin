@@ -44,7 +44,7 @@ const renderRouteItem = (route) => {
 }
 
 const RouteList = ({ routes = [] }) => {
-  const indexRoute = routes.find(v => !v.hideInMenu)
+  const indexRoute = routes.find(v => !v.hideInMenu) || {}
   return (
     <Switch>
       <Redirect exact from='/' to={indexRoute.path} />
