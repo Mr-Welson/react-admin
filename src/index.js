@@ -7,7 +7,6 @@ import 'dayjs/locale/zh-cn'
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import 'antd/dist/antd.css';
-import './index.css';
 import { Provider } from 'mobx-react'
 import store from './store'
 import App from './App';

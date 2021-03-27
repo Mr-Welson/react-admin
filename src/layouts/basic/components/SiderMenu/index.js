@@ -62,10 +62,9 @@ const MobileAppMenu = ({ siderWidth, collapsed, setCollapsed, ...theme }) => {
   )
 }
 
-const SiderMenu = ({ isMobile, appModel, ...rest }) => {
-  const { theme } = appModel;
+const SiderMenu = ({ isMobile, theme, ...rest }) => {
   const MemoMenu = useMemo(() => isMobile ? MobileAppMenu : WebAppMenuWithModel, [isMobile])
   return <MemoMenu {...rest} theme={theme} />
 }
 
-export default withModel(SiderMenu, 'appModel');
+export default SiderMenu;

@@ -17,7 +17,7 @@ const { Content } = Layout;
 const BasicLayout = ({ location, userModel, appModel }) => {
   // console.log('=== BasicLayout ===', rest);
 
-  const { loading, disableMobile } = appModel;
+  const { theme, loading, disableMobile } = appModel;
   const { token, routeList, onPathNameChange, flatRoutes, setRouteList, generateMenuList, setIndexRoute } = userModel;
 
   const colSize = useAntdMediaQuery();
@@ -69,9 +69,10 @@ const BasicLayout = ({ location, userModel, appModel }) => {
 
   return (
     <Spin spinning={loading} size="large" wrapperClassName="global-spinning">
-      <Layout className={classNames("app-layout", "screen-".concat(colSize))}>
+      <Layout className={classNames("app-layout", "screen-".concat(colSize), "theme-".concat(theme))}>
         <SiderMenu
           siderWidth={256}
+          theme={theme}
           isMobile={isMobile}
           collapsed={collapsed}
           setCollapsed={setCollapsed}
@@ -90,7 +91,7 @@ const BasicLayout = ({ location, userModel, appModel }) => {
           {/* <Footer /> */}
         </Layout>
       </Layout>
-    </Spin>
+    </Spin >
 
   );
 };
