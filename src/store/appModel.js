@@ -6,7 +6,7 @@ class AppModel extends StoreEnhancer {
   constructor() {
     // 定义需要缓存的数据
     const cacheList = [
-      { key: 'theme', type: 'localStorage', default: 'dark' },
+      { key: 'theme', type: 'local', default: 'dark' },
     ];
     super(cacheList)
   }
