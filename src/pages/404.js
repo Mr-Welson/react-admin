@@ -7,7 +7,8 @@ const Page404 = ({ tabModel }) => {
 
   const history = useHistory();
   const linkToIndex = useCallback(() => {
-    tabModel.closeTab({ pathname: '/404' })
+    const is404Page = true;
+    tabModel.closeTab({ pathname: '/404' }, is404Page)
     history.replace('/')
   }, [])
 

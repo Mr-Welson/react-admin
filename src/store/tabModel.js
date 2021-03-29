@@ -32,6 +32,7 @@ class TabModel extends StoreEnhancer {
   history = {}
   @observable tabList = []
   @observable activeTab = {}
+  @observable refreshKey = 1
 
   getIndexRoute() {
     return userModel.indexRoute
@@ -79,8 +80,8 @@ class TabModel extends StoreEnhancer {
   }
 
   // 关闭当前 往前推一个
-  closeTab = (tabItem) => {
-    if (tabItem.pathname === this.activeTab.pathname && tabItem.pathname !== '/404') {
+  closeTab = (tabItem, is404Page) => {
+    if (tabItem.pathname === this.activeTab.pathname && !is404Page) {
       const index = this.tabList.findIndex((v) => v.pathname === tabItem.pathname);
       const newTab = index === 0 ? this.tabList[index + 1] : this.tabList[index - 1];
       this.history.push(newTab.location.pathname)

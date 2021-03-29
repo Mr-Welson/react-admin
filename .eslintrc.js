@@ -79,5 +79,6 @@ module.exports = {
     "react/prop-types": 0,
     "no-case-declarations": 0,
     "no-prototype-builtins": 0,
+    "no-inner-declarations": 0,
   }
 };

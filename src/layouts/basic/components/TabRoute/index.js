@@ -1,21 +1,21 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Tabs, Dropdown, Button } from 'antd';
-// import useTabModel from './model';
 import { withModel, toJS } from '@/store'
 import { CloseOutlined } from '@ant-design/icons';
+import Utils from '@/utils';
 
 const { TabPane } = Tabs;
-
 
 const TabRoute = ({ userModel, tabModel }) => {
 
   const location = useLocation();
-  const history = useHistory();
+  // fix 点击刷新 Dropdown 不隐藏的bug 
+  const [refreshKey, setRefreshKey] = useState(1);
   const contextMenuRef = useRef();
   const [matchs, setMatchs] = useState([]);
   const { matchRoutes, indexRoute } = userModel;
-  const { tabList, activeTab, initTabList, addTab, updateTabItem, closeTab, closeOther, closeAll, setTabStore } = tabModel;
+  const { tabList, activeTab, initTabList, addTab, closeTab, closeOther, closeAll, setTabStore } = tabModel;
 
   useEffect(() => {
     initTabList()
@@ -43,27 +43,21 @@ const TabRoute = ({ userModel, tabModel }) => {
     setTabStore({ activeTab: tabItem })
   }, [matchs])
 
-  const onTabClose = useCallback((e, tabItem) => {
+  const onTabClose = (e, tabItem) => {
     e.stopPropagation();
     e.preventDefault();
     closeTab(tabItem);
-  }, [tabList, activeTab.pathname]);
+  };
 
   const onContextMenu = (e, item) => {
     e.preventDefault();
     contextMenuRef.current = item;
   }
+  
   const onRefresh = (e) => {
-    // TODO: 刷新数据
-    e.stopPropagation();
-    const item = contextMenuRef.current;
     contextMenuRef.current = null;
-    updateTabItem(item)
-    const location = {
-      ...item.location,
-      key: item.location.key + 1
-    }
-    history.replace(location)
+    setRefreshKey(Utils.uuid())
+    setTabStore({ refreshKey: Utils.uuid() })
   }
 
   const onClose = () => {
@@ -77,20 +71,22 @@ const TabRoute = ({ userModel, tabModel }) => {
     contextMenuRef.current = null;
     closeOther(item)
   }
-  
+
+  const closeAble = useMemo(() => tabList.length > 1, [tabList.length]);
+
   return (
     <Tabs activeKey={activeTab.pathname} className="app-tab-list">
       {tabList.map((v) => {
         const isHomePage = v.key === indexRoute.key;
-        const closeAble = tabList.length > 1;
         return (
           <TabPane
             key={v.pathname}
             tab={
               <Dropdown
+                key={refreshKey}
                 overlay={
                   <div className="tab-context-menu">
-                    {/* <Button type="link" block className="context-item" disabled={activeTab.pathname !== v.pathname} onClick={onRefresh}>刷新</Button> */}
+                    <Button type="link" block className="context-item" disabled={activeTab.pathname !== v.pathname} onClick={onRefresh}>刷新</Button>
                     <Button type="link" block className="context-item" disabled={isHomePage || !closeAble} onClick={onClose}>关闭</Button>
                     <Button type="link" className="context-item" disabled={!closeAble} onClick={onCloseOther}>关闭其他</Button>
                     <Button type="link" className="context-item" disabled={isHomePage || !closeAble} onClick={closeAll}>关闭所有</Button>
@@ -99,10 +95,10 @@ const TabRoute = ({ userModel, tabModel }) => {
                 placement="bottomLeft"
                 trigger={['contextMenu']}
               >
-                <Link to={v.location} onContextMenu={(e) => onContextMenu(e, v)}>
+                <Link to={v.location} onContextMenu={(e) => onContextMenu(e, v)} >
                   <div className="app-tab-item" >
                     <span>{v.name}</span>
-                    {tabList.length > 1 && !isHomePage && (
+                    {closeAble && !isHomePage && (
                       <CloseOutlined onClick={(e) => onTabClose(e, v)} />
                     )}
                   </div>

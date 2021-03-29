@@ -18,7 +18,7 @@ const { Content } = Layout;
 const BasicLayout = ({ location, userModel, appModel, tabModel }) => {
   // console.log('=== BasicLayout ===');
 
-  const { setTabStore } = tabModel;
+  const { setTabStore, refreshKey } = tabModel;
   const { theme, loading, disableMobile } = appModel;
   const { token, routeList, flatRoutes, onPathNameChange, generateMenuList, setUserStore } = userModel;
 
@@ -100,7 +100,7 @@ const BasicLayout = ({ location, userModel, appModel, tabModel }) => {
           </GlobalHeader>
           <TabRoute />
           <Content className="app-content">
-            <PageRouter routes={routeList} />
+            <PageRouter key={refreshKey} routes={routeList} />
           </Content>
           <GlobalFooter />
         </Layout>
