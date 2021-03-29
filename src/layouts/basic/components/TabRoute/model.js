@@ -59,7 +59,7 @@ const useTabModel = (indexRoute) => {
     const index = tabList.findIndex(v => v.pathname === tabItem.pathname);
     if (index === -1) {
       // 新增
-      if(tabItem.pathname === indexRoute.pathname) {
+      if (tabItem.pathname === indexRoute.pathname) {
         return updateTabList([tabItem, ...tabList])
       }
       return updateTabList([...tabList, tabItem])
@@ -92,8 +92,8 @@ const useTabModel = (indexRoute) => {
   // 关闭其他
   function closeOther(tabItem) {
     const newTabList = [tabItem];
-    if(tabItem.pathname !== indexRoute.pathname) {
-      newTabList.unshift({...indexRoute})
+    if (tabItem.pathname !== indexRoute.pathname) {
+      newTabList.unshift({ ...indexRoute })
     }
     if (tabItem.pathname !== activeTab.pathname) {
       history.push(tabItem.location.pathname)
@@ -103,9 +103,8 @@ const useTabModel = (indexRoute) => {
 
   // 关闭所有
   function closeAll() {
-    console.log(indexRoute);
     updateTabList([{ ...indexRoute }]);
-    history.push('/home')
+    history.push(indexRoute.pathname)
   }
 
   return {

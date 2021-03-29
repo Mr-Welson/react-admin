@@ -8,13 +8,13 @@ const SystemUser = () => {
       <Link to='/system/user/add'>
         添加用户
       </Link>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <Link to='/system/user/view/1'>
         查看用户1
       </Link>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <Link to='/system/user/view/2'>
         查看用户2
       </Link>

@@ -15,11 +15,15 @@ import './index.less';
 
 const { Content } = Layout;
 
-const BasicLayout = ({ location, userModel, appModel }) => {
-  // console.log('=== BasicLayout ===', rest);
+const BasicLayout = ({ location, userModel, appModel, tabModel }) => {
+  // console.log('=== BasicLayout ===');
 
+  const { setTabStore } = tabModel;
   const { theme, loading, disableMobile } = appModel;
   const { token, routeList, flatRoutes, onPathNameChange, generateMenuList, setUserStore } = userModel;
+
+  console.log('token==', token);
+  
 
   const colSize = useAntdMediaQuery();
   const isMobile = (colSize === 'sm' || colSize === 'xs') && !disableMobile;
@@ -43,13 +47,24 @@ const BasicLayout = ({ location, userModel, appModel }) => {
   const history = useHistory();
   useEffect(() => {
     setUserStore({ history });
+    setTabStore({ history });
   }, [])
 
   const initAsyncData = useCallback(async () => {
     const [data] = await Service.user.getMenuList();
     const indexRoute = data.find(v => !v.hideInMenu) || {};
+    const { icon, key, name, path } = indexRoute;
     setUserStore({
-      indexRoute,
+      indexRoute: {
+        icon,
+        key,
+        name,
+        pathname: path,
+        path,
+        location: {
+          pathname: path
+        }
+      },
       routeList: data,
     })
     generateMenuList(data)
@@ -58,9 +73,14 @@ const BasicLayout = ({ location, userModel, appModel }) => {
 
   // 验证 token
   useEffect(() => {
+
+    console.log(token);
+    console.log(userModel.token);
+
+    
     if (!token) {
       console.log('== token 失效 ==');
-      userModel.setToken(undefined)
+      userModel.setUserStore({ token: undefined })
       return history.replace('/login')
     }
     initAsyncData()
@@ -99,4 +119,4 @@ const BasicLayout = ({ location, userModel, appModel }) => {
   );
 };
 
-export default withRouter(withModel(BasicLayout, 'userModel', 'appModel'));
+export default withRouter(withModel(BasicLayout, 'userModel', 'appModel', 'tabModel'));

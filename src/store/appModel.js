@@ -17,7 +17,7 @@ class AppModel extends StoreEnhancer {
   @observable disableMobile = false;
 
   setAppStore = (object) => {
-    this.setData(object)
+    this._setData(object)
   }
 }
 

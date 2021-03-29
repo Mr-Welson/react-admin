@@ -1,29 +1,21 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { Tabs, Dropdown, Button } from 'antd';
-import useTabModel from './model';
+// import useTabModel from './model';
 import { withModel, toJS } from '@/store'
 import { CloseOutlined } from '@ant-design/icons';
+
 const { TabPane } = Tabs;
 
 
-const TabRoute = ({ userModel }) => {
+const TabRoute = ({ userModel, tabModel }) => {
 
   const location = useLocation();
   const history = useHistory();
   const contextMenuRef = useRef();
   const [matchs, setMatchs] = useState([]);
   const { matchRoutes, indexRoute } = userModel;
-  const { tabList, activeTab, setActiveTab, initTabList, addTab, updateTabItem, closeTab, closeOther, closeAll } = useTabModel({
-    icon: indexRoute.icon,
-    key: indexRoute.key,
-    name: indexRoute.name,
-    pathname: indexRoute.path,
-    location: {
-      pathname: indexRoute.path
-    }
-  });
-  // const { tabList, activeTab, setActiveTab, initTabList, addTab, updateTabItem, closeTab, closeOther, closeAll } = tabModel;
+  const { tabList, activeTab, initTabList, addTab, updateTabItem, closeTab, closeOther, closeAll, setTabStore } = tabModel;
 
   useEffect(() => {
     initTabList()
@@ -48,7 +40,7 @@ const TabRoute = ({ userModel }) => {
       location
     }
     addTab(tabItem)
-    setActiveTab(tabItem)
+    setTabStore({ activeTab: tabItem })
   }, [matchs])
 
   const onTabClose = useCallback((e, tabItem) => {
@@ -67,7 +59,6 @@ const TabRoute = ({ userModel }) => {
     const item = contextMenuRef.current;
     contextMenuRef.current = null;
     updateTabItem(item)
-    console.log(item);
     const location = {
       ...item.location,
       key: item.location.key + 1
@@ -86,7 +77,7 @@ const TabRoute = ({ userModel }) => {
     contextMenuRef.current = null;
     closeOther(item)
   }
-
+  
   return (
     <Tabs activeKey={activeTab.pathname} className="app-tab-list">
       {tabList.map((v) => {
@@ -125,5 +116,5 @@ const TabRoute = ({ userModel }) => {
   );
 };
 
-export default withModel(TabRoute, 'userModel');
+export default withModel(TabRoute, 'userModel', 'tabModel');
 

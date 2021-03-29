@@ -11,12 +11,14 @@ class UserModel extends StoreEnhancer {
       { key: 'token', type: 'session', default: undefined },
       { key: 'userInfo', type: 'session', default: {} },
     ];
+    console.log(2222);
+    
     super(cacheList)
   }
 
   // 保存路由的 history 对象
   history = {}
-  @observable token = false
+  @observable token = undefined
   @observable userInfo = {}
   // 主页路由
   @observable indexRoute = {}
@@ -47,7 +49,7 @@ class UserModel extends StoreEnhancer {
     if (matchRoutes.length === 1 && pathname !== '/') {
       return this.history.replace('/404')
     }
-    this.setData({ matchRoutes })
+    this._setData({ matchRoutes })
   }
 
   // 过滤隐藏菜单
@@ -72,11 +74,14 @@ class UserModel extends StoreEnhancer {
   generateMenuList = (pageRoutes) => {
     const authRoutes = this.filterNoAuthRoute(pageRoutes);
     const menuList = this.filterHiddenRoute(authRoutes);
-    this.setData({ menuList })
+    this._setData({ menuList })
   }
 
   setUserStore = (object) => {
-    this.setData(object)
+
+    console.log('object==', object);
+    
+    this._setData(object)
   }
 }
 
