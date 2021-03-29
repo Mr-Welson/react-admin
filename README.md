@@ -2,17 +2,19 @@
 
 **多标签页后台管理模板**
 
-- tab 页签➕右键菜单，提升效率
-- Mobx 状态管理➕持久化
+- tab 页签 ➕ 右键菜单，提升效率
+- Mobx 状态管理 ➕ 持久化
 - 封装实用 axios 请求
 - 动态链式面包屑导航
+- Json 式配置路由，支持嵌套
 - 菜单页面路由权限控制
-- less➕css module 样式隔离
-- 可自定义 webpack 配置➕优化打包
+- less ➕ css module 样式隔离
+- 可自定义 webpack 配置 ➕ 优化打包
+- 响应式菜单（兼容移动端）
+- 动态首页路由
 
 
 
-使用 ` use-media-antd-query ` 实现响应式菜单
 
 ## Docs
 
@@ -93,12 +95,9 @@ class Model {
 }
 ```
 
-2. Page404 中返回首页需关闭 404 页签
-3. ` src/routes ` 中的组件采用懒加载方式
-4. ` tabModel  ` 对比 `hooks` 方式和 `mobx` 方式，目前采用的是 `hooks` 方式，有优化空间
-5. 寻找更好的 `hooks` 方式的状态管理替代 `mobx`，当前采用的是 `mobx@4.15.7` (因为要考虑兼容 ie10+)
-6. 动态设置 ` index` 路由
-7.  ` typescript ` 支持
+2. ` src/routes ` 中的组件采用懒加载方式
+3. 寻找更好的 `hooks` 方式的状态管理替代 `mobx`，当前采用的是 `mobx@4.15.7` (因为要考虑兼容 ie10+)
+4. ` typescript ` 支持
 
 
 
@@ -130,7 +129,7 @@ class Model {
 
 https://procomponents.ant.design/components/water-mark
 
-### Resize 监听
+### 响应式
 
 ` use-media-antd-query `
 

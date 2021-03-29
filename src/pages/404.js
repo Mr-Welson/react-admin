@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Result, Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { withModel } from '@/store';
 
-const Page404 = () => {
-  // TODO: 返回首页时关闭 404 页签
+const Page404 = ({ tabModel }) => {
+
+  const history = useHistory();
+  const linkToIndex = useCallback(() => {
+    tabModel.closeTab({ pathname: '/404' })
+    history.replace('/')
+  }, [])
+
   return (
     <Result
       status="404"
@@ -11,11 +18,11 @@ const Page404 = () => {
       subTitle="抱歉，你访问的页面不存在"
       extra={
         <Link to="/" replace>
-          <Button type="primary">返回首页</Button>
+          <Button type="primary" onClick={linkToIndex}>返回首页</Button>
         </Link>
       }
     />
   );
 }
 
-export default Page404
+export default withModel(Page404, 'tabModel')
