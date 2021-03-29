@@ -6,10 +6,15 @@ import { Button, DatePicker } from 'antd';
 const Home = () => {
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
+  const loadingStart = () => {
+    setLoading(true)
     setTimeout(() => {
       setLoading(false)
     }, 1000);
+  }
+
+  useEffect(() => {
+    loadingStart()
   }, [])
 
   return (
@@ -18,7 +23,7 @@ const Home = () => {
       <h2>
         {loading ? '加载中...' : '加载完成！'}
       </h2>
-      <Button onClick={() => setLoading(loading => !loading)}>
+      <Button onClick={loadingStart}>
         loading
       </Button>
       <Button>
