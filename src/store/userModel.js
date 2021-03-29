@@ -8,11 +8,9 @@ class UserModel extends StoreEnhancer {
   constructor() {
     // 定义需要缓存的数据
     const cacheList = [
-      { key: 'token', type: 'session', default: undefined },
+      { key: 'token', cacheKey: 'zf_token', type: 'session', default: undefined },
       { key: 'userInfo', type: 'session', default: {} },
     ];
-    console.log(2222);
-    
     super(cacheList)
   }
 
@@ -78,9 +76,6 @@ class UserModel extends StoreEnhancer {
   }
 
   setUserStore = (object) => {
-
-    console.log('object==', object);
-    
     this._setData(object)
   }
 }

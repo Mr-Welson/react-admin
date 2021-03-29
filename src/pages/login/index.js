@@ -8,8 +8,10 @@ import { withModel } from '@/store';
 
 const LoginForm = ({ history, userModel }) => {
 
+  const { setUserStore } = userModel;
+
   useEffect(() => {
-    userModel.setUserStore({ token: undefined });
+    setUserStore({ token: undefined });
   }, [])
 
   // 触发登录方法
@@ -20,9 +22,8 @@ const LoginForm = ({ history, userModel }) => {
       return
     }
     const [result] = await Service.user.login(values)
-    console.log(result);
-    userModel.setUserStore({
-      toekn: result.token,
+    setUserStore({
+      token: result.token,
       userInfo: result.userInfo
     });
     history.replace('/')

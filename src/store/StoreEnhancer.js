@@ -29,8 +29,6 @@ class StoreEnhancer {
 
   @action
   _setData(object) {
-    console.log('3333', object);
-    
     for (const key in object) {
       const value = object[key];
       this[key] = value;

@@ -80,14 +80,13 @@ class TabModel extends StoreEnhancer {
 
   // 关闭当前 往前推一个
   closeTab = (tabItem) => {
-    if (tabItem.pathname === this.activeTab.pathname) {
+    if (tabItem.pathname === this.activeTab.pathname && tabItem.pathname !== '/404') {
       const index = this.tabList.findIndex((v) => v.pathname === tabItem.pathname);
       const newTab = index === 0 ? this.tabList[index + 1] : this.tabList[index - 1];
       this.history.push(newTab.location.pathname)
     }
     const tabList = this.tabList.filter((v) => v.pathname !== tabItem.pathname);
     this._setData({ tabList });
-
   }
 
   // 关闭其他

@@ -22,9 +22,6 @@ const BasicLayout = ({ location, userModel, appModel, tabModel }) => {
   const { theme, loading, disableMobile } = appModel;
   const { token, routeList, flatRoutes, onPathNameChange, generateMenuList, setUserStore } = userModel;
 
-  console.log('token==', token);
-  
-
   const colSize = useAntdMediaQuery();
   const isMobile = (colSize === 'sm' || colSize === 'xs') && !disableMobile;
 
@@ -73,13 +70,7 @@ const BasicLayout = ({ location, userModel, appModel, tabModel }) => {
 
   // 验证 token
   useEffect(() => {
-
-    console.log(token);
-    console.log(userModel.token);
-
-    
     if (!token) {
-      console.log('== token 失效 ==');
       userModel.setUserStore({ token: undefined })
       return history.replace('/login')
     }
