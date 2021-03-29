@@ -53,7 +53,7 @@ const TabRoute = ({ userModel, tabModel }) => {
     e.preventDefault();
     contextMenuRef.current = item;
   }
-  
+
   const onRefresh = (e) => {
     contextMenuRef.current = null;
     setRefreshKey(Utils.uuid())
@@ -78,6 +78,7 @@ const TabRoute = ({ userModel, tabModel }) => {
     <Tabs activeKey={activeTab.pathname} className="app-tab-list">
       {tabList.map((v) => {
         const isHomePage = v.key === indexRoute.key;
+        const isErrorPage = v.pathname === '/404'
         return (
           <TabPane
             key={v.pathname}
@@ -86,10 +87,10 @@ const TabRoute = ({ userModel, tabModel }) => {
                 key={refreshKey}
                 overlay={
                   <div className="tab-context-menu">
-                    <Button type="link" block className="context-item" disabled={activeTab.pathname !== v.pathname} onClick={onRefresh}>刷新</Button>
+                    <Button type="link" block className="context-item" disabled={activeTab.pathname !== v.pathname || isErrorPage} onClick={onRefresh}>刷新</Button>
                     <Button type="link" block className="context-item" disabled={isHomePage || !closeAble} onClick={onClose}>关闭</Button>
-                    <Button type="link" className="context-item" disabled={!closeAble} onClick={onCloseOther}>关闭其他</Button>
-                    <Button type="link" className="context-item" disabled={isHomePage || !closeAble} onClick={closeAll}>关闭所有</Button>
+                    <Button type="link" className="context-item" disabled={!closeAble || isErrorPage} onClick={onCloseOther}>关闭其他</Button>
+                    <Button type="link" className="context-item" disabled={isHomePage || !closeAble || isErrorPage} onClick={closeAll}>关闭所有</Button>
                   </div>
                 }
                 placement="bottomLeft"
