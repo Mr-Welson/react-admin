@@ -1,6 +1,6 @@
 import { matchPath } from 'react-router-dom';
 
-export const matchPathRoutes = (pathname, flatRoutes) => {
+export function matchPathRoutes(pathname, flatRoutes) {
   const matchRoutes = flatRoutes.filter(v => {
     const matchInfo = matchPath(pathname, {
       path: v.path,

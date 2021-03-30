@@ -80,5 +80,7 @@ module.exports = {
     "no-case-declarations": 0,
     "no-prototype-builtins": 0,
     "no-inner-declarations": 0,
+    "no-unreachable": 1,
+    "no-debugger": 1
   }
 };

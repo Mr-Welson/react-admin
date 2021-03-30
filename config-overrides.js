@@ -5,9 +5,10 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
 const webpack = require('webpack')
-const path = require('path')
 const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 // const darkThemeVars = require('antd/dist/dark-theme');
+const addProxy = require('./config/addProxy');
+const webpackAlias = require('./config/webpackAlias');
 
 // 分析打包大小
 const addAnalyze = () => (config) => {
@@ -64,24 +65,11 @@ const addOptimization = () => (config) => {
   return config
 }
 
-const addProxy = () => (config) => {
-  config.proxy = {
-    '/mock/': {
-      target: 'http://localhost:4000/mock/',
-      changeOrigin: true,
-      pathRewrite: { '^/mock/': '/' },
-    },
-  };
-  return config;
-}
-
 module.exports = {
   webpack: override(
     // addAnalyze(),
     // 配置路径别名
-    addWebpackAlias({
-      '@': path.resolve('src')
-    }),
+    addWebpackAlias(webpackAlias),
     addOptimization(),
     // 针对antd 实现按需打包：根据import来打包 (使用babel-plugin-import)
     fixBabelImports('import', {
