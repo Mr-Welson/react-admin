@@ -33,7 +33,8 @@ const contentTypeMap = {
 export const $http = ({ method = 'GET', url, data, type = 'json', ...rest }) => {
   method = method.toLocaleUpperCase();
   return http({
-    baseURL: url.startsWith('/mock') ? "" : process.env.base,
+    // baseURL: url.startsWith('/mock') ? "" : process.env.base,
+    // baseURL: process.env.base,
     url,
     method,
     data: (method === "POST" || method === "PUT") ? data : null,
@@ -51,6 +52,17 @@ export const $http = ({ method = 'GET', url, data, type = 'json', ...rest }) => 
     });
 };
 
+export const $handleResponse = (result) => {
+  console.log(result);
+  
+  if (result.success) {
+    return [result, undefined]
+  } else {
+    return [undefined, result]
+  }
+}
+
 export const requestInstance = (fn) => {
   fn.prototype.$http = $http
+  fn.prototype.$handleResponse = $handleResponse
 }

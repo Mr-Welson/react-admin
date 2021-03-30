@@ -1,35 +1,30 @@
 import { requestInstance } from './request';
 import { pageRoutes } from '@/routes'
 
-const baseUrl = 'mock';
+const baseUrl = '/mock';
 
 const URL = {
-  login: `${baseUrl}/sysLogin`,
-  getUserPermissionByToken: `${baseUrl}/getUserPermissionByToken`,
+  login: `${baseUrl}/sysLogin.json`,
+  getUserPermissionByToken: `${baseUrl}/getUserPermissionByToken.json`,
 }
 
 @requestInstance
 class UserService {
 
-  login() {
-    return Promise.resolve([{token: '111', userInfo: {}}])
-    // return this.$http({
-    //   url: URL.login
-    // }).then(res => {
-    //   return [res, null]
-    // }).catch(err => {
-    //   return [undefined, err]
-    // })
+  async login(data) {
+    const response = await this.$http({
+      url: URL.login,
+      data
+    })
+    return this.$handleResponse(response)
   }
 
-  getUserPermissionByToken() {
-    return this.$http({
-      url: URL.getUserPermissionByToken
-    }).then(res => {
-      return [res, null]
-    }).catch(err => {
-      return [undefined, err]
+  async getUserPermissionByToken(data) {
+    const response = await this.$http({
+      url: URL.getUserPermissionByToken,
+      data
     })
+    return this.$handleResponse(response)
   }
 
   getMenuList() {

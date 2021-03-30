@@ -21,7 +21,10 @@ const LoginForm = ({ history, userModel }) => {
       message.error('用户名或密码错误')
       return
     }
-    const [result] = await Service.user.login(values)
+    const [result] = await Service.user.login(values);
+    
+    console.log(result);
+    
     setUserStore({
       token: result.token,
       userInfo: result.userInfo

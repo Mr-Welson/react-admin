@@ -67,9 +67,9 @@ const addOptimization = () => (config) => {
 const addProxy = () => (config) => {
   config.proxy = {
     '/mock/': {
-      target: 'https://127.0.0.1:4000/mock',
+      target: 'http://localhost:4000/mock/',
       changeOrigin: true,
-      pathRewrite: { '^/mock': '/' },
+      pathRewrite: { '^/mock/': '/' },
     },
   };
   return config;

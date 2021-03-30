@@ -4,86 +4,86 @@ function getFakeCaptcha(req, res) {
 
 const allAuth = [
   {
-    action: "eduTeam:eduApply:admin",
-    describe: "管理员",
-    type: "1",
+    "action": "user:view",
+    "describe": "查看用户按钮",
+    "type": "1"
   },
   {
-    action: "user:form:phone",
-    describe: "手机号禁用",
-    type: "2",
+    "action": "user:edit",
+    "describe": "编辑用户按钮",
+    "type": "1"
   },
   {
-    action: "user:add",
-    describe: "添加用户按钮",
-    type: "1",
-  }
+    "action": "user:add",
+    "describe": "添加用户按钮",
+    "type": "1"
+  },
 ]
 const auth = [
   {
-    action: "user:add",
-    describe: "添加用户按钮",
-    type: "1"
+    "action": "user:view",
+    "describe": "查看用户按钮",
+    "type": "1"
   }
 ]
 const menuList = [
   {
-    path: "/home",
-    meta: {
-      icon: "home",
-      title: "首页"
+    "path": "/home",
+    "meta": {
+      "icon": "home",
+      "title": "首页"
     },
-    name: "home",
-    id: "9502685863ab87f0ad1134142788a385"
+    "name": "home",
+    "id": "9502685863ab87f0ad1134142788a385"
   },
   {
-    path: "/system",
-    meta: {
-      icon: "setting",
-      title: "系统管理"
+    "path": "/system",
+    "meta": {
+      "icon": "setting",
+      "title": "系统管理"
     },
-    name: "system",
-    id: "d7d6e2e4e2934f2c9385a623fd98c6f3",
-    children: [
+    "name": "system",
+    "id": "d7d6e2e4e2934f2c9385a623fd98c6f3",
+    "children": [
       {
-        path: "/system/user",
-        meta: {
-          title: "用户管理"
+        "path": "/system/user",
+        "meta": {
+          "title": "用户管理"
         },
-        name: "systemUser",
-        id: "3f915b2769fc80648e92d04e84ca059d"
+        "name": "systemUser",
+        "id": "3f915b2769fc80648e92d04e84ca059d"
       },
       {
-        path: "/system/role",
-        meta: {
-          title: "角色管理"
+        "path": "/system/role",
+        "meta": {
+          "title": "角色管理"
         },
-        name: "systemRole",
-        id: "190c2b43bec6a5f7a4194a85db67d96a"
+        "name": "systemRole",
+        "id": "190c2b43bec6a5f7a4194a85db67d96a"
       },
       {
-        path: "/system/menu",
-        meta: {
-          title: "菜单管理"
+        "path": "/system/menu",
+        "meta": {
+          "title": "菜单管理"
         },
-        name: "systemMenu",
-        id: "54dd5457a3190740005c1bfec55b1c34"
+        "name": "systemMenu",
+        "id": "54dd5457a3190740005c1bfec55b1c34"
       },
       {
-        path: "/system/depart",
-        meta: {
-          title: "部门管理"
+        "path": "/system/depart",
+        "meta": {
+          "title": "部门管理"
         },
-        name: "systemDepart",
-        id: "45c966826eeff4c99b8f8ebfe74511fc"
+        "name": "systemDepart",
+        "id": "45c966826eeff4c99b8f8ebfe74511fc"
       },
       {
-        path: "/system/dict",
-        meta: {
-          title: "字典管理"
+        "path": "/system/dict",
+        "meta": {
+          "title": "字典管理"
         },
-        name: "systemDict",
-        id: "f1cb187abf927c88b89470d08615f5ac"
+        "name": "systemDict",
+        "id": "f1cb187abf927c88b89470d08615f5ac"
       },
     ],
   }
