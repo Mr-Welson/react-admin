@@ -7,14 +7,14 @@ import Utils from '@/utils';
 
 const { TabPane } = Tabs;
 
-const TabRoute = ({ userModel, tabModel }) => {
+const TabRoute = ({ authModel, tabModel }) => {
 
   const location = useLocation();
   // fix 点击刷新 Dropdown 不隐藏的bug 
   const [refreshKey, setRefreshKey] = useState(1);
   const contextMenuRef = useRef();
   const [matchs, setMatchs] = useState([]);
-  const { matchRoutes, indexRoute } = userModel;
+  const { matchRoutes, indexRoute } = authModel;
   const { tabList, activeTab, initTabList, addTab, closeTab, closeOther, closeAll, setTabStore } = tabModel;
 
   useEffect(() => {
@@ -113,5 +113,5 @@ const TabRoute = ({ userModel, tabModel }) => {
   );
 };
 
-export default withModel(TabRoute, 'userModel', 'tabModel');
+export default withModel(TabRoute, 'authModel', 'tabModel');
 

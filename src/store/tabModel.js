@@ -1,22 +1,24 @@
 import { observable } from 'mobx'
 import _ from 'lodash';
 import StoreEnhancer from './StoreEnhancer';
-import userModel from './userModel'
+import authModel from './authModel'
 
-
-// const indexRoute = {
-//   icon: 'UserOutlined',
-//   key: 'home',
-//   name: '首页',
-//   pathname: '/home',
-//   location: {
-//     pathname: '/home',
-//     query: {},
-//     search: '',
-//     state: undefined,
-//     hash: ''
-//   }
-// }
+/**
+ * tabItem 数据格式
+  const indexRoute = {
+    icon: 'UserOutlined',
+    key: 'home',
+    name: '首页',
+    pathname: '/home',
+    location: {
+      pathname: '/home',
+      query: {},
+      search: '',
+      state: undefined,
+      hash: ''
+    }
+  }
+ */
 
 class TabModel extends StoreEnhancer {
 
@@ -35,7 +37,7 @@ class TabModel extends StoreEnhancer {
   @observable refreshKey = 1
 
   getIndexRoute() {
-    return userModel.indexRoute
+    return authModel.indexRoute
   }
 
   initTabList = () => {
@@ -79,9 +81,13 @@ class TabModel extends StoreEnhancer {
     this._setData({ tabList: this.tabList });
   }
 
-  // 关闭当前 往前推一个
-  closeTab = (tabItem, is404Page) => {
-    if (tabItem.pathname === this.activeTab.pathname && !is404Page) {
+  /**
+   * 关闭 Tab, 往前推一个
+   * @params {object | undefined} 不传 tabItem 表示关闭当前
+   */
+  closeTab = (tabItem) => {
+    tabItem = tabItem || this.activeTab;
+    if (tabItem.pathname === this.activeTab.pathname) {
       const index = this.tabList.findIndex((v) => v.pathname === tabItem.pathname);
       const newTab = index === 0 ? this.tabList[index + 1] : this.tabList[index - 1];
       this.history.push(newTab.location.pathname)

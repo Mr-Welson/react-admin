@@ -1,6 +1,7 @@
 import userModel from './userModel'
 import tabModel from './tabModel'
 import appModel from './appModel'
+import authModel from './authModel'
 import { toJS as tojs } from 'mobx'
 import { inject, observer } from 'mobx-react'
 
@@ -15,6 +16,7 @@ const store = {
   userModel,
   tabModel,
   appModel,
+  authModel,
 }
 
 export default store

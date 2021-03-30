@@ -98,6 +98,7 @@ class Model {
 2. ` src/routes ` 中的组件采用懒加载方式
 3. 寻找更好的 `hooks` 方式的状态管理替代 `mobx`，当前采用的是 `mobx@4.15.7` (因为要考虑兼容 ie10+)
 4. ` typescript ` 支持
+5. 路由监听 beforeLeaveHook
 
 
 

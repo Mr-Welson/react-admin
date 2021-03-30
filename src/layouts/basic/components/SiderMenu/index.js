@@ -5,8 +5,8 @@ import BaseMenu from './BaseMenu';
 import Logo from '../Logo'
 import './index.less';
 
-const WebAppMenu = ({ siderWidth, collapsed, theme, userModel }) => {
-  const { menuList, matchRoutes } = userModel;
+const WebAppMenu = ({ siderWidth, collapsed, theme, authModel }) => {
+  const { menuList, matchRoutes } = authModel;
   const [activeKeys, setActiveKeys] = useState([]);
   const [matchs, setMatchs] = useState([]);
 
@@ -44,7 +44,7 @@ const WebAppMenu = ({ siderWidth, collapsed, theme, userModel }) => {
   )
 }
 
-const WebAppMenuWithModel = withModel(WebAppMenu, 'userModel');
+const WebAppMenuWithModel = withModel(WebAppMenu, 'authModel');
 
 const MobileAppMenu = ({ siderWidth, collapsed, setCollapsed, ...theme }) => {
   return (

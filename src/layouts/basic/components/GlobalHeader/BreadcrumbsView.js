@@ -5,9 +5,9 @@ import { Breadcrumb } from 'antd';
 import * as AntIcon from '@ant-design/icons';
 
 
-const BreadcrumbsView = ({ userModel }) => {
+const BreadcrumbsView = ({ authModel }) => {
 
-  const { matchRoutes, indexRoute } = userModel;
+  const { matchRoutes, indexRoute } = authModel;
   const IndexIcon = AntIcon[indexRoute.icon];
   const routes = toJS(matchRoutes);
   routes.shift()
@@ -29,4 +29,4 @@ const BreadcrumbsView = ({ userModel }) => {
   )
 }
 
-export default withModel(BreadcrumbsView, 'userModel');
+export default withModel(BreadcrumbsView, 'authModel');

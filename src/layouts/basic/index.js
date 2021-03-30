@@ -15,12 +15,13 @@ import './index.less';
 
 const { Content } = Layout;
 
-const BasicLayout = ({ location, userModel, appModel, tabModel }) => {
+const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => {
   // console.log('=== BasicLayout ===');
 
   const { setTabStore, refreshKey } = tabModel;
   const { theme, loading, disableMobile } = appModel;
-  const { token, routeList, flatRoutes, onPathNameChange, generateMenuList, setUserStore } = userModel;
+  const { token, setUserStore } = userModel;
+  const { routeList, flatRoutes, onPathNameChange, generateMenuList, setAuthRoute, setIndexRoute, setAuthStore } = authModel;
 
   const colSize = useAntdMediaQuery();
   const isMobile = (colSize === 'sm' || colSize === 'xs') && !disableMobile;
@@ -43,7 +44,7 @@ const BasicLayout = ({ location, userModel, appModel, tabModel }) => {
   // 暂时使用这种方式在 mobx 中访问 history 对象
   const history = useHistory();
   useEffect(() => {
-    setUserStore({ history });
+    setAuthStore({ history });
     setTabStore({ history });
   }, [])
 
@@ -51,18 +52,13 @@ const BasicLayout = ({ location, userModel, appModel, tabModel }) => {
     const [data] = await Service.user.getMenuList();
     const indexRoute = data.find(v => !v.hideInMenu) || {};
     const { icon, key, name, path } = indexRoute;
-    setUserStore({
-      indexRoute: {
-        icon,
-        key,
-        name,
-        pathname: path,
-        path,
-        location: {
-          pathname: path
-        }
-      },
-      routeList: data,
+    setAuthRoute(data)
+    setIndexRoute({
+      icon, key, name, path,
+      pathname: path,
+      location: {
+        pathname: path
+      }
     })
     generateMenuList(data)
     setCanRender(true)
@@ -71,7 +67,7 @@ const BasicLayout = ({ location, userModel, appModel, tabModel }) => {
   // 验证 token
   useEffect(() => {
     if (!token) {
-      userModel.setUserStore({ token: undefined })
+      setUserStore({ token: undefined })
       return history.replace('/login')
     }
     initAsyncData()
@@ -110,4 +106,4 @@ const BasicLayout = ({ location, userModel, appModel, tabModel }) => {
   );
 };
 
-export default withRouter(withModel(BasicLayout, 'userModel', 'appModel', 'tabModel'));
+export default withRouter(withModel(BasicLayout, 'authModel', 'userModel', 'appModel', 'tabModel'));
