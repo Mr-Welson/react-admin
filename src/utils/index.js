@@ -3,6 +3,7 @@ import * as array from "./array";
 import * as cache from "./cache";
 import * as download from "./download";
 import * as image from "./image";
+import * as location from "./location";
 
 const Utils = {
   ...common,
@@ -10,6 +11,7 @@ const Utils = {
   ...cache,
   ...download,
   ...image,
+  ...location,
 };
 
 export default Utils;
