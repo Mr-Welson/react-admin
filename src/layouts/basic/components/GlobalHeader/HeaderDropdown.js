@@ -7,7 +7,7 @@ import { withModel } from '@/store/withModel';
 const MenuHeaderDropdown = ({ userModel }) => {
   const history = useHistory()
   const loginOut = useCallback(() => {
-    userModel.setUserStore({ token: undefined });
+    userModel.logout();
     history.replace('/login')
   }, [])
   return (

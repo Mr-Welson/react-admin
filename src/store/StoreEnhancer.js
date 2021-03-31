@@ -9,7 +9,9 @@ class StoreEnhancer {
       const disposer = autorun(() => {
         const initData = {};
         cacheList.forEach(v => {
-          const value = Utils.getCache(v.cacheKey || v.key, v.type || 'local') || v.default;
+          let cacheKey = v.cacheKey || v.key;
+          let cacheType = v.type || 'local';
+          const value = Utils.getCache(cacheKey, cacheType) || v.default;
           if (v.initHandler) {
             v.initHandler(value)
           } else {
@@ -37,6 +39,16 @@ class StoreEnhancer {
         const cacheItem = this._cacheList.find(v => v.key === key);
         cacheItem && Utils.setCache(cacheItem.cacheKey || key, value, cacheItem.type)
       }
+    }
+  }
+
+  // 清空缓存数据
+  @action
+  _clearStore() {
+    if (this._cacheList) {
+      this._cacheList.forEach(item => {
+        Utils.setCache(item.cacheKey || item.key, item.default, item.type)
+      })
     }
   }
 }

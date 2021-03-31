@@ -7,10 +7,10 @@ import './login.less'
 
 
 const LoginForm = ({ history, userModel = {} }) => {
-  const { setUserStore } = userModel;
+  const { logout, setUserStore } = userModel;
   const [loading, setLoading] = useState(false)
   useEffect(() => {
-    setUserStore({ token: undefined });
+    logout();
   }, [])
 
   // 触发登录方法
