@@ -48,21 +48,21 @@ export const $http = ({ method = 'GET', url, data, type = 'json', ...rest }) => 
     .then(res => res.data)
     .catch(error => {
       console.error(error);
-      return Promise.resolve({ success: false, message: "请求失败" });
+      return Promise.resolve({ success: false, message: "请求失败", ...error });
     });
 };
 
 export const $handleResponse = (result) => {
-  console.log(result);
-  
   if (result.success) {
-    return [result, undefined]
+    return [result.result, undefined]
   } else {
     return [undefined, result]
   }
 }
 
-export const requestInstance = (fn) => {
-  fn.prototype.$http = $http
-  fn.prototype.$handleResponse = $handleResponse
+export class HttpRequest {
+  constructor() {
+    this.$http = $http
+    this.$handleResponse = $handleResponse
+  }
 }

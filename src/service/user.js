@@ -1,4 +1,4 @@
-import { requestInstance } from './request';
+import { HttpRequest } from './request';
 import { pageRoutes } from '@/routes'
 
 const baseUrl = '/mock';
@@ -8,9 +8,8 @@ const URL = {
   getUserPermissionByToken: `${baseUrl}/getUserPermissionByToken.json`,
 }
 
-@requestInstance
-class UserService {
-
+class UserService extends HttpRequest {
+  
   async login(data) {
     const response = await this.$http({
       url: URL.login,

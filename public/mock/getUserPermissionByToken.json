@@ -10,13 +10,8 @@
         "type": "1"
       },
       {
-        "action": "user:edit",
-        "describe": "编辑用户按钮",
-        "type": "1"
-      },
-      {
-        "action": "user:add",
-        "describe": "添加用户按钮",
+        "action": "user:update",
+        "describe": "添加/编辑用户按钮",
         "type": "1"
       }
     ],
