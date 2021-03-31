@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Form, Input, Button, message } from 'antd'
 import Service from '@/service'
-import { withModel } from '@/store';
+import { withModel } from '@/store/withModel';
 import './login.less'
 
 

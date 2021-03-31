@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'antd';
-import { withModel } from '@/store'
+import { withModel } from '@/store/withModel'
 
 const EditUser = ({ tabModel }) => {
   const history = useHistory();

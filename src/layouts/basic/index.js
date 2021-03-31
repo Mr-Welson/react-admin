@@ -3,7 +3,7 @@ import useAntdMediaQuery from 'use-media-antd-query';
 import classNames from 'classnames';
 import { withRouter, useHistory } from 'react-router-dom';
 import { Layout, Spin } from 'antd';
-import { withModel, toJS } from '@/store'
+import { withModel, toJS } from '@/store/withModel'
 import Service from '@/service';
 import GlobalHeader from './components/GlobalHeader';
 import SiderTrigger from './components/SiderTrigger';
@@ -38,7 +38,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
 
   // 监听 pathname 
   useEffect(() => {
-    
+
     onPathNameChange(location.pathname, flatRoutes)
   }, [location.pathname, flatRoutes])
 
@@ -55,7 +55,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
     const routeList = await setRouteList(data.menu);
     generateMenuList(routeList)
     const indexRoute = routeList.find(v => !v.hideInMenu && v.name);
-    console.log(indexRoute);
+    // console.log('== indexRoute ==', indexRoute);
     const { name, path, icon, key } = indexRoute
     setIndexRoute({
       icon,

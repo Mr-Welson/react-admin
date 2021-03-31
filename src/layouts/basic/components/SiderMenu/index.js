@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Layout, Drawer } from 'antd';
-import { withModel, toJS } from '@/store'
+import { withModel, toJS } from '@/store/withModel'
 import BaseMenu from './BaseMenu';
 import Logo from '../Logo'
 import './index.less';

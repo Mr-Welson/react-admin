@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Result, Button } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
-import { withModel } from '@/store';
+import { withModel } from '@/store/withModel';
 
 const Page404 = ({ tabModel }) => {
 

@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom'
 import { Menu, Dropdown, Avatar } from 'antd';
-import { withModel } from '@/store';
+import { withModel } from '@/store/withModel';
 
 const MenuHeaderDropdown = ({ userModel }) => {
   const history = useHistory()

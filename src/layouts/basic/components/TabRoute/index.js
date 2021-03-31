@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Tabs, Dropdown, Button } from 'antd';
-import { withModel, toJS } from '@/store'
+import { withModel, toJS } from '@/store/withModel'
 import { CloseOutlined } from '@ant-design/icons';
 import Utils from '@/utils';
 

@@ -31,16 +31,12 @@ class AuthModel extends StoreEnhancer {
   get flatRoutes() {
     let routes = Utils.flattenRoutes(toJS(this.routeList));
     // routes = routes.filter(v => v.key && v.path);
-    console.log(routes);
     return routes
   }
 
   // 根据 pathname 匹配路由
   onPathNameChange = (pathname, flatRoutes) => {
     const matchRoutes = Utils.matchPathRoutes(pathname, flatRoutes)
-    console.log(pathname);
-    console.log('matchRoutes==', matchRoutes);
-
     if (matchRoutes.length === 1 && pathname !== '/') {
       return this.history.replace('/404')
     }
@@ -64,7 +60,7 @@ class AuthModel extends StoreEnhancer {
   // 合成用户菜单
   generateMenuList = (authRouteList) => {
     const menuList = this.filterHiddenRoute(authRouteList);
-    console.log('menuList==', menuList);
+    // console.log('==menuList==', menuList);
     this._setData({ menuList })
   }
 
@@ -107,8 +103,7 @@ class AuthModel extends StoreEnhancer {
       }
       routeList.push(route)
     })
-    console.log('routeList==', routeList);
-
+    // console.log('==routeList==', routeList);
     this._setData({ routeList })
     return Promise.resolve(routeList)
   }

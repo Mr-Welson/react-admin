@@ -1,43 +1,29 @@
 /* eslint-disable camelcase */
-// /**
-//  * @description 路由配置项
-//  * @param {String} path 前端路由访问地址
-//  * @param {?Boolean} exact true 是否严格匹配
-//  * @param {?ReactComponentElement} component 前端路由对应的组件路径
-//  * @param {?Array} routes 配置子路由
-//  * @param {String} name 路由标题
-//  * @param {?String} icon 路由图标
-//  * @param {String} key 路由的唯一标识符(不能重复)
-//  * @param {?String} authKey 按钮权限(可以重复)
-//  *    同时包含 authKey 、path 和 component 则表示该权限可以通过路由打开
-//  *    只包含 authKey, 不包含 path 和 component 则表示该权限没有对应路由
-//  * @param {?Boolean} isLocal 是否只在开发环境显示，如 Test 路由或临时路由
-//  * @param {?Boolean} hideInMenu 是否在导航菜单中显示，如详情页路由不需要显示在菜单
-//  * @param {?String} activeMenuKey 手动指定需要激活的菜单
-//  *    通常直接通过 path 匹配来决定激活的菜单和面包屑
-//  *    如 /system/user/add 会同时匹配 /system 、/system/user、/system/user/add 3个菜单
-//  */
+/**
+ * @description 路由配置项
+ * @param {String} path 前端路由访问地址
+ * @param {?Boolean} exact true 是否严格匹配
+ * @param {?ReactComponentElement} component 前端路由对应的组件路径
+ * @param {?Array} routes 配置子路由
+ * @param {String} name 路由标题
+ * @param {?String} icon 路由图标
+ * @param {String} key 路由的唯一标识符(不能重复)
+ * @param {?String} authKey 按钮权限(可以重复)
+ *    同时包含 authKey 、path 和 component 则表示该权限可以通过路由打开
+ *    只包含 authKey, 不包含 path 和 component 则表示该权限没有对应路由
+ * @param {?Boolean} isLocal 是否只在开发环境显示，如 Test 路由或临时路由
+ * @param {?Boolean} hideInMenu 是否在导航菜单中显示，如详情页路由不需要显示在菜单
+ * @param {?String} activeMenuKey 手动指定需要激活的菜单
+ *    通常直接通过 path 匹配来决定激活的菜单和面包屑
+ *    如 /system/user/add 会同时匹配 /system 、/system/user、/system/user/add 3个菜单
+ * @param {?Boolean} unAuth 是否不需要通过权限校验，如 404 路由不需要权验证
+ */
 import { lazy } from 'react';
-// import Layout from '@/layouts/basic'
-// import Login from '@/pages/login'
-// import SystemLayout from '@/layouts/system'
-// import Home from '@/pages/home'
-// import Test from '@/pages/test'
-// import User from '@/pages/system/user'
-// import Menu from '@/pages/system/menu'
-// import Dict from '@/pages/system/dict'
-// import Depart from '@/pages/system/depart'
-// import ViewUser from '@/pages/system/user/viewUser'
-// import AddUser from '@/pages/system/user/addUser'
-// import EditUser from '@/pages/system/user/editUser'
-// import Role from '@/pages/system/role'
+import Layout from '@/layouts/basic'
+import Login from '@/pages/login'
 // import Menu_1_1 from '@/pages/nested/menu-1/menu-1-1'
 // import Menu_1_2 from '@/pages/nested/menu-1/menu-1-2'
 // import Menu_2 from '@/pages/nested/menu-2'
-// import P404 from '@/pages/404'
-
-const Layout = lazy(() => import('@/layouts/basic'));
-const Login = lazy(() => import('@/pages/login'));
 const P404 = lazy(() => import('@/pages/404'));
 const Home = lazy(() => import('@/pages/home'));
 const Test = lazy(() => import('@/pages/test'));
@@ -51,8 +37,9 @@ const Role = lazy(() => import('@/pages/system/role'));
 const Depart = lazy(() => import('@/pages/system/depart'));
 const Dict = lazy(() => import('@/pages/system/dict'));
 
-
+// 按钮权限
 export const localAuthList = [
+  // ---- 用户管理 ----
   {
     key: 'user:view',
     name: '查看用户按钮',
@@ -63,6 +50,7 @@ export const localAuthList = [
     name: '编辑用户',
     authKey: 'user:update',
   },
+  // ---- 角色管理 ----
   {
     key: 'role:add',
     name: '添加角色',
@@ -74,22 +62,13 @@ export const localAuthList = [
     authKey: 'role:update',
   },
 ]
-
-export const staticRoutes = [
-  {
-    path: '/login',
-    key: 'login',
-    name: '登录',
-    hideInMenu: true,
-    component: Login,
-  },
-]
-
+// 业务路由
 export const pageRoutes = [
   {
+    // root路由必须排在第一个
     path: '/',
-    key: 'index',
-    name: '首页',
+    key: 'root',
+    name: 'root',
     unAuth: true,
     hideInMenu: true,
   },
@@ -227,16 +206,22 @@ export const pageRoutes = [
   // },
 ]
 
-const routes = [
-  ...staticRoutes,
+// 静态路由和根路由
+export const staticRoutes = [
+  {
+    path: '/login',
+    exact: true,
+    key: 'login',
+    name: '登录',
+    hideInMenu: true,
+    component: Login,
+  },
   {
     path: '/',
-    key: 'index',
+    exact: false,
+    key: 'root',
     name: '布局',
     hideInMenu: true,
     component: Layout,
-    routes: pageRoutes
   }
 ]
-
-export default routes

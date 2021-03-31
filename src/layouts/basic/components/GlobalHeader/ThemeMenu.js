@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, Dropdown, Button } from 'antd';
-import { withModel } from '@/store'
+import { withModel } from '@/store/withModel'
 
 const ThemeMenu = ({ appModel }) => {
   const { setAppStore } = appModel

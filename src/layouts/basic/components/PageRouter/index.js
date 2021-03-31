@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom'
+import { Spin } from 'antd';
 // import P404 from '@/pages/404'
 
 const renderRoutes = (routes) => {
@@ -45,10 +46,12 @@ const renderRouteItem = (route) => {
 
 const RouteList = ({ indexRoute = {}, routes = [] }) => {
   return (
-    <Switch>
-      <Redirect exact from='/' to={indexRoute.path} />
-      {renderRoutes(routes)}
-    </Switch>
+    <Suspense fallback={<Spin />}>
+      <Switch>
+        <Redirect exact from='/' to={indexRoute.path} />
+        {renderRoutes(routes)}
+      </Switch>
+    </Suspense>
   )
 }
 
