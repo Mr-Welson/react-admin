@@ -26,7 +26,7 @@
       {
         "path": "/home",
         "meta": {
-          "icon": "home",
+          "icon": "UserOutlined",
           "title": "首页"
         },
         "name": "home",
@@ -35,7 +35,7 @@
       {
         "path": "/system",
         "meta": {
-          "icon": "setting",
+          "icon": "UserOutlined",
           "title": "系统管理"
         },
         "name": "system",
@@ -44,6 +44,7 @@
           {
             "path": "/system/user",
             "meta": {
+              "icon": "UserOutlined",
               "title": "用户管理"
             },
             "name": "systemUser",
@@ -52,6 +53,7 @@
           {
             "path": "/system/role",
             "meta": {
+              "icon": "UserOutlined",
               "title": "角色管理"
             },
             "name": "systemRole",
@@ -60,6 +62,7 @@
           {
             "path": "/system/menu",
             "meta": {
+              "icon": "UserOutlined",
               "title": "菜单管理"
             },
             "name": "systemMenu",
@@ -68,6 +71,7 @@
           {
             "path": "/system/depart",
             "meta": {
+              "icon": "UserOutlined",
               "title": "部门管理"
             },
             "name": "systemDepart",
@@ -76,6 +80,7 @@
           {
             "path": "/system/dict",
             "meta": {
+              "icon": "UserOutlined",
               "title": "字典管理"
             },
             "name": "systemDict",

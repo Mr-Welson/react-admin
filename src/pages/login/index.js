@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Form, Input, Button, message } from 'antd'
-import './login.less'
 import Service from '@/service'
 import { withModel } from '@/store';
+import './login.less'
 
 
-const LoginForm = ({ history, userModel }) => {
-
+const LoginForm = ({ history, userModel = {} }) => {
   const { setUserStore } = userModel;
-
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     setUserStore({ token: undefined });
   }, [])
@@ -18,18 +17,19 @@ const LoginForm = ({ history, userModel }) => {
   const onFinish = async (values) => {
     const { username, password } = values
     if (username !== 'admin' && password !== '123456') {
-      message.error('用户名或密码错误')
-      return
+      return message.error('用户名或密码错误')
     }
-    const [result] = await Service.user.login(values);
-    
+    setLoading(true)
+    const [result, error] = await Service.user.login(values);
     console.log(result);
-    
-    setUserStore({
-      token: result.token,
-      userInfo: result.userInfo
-    });
-    history.replace('/')
+    if (!error) {
+      setUserStore({
+        token: result.token,
+        userInfo: result.userInfo
+      });
+      setLoading(false);
+      history.replace('/')
+    }
   }
 
   return (
@@ -63,6 +63,7 @@ const LoginForm = ({ history, userModel }) => {
             htmlType="submit"
             size="large"
             type="primary"
+            loading={loading}
           >
             登录
         </Button>

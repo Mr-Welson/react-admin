@@ -1,39 +1,79 @@
 /* eslint-disable camelcase */
-// 路由配置项
-/**
-    path 前端路由访问地址
-    exact 是否严格匹配
-    component 前端路由对应的组件路径
-      绝对路径: '@/pages/index'
-      相对路径（会从 src/pages 开始找起）: 'index'
-    routes 配置子路由
-    name: 路由标题
-    icon: 菜单图标
-    key: 路由的唯一标识符
-    isLocal: 是否只在开发环境显示，如：Test 路由或临时路由
-    hideInMenu: 是否显示在菜单，如详情页路由不需要显示在菜单
-    needRedirect: 是否要重定向
-    activeMenuKey: 手动指定需要激活的菜单
- */
+// /**
+//  * @description 路由配置项
+//  * @param {String} path 前端路由访问地址
+//  * @param {?Boolean} exact true 是否严格匹配
+//  * @param {?ReactComponentElement} component 前端路由对应的组件路径
+//  * @param {?Array} routes 配置子路由
+//  * @param {String} name 路由标题
+//  * @param {?String} icon 路由图标
+//  * @param {String} key 路由的唯一标识符(不能重复)
+//  * @param {?String} authKey 按钮权限(可以重复)
+//  *    同时包含 authKey 、path 和 component 则表示该权限可以通过路由打开
+//  *    只包含 authKey, 不包含 path 和 component 则表示该权限没有对应路由
+//  * @param {?Boolean} isLocal 是否只在开发环境显示，如 Test 路由或临时路由
+//  * @param {?Boolean} hideInMenu 是否在导航菜单中显示，如详情页路由不需要显示在菜单
+//  * @param {?String} activeMenuKey 手动指定需要激活的菜单
+//  *    通常直接通过 path 匹配来决定激活的菜单和面包屑
+//  *    如 /system/user/add 会同时匹配 /system 、/system/user、/system/user/add 3个菜单
+//  */
+import { lazy } from 'react';
+// import Layout from '@/layouts/basic'
+// import Login from '@/pages/login'
+// import SystemLayout from '@/layouts/system'
+// import Home from '@/pages/home'
+// import Test from '@/pages/test'
+// import User from '@/pages/system/user'
+// import Menu from '@/pages/system/menu'
+// import Dict from '@/pages/system/dict'
+// import Depart from '@/pages/system/depart'
+// import ViewUser from '@/pages/system/user/viewUser'
+// import AddUser from '@/pages/system/user/addUser'
+// import EditUser from '@/pages/system/user/editUser'
+// import Role from '@/pages/system/role'
+// import Menu_1_1 from '@/pages/nested/menu-1/menu-1-1'
+// import Menu_1_2 from '@/pages/nested/menu-1/menu-1-2'
+// import Menu_2 from '@/pages/nested/menu-2'
+// import P404 from '@/pages/404'
 
-import Login from '@/pages/login'
-import Layout from '@/layouts/basic'
-import SystemLayout from '@/layouts/system'
-import Home from '@/pages/home'
-import Test from '@/pages/test'
-import User from '@/pages/system/user'
-import Menu from '@/pages/system/menu'
-import Dict from '@/pages/system/dict'
-import Depart from '@/pages/system/depart'
-import AddUser from '@/pages/system/user/addUser'
-import ViewUser from '@/pages/system/user/viewUser'
-import Role from '@/pages/system/role'
-import Menu_1_1 from '@/pages/nested/menu-1/menu-1-1'
-import Menu_1_2 from '@/pages/nested/menu-1/menu-1-2'
-import Menu_2 from '@/pages/nested/menu-2'
-import P404 from '@/pages/404'
+const Layout = lazy(() => import('@/layouts/basic'));
+const Login = lazy(() => import('@/pages/login'));
+const P404 = lazy(() => import('@/pages/404'));
+const Home = lazy(() => import('@/pages/home'));
+const Test = lazy(() => import('@/pages/test'));
+const SystemLayout = lazy(() => import('@/layouts/system'));
+const User = lazy(() => import('@/pages/system/user'));
+const ViewUser = lazy(() => import('@/pages/system/user/viewUser'));
+// const EditUser = lazy(() => import('@/pages/system/user/editUser'));
+const AddUser = lazy(() => import('@/pages/system/user/addUser'));
+const Menu = lazy(() => import('@/pages/system/menu'));
+const Role = lazy(() => import('@/pages/system/role'));
+const Depart = lazy(() => import('@/pages/system/depart'));
+const Dict = lazy(() => import('@/pages/system/dict'));
 
 
+export const localAuthList = [
+  {
+    key: 'user:view',
+    name: '查看用户按钮',
+    authKey: 'user:view',
+  },
+  {
+    key: 'user:edit',
+    name: '编辑用户',
+    authKey: 'user:update',
+  },
+  {
+    key: 'role:add',
+    name: '添加角色',
+    authKey: 'role:update',
+  },
+  {
+    key: 'role:edit',
+    name: '编辑角色',
+    authKey: 'role:update',
+  },
+]
 
 export const staticRoutes = [
   {
@@ -44,11 +84,13 @@ export const staticRoutes = [
     component: Login,
   },
 ]
+
 export const pageRoutes = [
   {
     path: '/',
     key: 'index',
     name: '首页',
+    unAuth: true,
     hideInMenu: true,
   },
   {
@@ -57,6 +99,7 @@ export const pageRoutes = [
     name: '404',
     icon: 'UserOutlined',
     hideInMenu: true,
+    unAuth: true,
     component: P404,
   },
   {
@@ -89,21 +132,32 @@ export const pageRoutes = [
         component: User,
       },
       {
-        path: '/system/user/add',
-        key: 'userAdd',
-        name: '添加用户',
-        icon: 'UserOutlined',
-        hideInMenu: true,
-        component: AddUser,
-      },
-      {
         path: '/system/user/view/:id',
-        key: 'userView',
+        key: 'systemUserView',
         name: '查看用户',
         icon: 'UserOutlined',
         hideInMenu: true,
+        authKey: 'user:view',
         component: ViewUser,
       },
+      {
+        path: '/system/user/add',
+        key: 'systemUserAdd',
+        name: '添加用户',
+        icon: 'UserOutlined',
+        hideInMenu: true,
+        authKey: 'user:update',
+        component: AddUser,
+      },
+      // {
+      //   path: '/system/user/edit',
+      //   key: 'systemUserEdit',
+      //   name: '编辑用户',
+      //   icon: 'UserOutlined',
+      //   hideInMenu: true,
+      //   authKey: 'user:update',
+      //   component: EditUser,
+      // },
       {
         path: '/system/role',
         key: 'systemRole',
@@ -114,9 +168,9 @@ export const pageRoutes = [
       {
         path: '/system/menu',
         key: 'systemMenu',
-        component: Menu,
         name: '菜单管理',
         icon: 'UserOutlined',
+        component: Menu,
       },
       {
         path: '/system/depart',
@@ -128,49 +182,49 @@ export const pageRoutes = [
       {
         path: '/system/dict',
         key: 'systemDict',
-        component: Dict,
         name: '字典管理',
         icon: 'UserOutlined',
+        component: Dict,
       },
     ]
   },
-  {
-    path: '/nested',
-    key: 'nested',
-    name: '一级菜单',
-    icon: 'UserOutlined',
-    routes: [
-      {
-        path: '/nested/menu-1',
-        key: 'menu-1',
-        name: '二级菜单01',
-        icon: 'UserOutlined',
-        routes: [
-          {
-            path: '/nested/menu-1/menu-1-1',
-            key: 'menu-1-1',
-            name: '三级菜单01',
-            icon: 'UserOutlined',
-            component: Menu_1_1,
-          },
-          {
-            path: '/nested/menu-1/menu-1-2',
-            key: 'menu-1-2',
-            name: '三级菜单02',
-            icon: 'UserOutlined',
-            component: Menu_1_2,
-          }
-        ]
-      },
-      {
-        path: '/nested/menu-2',
-        key: 'menu-2',
-        name: '二级菜单02',
-        icon: 'UserOutlined',
-        component: Menu_2,
-      },
-    ]
-  },
+  // {
+  //   path: '/nested',
+  //   key: 'nested',
+  //   name: '一级菜单',
+  //   icon: 'UserOutlined',
+  //   routes: [
+  //     {
+  //       path: '/nested/menu-1',
+  //       key: 'menu-1',
+  //       name: '二级菜单01',
+  //       icon: 'UserOutlined',
+  //       routes: [
+  //         {
+  //           path: '/nested/menu-1/menu-1-1',
+  //           key: 'menu-1-1',
+  //           name: '三级菜单01',
+  //           icon: 'UserOutlined',
+  //           component: Menu_1_1,
+  //         },
+  //         {
+  //           path: '/nested/menu-1/menu-1-2',
+  //           key: 'menu-1-2',
+  //           name: '三级菜单02',
+  //           icon: 'UserOutlined',
+  //           component: Menu_1_2,
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       path: '/nested/menu-2',
+  //       key: 'menu-2',
+  //       name: '二级菜单02',
+  //       icon: 'UserOutlined',
+  //       component: Menu_2,
+  //     },
+  //   ]
+  // },
 ]
 
 const routes = [

@@ -1,7 +1,7 @@
-import React, { useMemo, useState } from 'react'
+import React, { Suspense, lazy, useMemo, useState } from 'react'
 import { HashRouter, BrowserRouter, Switch, Route } from 'react-router-dom'
-import Login from '@/pages/login'
-import Layout from '@/layouts/basic'
+import { staticRoutes } from '@/routes'
+const Layout = lazy(() => import('@/layouts/basic'));
 
 const getRouteType = (routeType) => {
   switch (routeType) {
@@ -17,10 +17,15 @@ const App = () => {
   const Router = useMemo(() => getRouteType(routeType), [routeType])
   return (
     <Router>
-      <Switch>
-        <Route exact path='/login' component={Login} />
-        <Route path='/' component={Layout} />
-      </Switch>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          {staticRoutes.map(route => (
+            <Route exact={route.exact || true} key={route.path} path={route.path} component={route.component} />
+          ))}
+          {/* <Route exact path='/login' component={Login} /> */}
+          <Route path='/' component={Layout} />
+        </Switch>
+      </Suspense>
     </Router>
   );
 }

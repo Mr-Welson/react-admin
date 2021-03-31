@@ -9,7 +9,7 @@ const URL = {
 }
 
 class UserService extends HttpRequest {
-  
+
   async login(data) {
     const response = await this.$http({
       url: URL.login,
@@ -29,7 +29,7 @@ class UserService extends HttpRequest {
   getMenuList() {
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve([pageRoutes, false])
+        resolve([[pageRoutes], false])
       }, 300)
     })
   }

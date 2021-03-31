@@ -3,7 +3,7 @@ import useAntdMediaQuery from 'use-media-antd-query';
 import classNames from 'classnames';
 import { withRouter, useHistory } from 'react-router-dom';
 import { Layout, Spin } from 'antd';
-import { withModel } from '@/store'
+import { withModel, toJS } from '@/store'
 import Service from '@/service';
 import GlobalHeader from './components/GlobalHeader';
 import SiderTrigger from './components/SiderTrigger';
@@ -21,7 +21,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   const { setTabStore, refreshKey } = tabModel;
   const { theme, loading, disableMobile } = appModel;
   const { token, setUserStore } = userModel;
-  const { routeList, flatRoutes, onPathNameChange, generateMenuList, setAuthRoute, setIndexRoute, setAuthStore } = authModel;
+  const { indexRoute, routeList, flatRoutes, onPathNameChange, generateMenuList, setRouteList, setAuthList, setIndexRoute, setAuthStore } = authModel;
 
   const colSize = useAntdMediaQuery();
   const isMobile = (colSize === 'sm' || colSize === 'xs') && !disableMobile;
@@ -38,6 +38,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
 
   // 监听 pathname 
   useEffect(() => {
+    
     onPathNameChange(location.pathname, flatRoutes)
   }, [location.pathname, flatRoutes])
 
@@ -48,19 +49,25 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
     setTabStore({ history });
   }, [])
 
-  const initAsyncData = useCallback(async () => {
-    const [data] = await Service.user.getMenuList();
-    const indexRoute = data.find(v => !v.hideInMenu) || {};
-    const { icon, key, name, path } = indexRoute;
-    setAuthRoute(data)
+  const initApp = useCallback(async () => {
+    const [data] = await Service.user.getUserPermissionByToken();
+    setAuthList(data.auth)
+    const routeList = await setRouteList(data.menu);
+    generateMenuList(routeList)
+    const indexRoute = routeList.find(v => !v.hideInMenu && v.name);
+    console.log(indexRoute);
+    const { name, path, icon, key } = indexRoute
     setIndexRoute({
-      icon, key, name, path,
+      icon,
+      key,
+      name,
+      path,
       pathname: path,
       location: {
         pathname: path
       }
     })
-    generateMenuList(data)
+
     setCanRender(true)
   }, [])
 
@@ -70,11 +77,11 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
       setUserStore({ token: undefined })
       return history.replace('/login')
     }
-    initAsyncData()
+    initApp()
   }, [token])
 
   if (!canRender) {
-    return <Spin spinning={canRender} size="large" wrapperClassName="global-spinning"></Spin>
+    return <Spin spinning={!canRender} size="large" wrapperClassName="global-spinning"></Spin>
   }
 
   return (
@@ -96,13 +103,12 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
           </GlobalHeader>
           <TabRoute />
           <Content className="app-content">
-            <PageRouter key={refreshKey} routes={routeList} />
+            <PageRouter key={refreshKey} indexRoute={indexRoute} routes={toJS(routeList)} />
           </Content>
           <GlobalFooter />
         </Layout>
       </Layout>
     </Spin >
-
   );
 };
 
