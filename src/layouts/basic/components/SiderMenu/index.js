@@ -5,7 +5,7 @@ import BaseMenu from './BaseMenu';
 import Logo from '../Logo'
 import './index.less';
 
-const WebAppMenu = ({ siderWidth, collapsed, theme, authModel }) => {
+const WebAppMenu = ({ authModel, siderWidth, collapsed, theme, layout }) => {
   const { menuList, matchRoutes } = authModel;
   const [activeKeys, setActiveKeys] = useState([]);
   const [matchs, setMatchs] = useState([]);
@@ -23,30 +23,45 @@ const WebAppMenu = ({ siderWidth, collapsed, theme, authModel }) => {
     setActiveKeys(activeKeys)
   }, [matchs])
 
+  const mode = useMemo(() => layout === 'top' ? 'horizontal' : 'inline', [layout])
+  const hasSiderMenu = useMemo(() => mode === 'inline', [mode])
+  console.log(mode);
+  
   return (
-    <Layout.Sider
-      className="app-sider"
-      width={siderWidth}
-      theme={theme}
-      trigger={null}
-      collapsible
-      collapsed={collapsed}
-    >
-      <div className="app-sider-content">
-        <Logo collapsed={collapsed} />
+    hasSiderMenu
+      ? (
+        <Layout.Sider
+          className="app-sider"
+          width={siderWidth}
+          theme={theme}
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+        >
+          <div className="app-sider-content">
+            <Logo collapsed={collapsed} />
+            <BaseMenu
+              mode={mode}
+              theme={theme}
+              menuList={menuList}
+              activeKeys={activeKeys}
+            />
+          </div>
+        </Layout.Sider >
+      ) : (
         <BaseMenu
+          mode={mode}
           theme={theme}
           menuList={menuList}
           activeKeys={activeKeys}
         />
-      </div>
-    </Layout.Sider>
+      )
   )
 }
 
 const WebAppMenuWithModel = withModel(WebAppMenu, 'authModel');
 
-const MobileAppMenu = ({ siderWidth, collapsed, setCollapsed, ...theme }) => {
+const MobileAppMenu = ({ siderWidth, collapsed, setCollapsed, ...rest }) => {
   return (
     <Drawer
       // className="app-menu-drawer"
@@ -57,14 +72,14 @@ const MobileAppMenu = ({ siderWidth, collapsed, setCollapsed, ...theme }) => {
       onClose={() => setCollapsed(collapsed => !collapsed)}
       visible={!collapsed}
     >
-      <WebAppMenuWithModel siderWidth={siderWidth} collapsed={collapsed} theme={theme} />
+      <WebAppMenuWithModel siderWidth={siderWidth} collapsed={collapsed} {...rest} />
     </Drawer>
   )
 }
 
-const SiderMenu = ({ isMobile, theme, ...rest }) => {
+const SiderMenu = ({ isMobile, ...rest }) => {
   const MemoMenu = useMemo(() => isMobile ? MobileAppMenu : WebAppMenuWithModel, [isMobile])
-  return <MemoMenu {...rest} theme={theme} />
+  return <MemoMenu {...rest} />
 }
 
 export default SiderMenu;

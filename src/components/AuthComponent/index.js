@@ -1,7 +1,6 @@
 /**
  * @param {String|Array} authName 
  * @param {Boolean} matchAll false authName为数组时，决定全部匹配还是
- * @param {noAuthComponent} isUnion 权限校验为 false 时，渲染的组件，默认为 null
  */
 
 const authList = [];

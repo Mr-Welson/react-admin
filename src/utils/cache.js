@@ -32,7 +32,7 @@ export function getCache(key, type = 'local') {
 }
 
 /**
- * 获取缓存数据
+ * 设置缓存数据
  * @param {string} key
  * @param {any} value
  * @param {string} type: 缓存类型 'local'(默认) / cookie / session;

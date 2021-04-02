@@ -18,6 +18,15 @@
 
 ## Docs
 
+### Layout
+
+```
+  layout: top,sider,mix
+
+
+
+```
+
 ### Route
 
 根据 src/routes 生成路由及菜单
@@ -30,9 +39,15 @@
 
 
 
+### CustomHooks
+
+useList
+
+usePagination
+
 ### Components
 
-
+Skeleton 、Table、List、Upload、Tree、Form、ModalForm、DrawerForm、ViewForm、WaterMark、PageLayout、Card
 
 ### Service
 
@@ -99,6 +114,7 @@ class Model {
 3. 寻找更好的 `hooks` 方式的状态管理替代 `mobx`，当前采用的是 `mobx@4.15.7` (因为要考虑兼容 ie10+)
 4. ` typescript ` 支持
 5. 路由监听 beforeLeaveHook
+6. checkPermissions
 
 
 

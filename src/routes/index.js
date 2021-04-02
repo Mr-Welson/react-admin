@@ -36,6 +36,7 @@ const Menu = lazy(() => import('@/pages/system/menu'));
 const Role = lazy(() => import('@/pages/system/role'));
 const Depart = lazy(() => import('@/pages/system/depart'));
 const Dict = lazy(() => import('@/pages/system/dict'));
+const Demo = lazy(() => import('@/pages/demo'));
 
 // 按钮权限
 export const localAuthList = [
@@ -95,6 +96,14 @@ export const pageRoutes = [
     name: '测试',
     icon: 'VideoCameraOutlined',
     component: Test,
+  },
+  {
+    path: '/demo',
+    key: 'demo',
+    name: 'demno',
+    icon: 'VideoCameraOutlined',
+    unAuth: true,
+    component: Demo,
   },
   {
     path: '/system',

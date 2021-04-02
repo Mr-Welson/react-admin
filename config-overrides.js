@@ -95,7 +95,6 @@ module.exports = {
     addProxy(),
     // disableHostCheck
     // host
-    // proxy
   )
 }
 

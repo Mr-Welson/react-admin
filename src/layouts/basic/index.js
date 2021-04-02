@@ -11,15 +11,15 @@ import SiderMenu from './components/SiderMenu';
 import TabRoute from './components/TabRoute';
 import PageRouter from './components/PageRouter';
 import GlobalFooter from './components/GlobalFooter';
+import LayoutSetting from './components/LayoutSetting';
+import Logo from './components/Logo';
 import './index.less';
-
-const { Content } = Layout;
 
 const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => {
   // console.log('=== BasicLayout ===');
 
   const { setTabStore, refreshKey } = tabModel;
-  const { theme, loading, disableMobile } = appModel;
+  const { theme, settings, loading, disableMobile } = appModel;
   const { token, setUserStore } = userModel;
   const { indexRoute, routeList, flatRoutes, onPathNameChange, generateMenuList, setRouteList, setAuthList, setIndexRoute, setAuthStore } = authModel;
 
@@ -87,26 +87,64 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   return (
     <Spin spinning={loading} size="large" wrapperClassName="global-spinning">
       <Layout className={classNames("app-layout", "screen-".concat(colSize), "theme-".concat(theme))}>
-        <SiderMenu
-          siderWidth={256}
-          theme={theme}
-          isMobile={isMobile}
-          collapsed={collapsed}
-          setCollapsed={setCollapsed}
-        />
-        <Layout className="app-content-layout">
-          <GlobalHeader
-            leftExtraContent={
-              <SiderTrigger collapsed={collapsed} setCollapsed={setCollapsed} />
-            }
-          >
-          </GlobalHeader>
-          <TabRoute />
-          <Content className="app-content">
-            <PageRouter key={refreshKey} indexRoute={indexRoute} routes={toJS(routeList)} />
-          </Content>
-          <GlobalFooter />
-        </Layout>
+        {settings.layout === 'top'
+          ? (
+            <>
+              <Layout className="app-content-layout">
+                <GlobalHeader
+                  hasBreadcrumb={false}
+                  leftExtraContent={
+                    <Logo />
+                  }
+                  rightExtraContent={
+                    <LayoutSetting />
+                  }
+                >
+                  <SiderMenu
+                    layout={settings.layout}
+                    siderWidth={256}
+                    theme={theme}
+                    isMobile={isMobile}
+                    collapsed={collapsed}
+                    setCollapsed={setCollapsed}
+                    hasBreadcrumbs={false}
+                  />
+                </GlobalHeader>
+                {/* <TabRoute /> */}
+                <Layout.Content className="app-content">
+                  <PageRouter key={refreshKey} indexRoute={indexRoute} routes={toJS(routeList)} />
+                </Layout.Content>
+                <GlobalFooter />
+              </Layout>
+            </>
+          ) : (
+            <>
+              <SiderMenu
+                layout={settings.layout}
+                siderWidth={256}
+                theme={theme}
+                isMobile={isMobile}
+                collapsed={collapsed}
+                setCollapsed={setCollapsed}
+              />
+              <Layout className="app-content-layout">
+                <GlobalHeader
+                  leftExtraContent={
+                    <SiderTrigger collapsed={collapsed} setCollapsed={setCollapsed} />
+                  }
+                  rightExtraContent={
+                    <LayoutSetting />
+                  }
+                >
+                </GlobalHeader>
+                <TabRoute />
+                <Layout.Content className="app-content">
+                  <PageRouter key={refreshKey} indexRoute={indexRoute} routes={toJS(routeList)} />
+                </Layout.Content>
+                <GlobalFooter />
+              </Layout>
+            </>
+          )}
       </Layout>
     </Spin >
   );

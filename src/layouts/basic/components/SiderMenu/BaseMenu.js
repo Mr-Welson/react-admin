@@ -6,11 +6,13 @@ import * as AntIcon from '@ant-design/icons';
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
-const BaseMenu = ({ theme = 'dark', menuList = [], activeKeys }) => {
+const BaseMenu = ({ mode = 'inline', theme = 'dark', menuList = [], activeKeys }) => {
+  console.log(mode);
+  
   return (
     <Menu
       className="app-menu"
-      mode="inline"
+      mode={mode} // mode="horizontal"
       theme={theme}
       defaultOpenKeys={activeKeys}
       selectedKeys={activeKeys}
