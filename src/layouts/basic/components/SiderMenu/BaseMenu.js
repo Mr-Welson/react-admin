@@ -7,8 +7,6 @@ const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
 const BaseMenu = ({ mode = 'inline', theme = 'dark', menuList = [], activeKeys }) => {
-  console.log(mode);
-  
   return (
     <Menu
       className="app-menu"

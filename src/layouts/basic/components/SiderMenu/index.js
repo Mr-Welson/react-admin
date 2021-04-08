@@ -25,7 +25,6 @@ const WebAppMenu = ({ authModel, siderWidth, collapsed, theme, layout }) => {
 
   const mode = useMemo(() => layout === 'top' ? 'horizontal' : 'inline', [layout])
   const hasSiderMenu = useMemo(() => mode === 'inline', [mode])
-  console.log(mode);
   
   return (
     hasSiderMenu

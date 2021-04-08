@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import useAntdMediaQuery from 'use-media-antd-query';
 import classNames from 'classnames';
 import { withRouter, useHistory } from 'react-router-dom';
 import { Layout, Spin } from 'antd';
-import { withModel, toJS } from '@/store/withModel'
+import { withModel } from '@/store/withModel'
 import Service from '@/service';
 import GlobalHeader from './components/GlobalHeader';
 import SiderTrigger from './components/SiderTrigger';
@@ -21,13 +21,14 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   const { setTabStore, refreshKey } = tabModel;
   const { theme, settings, loading, disableMobile } = appModel;
   const { token, setUserStore } = userModel;
-  const { indexRoute, routeList, flatRoutes, onPathNameChange, generateMenuList, setRouteList, setAuthList, setIndexRoute, setAuthStore } = authModel;
+  const { indexRoute, flatRoutes, onPathNameChange, generateMenuList, setRouteList, setAuthList, setIndexRoute, setAuthStore } = authModel;
 
   const colSize = useAntdMediaQuery();
   const isMobile = (colSize === 'sm' || colSize === 'xs') && !disableMobile;
 
   const [canRender, setCanRender] = useState(false);
   const [collapsed, setCollapsed] = useState(isMobile ? true : false);
+  const [routes, setRoutes] = useState([]);
 
   // 监听 resize 
   useEffect(() => {
@@ -38,7 +39,6 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
 
   // 监听 pathname 
   useEffect(() => {
-
     onPathNameChange(location.pathname, flatRoutes)
   }, [location.pathname, flatRoutes])
 
@@ -53,6 +53,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
     const [data] = await Service.user.getUserPermissionByToken();
     setAuthList(data.auth)
     const routeList = await setRouteList(data.menu);
+    setRoutes(routeList)
     generateMenuList(routeList)
     const indexRoute = routeList.find(v => !v.hideInMenu && v.name);
     // console.log('== indexRoute ==', indexRoute);
@@ -67,7 +68,6 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
         pathname: path
       }
     })
-
     setCanRender(true)
   }, [])
 
@@ -79,6 +79,10 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
     }
     initApp()
   }, [token])
+
+  const MemoPageRouter = useMemo(() => {
+    return <PageRouter key={refreshKey} indexRoute={indexRoute} routes={routes} />
+  }, [refreshKey, indexRoute, routes])
 
   if (!canRender) {
     return <Spin spinning={!canRender} size="large" wrapperClassName="global-spinning"></Spin>
@@ -112,7 +116,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
                 </GlobalHeader>
                 {/* <TabRoute /> */}
                 <Layout.Content className="app-content">
-                  <PageRouter key={refreshKey} indexRoute={indexRoute} routes={toJS(routeList)} />
+                  {MemoPageRouter}
                 </Layout.Content>
                 <GlobalFooter />
               </Layout>
@@ -139,7 +143,8 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
                 </GlobalHeader>
                 <TabRoute />
                 <Layout.Content className="app-content">
-                  <PageRouter key={refreshKey} indexRoute={indexRoute} routes={toJS(routeList)} />
+                  {MemoPageRouter}
+                  {/* <PageRouter key={refreshKey} indexRoute={indexRoute} routes={routes} /> */}
                 </Layout.Content>
                 <GlobalFooter />
               </Layout>
