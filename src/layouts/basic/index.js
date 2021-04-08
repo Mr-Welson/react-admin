@@ -12,12 +12,11 @@ import TabRoute from './components/TabRoute';
 import PageRouter from './components/PageRouter';
 import GlobalFooter from './components/GlobalFooter';
 import LayoutSetting from './components/LayoutSetting';
-import Logo from './components/Logo';
+import LogoAndTitle from "./components/LogoAndTitle";
+import { siderWidth } from './defaultProps';
 import './index.less';
 
 const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => {
-  // console.log('=== BasicLayout ===');
-
   const { setTabStore, refreshKey } = tabModel;
   const { theme, settings, loading, disableMobile } = appModel;
   const { token, setUserStore } = userModel;
@@ -88,25 +87,29 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
     return <Spin spinning={!canRender} size="large" wrapperClassName="global-spinning"></Spin>
   }
 
+  const { layout, fixedHeader } = settings;
   return (
     <Spin spinning={loading} size="large" wrapperClassName="global-spinning">
       <Layout className={classNames("app-layout", "screen-".concat(colSize), "theme-".concat(theme))}>
-        {settings.layout === 'top'
+        {layout === 'top'
           ? (
             <>
               <Layout className="app-content-layout">
                 <GlobalHeader
+                  layout={layout}
+                  theme={theme}
+                  fixedHeader={fixedHeader}
                   hasBreadcrumb={false}
                   leftExtraContent={
-                    <Logo />
+                    <LogoAndTitle />
                   }
                   rightExtraContent={
                     <LayoutSetting />
                   }
                 >
                   <SiderMenu
-                    layout={settings.layout}
-                    siderWidth={256}
+                    layout={layout}
+                    siderWidth={siderWidth}
                     theme={theme}
                     isMobile={isMobile}
                     collapsed={collapsed}
@@ -114,7 +117,6 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
                     hasBreadcrumbs={false}
                   />
                 </GlobalHeader>
-                {/* <TabRoute /> */}
                 <Layout.Content className="app-content">
                   {MemoPageRouter}
                 </Layout.Content>
@@ -124,8 +126,9 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
           ) : (
             <>
               <SiderMenu
-                layout={settings.layout}
-                siderWidth={256}
+                layout={layout}
+                fixedHeader={fixedHeader}
+                siderWidth={siderWidth}
                 theme={theme}
                 isMobile={isMobile}
                 collapsed={collapsed}
@@ -133,6 +136,9 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
               />
               <Layout className="app-content-layout">
                 <GlobalHeader
+                  layout={layout}
+                  theme={theme}
+                  hasBreadcrumb={true}
                   leftExtraContent={
                     <SiderTrigger collapsed={collapsed} setCollapsed={setCollapsed} />
                   }
@@ -144,7 +150,6 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
                 <TabRoute />
                 <Layout.Content className="app-content">
                   {MemoPageRouter}
-                  {/* <PageRouter key={refreshKey} indexRoute={indexRoute} routes={routes} /> */}
                 </Layout.Content>
                 <GlobalFooter />
               </Layout>

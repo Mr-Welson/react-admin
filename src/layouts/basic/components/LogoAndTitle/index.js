@@ -1,7 +1,11 @@
 import React from 'react';
+import classNames from 'classnames';
 import style from './index.module.less';
+import { withModel } from '@/store/withModel'
 
-const LogoView = ({ collapsed }) => {
+const LogoAndTitle = ({ collapsed, appModel }) => {
+
+  const { theme } = appModel;
 
   return (
     <div className={style.logo}>
@@ -11,4 +15,4 @@ const LogoView = ({ collapsed }) => {
   )
 }
 
-export default LogoView;
+export default withModel(LogoAndTitle, 'appModel');

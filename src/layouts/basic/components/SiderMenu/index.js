@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Layout, Drawer } from 'antd';
 import { withModel, toJS } from '@/store/withModel'
 import BaseMenu from './BaseMenu';
-import Logo from '../Logo'
+import LogoAndTitle from '../LogoAndTitle'
 import './index.less';
 
 const WebAppMenu = ({ authModel, siderWidth, collapsed, theme, layout }) => {
@@ -38,7 +38,7 @@ const WebAppMenu = ({ authModel, siderWidth, collapsed, theme, layout }) => {
           collapsed={collapsed}
         >
           <div className="app-sider-content">
-            <Logo collapsed={collapsed} />
+            <LogoAndTitle collapsed={collapsed} />
             <BaseMenu
               mode={mode}
               theme={theme}
