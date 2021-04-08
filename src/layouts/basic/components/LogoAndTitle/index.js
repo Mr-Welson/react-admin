@@ -14,4 +14,10 @@ const LogoAndTitle = ({ collapsed, appModel }) => {
   )
 }
 
+export const MLogo = () => (
+  <div className='m-app-logo'>
+    <img alt='logo' src='/assets/logo.png' />
+  </div>
+)
+
 export default withModel(LogoAndTitle, 'appModel');

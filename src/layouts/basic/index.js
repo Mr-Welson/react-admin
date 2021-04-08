@@ -12,9 +12,16 @@ import TabRoute from './components/TabRoute';
 import PageRouter from './components/PageRouter';
 import GlobalFooter from './components/GlobalFooter';
 import LayoutSetting from './components/LayoutSetting';
-import LogoAndTitle from "./components/LogoAndTitle";
+import LogoAndTitle, { MLogo } from "./components/LogoAndTitle";
 import { siderWidth } from './defaultProps';
 import './index.less';
+
+/**
+ * 移动端布局说明：
+ * 1. 顶部导航栏不生效
+ * 2. 自动屏蔽面包屑和多页签
+ * 3. Header 自动添加小Logo 和 SiderTrigger
+ */
 
 const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => {
   const { setTabStore, refreshKey } = tabModel;
@@ -91,7 +98,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   return (
     <Spin spinning={loading} size="large" wrapperClassName="global-spinning">
       <Layout className={classNames("app-layout", "screen-".concat(colSize), "theme-".concat(theme))}>
-        {layout === 'top'
+        {layout === 'top' && !isMobile
           ? (
             <>
               <Layout className="app-content-layout">
@@ -137,16 +144,19 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
                   layout={layout}
                   theme={theme}
                   fixedHeader={fixedHeader}
-                  hasBreadcrumb={true}
+                  hasBreadcrumb={!isMobile}
                   leftExtraContent={
-                    <SiderTrigger collapsed={collapsed} setCollapsed={setCollapsed} />
+                    <>
+                      {isMobile && <MLogo />}
+                      <SiderTrigger collapsed={collapsed} setCollapsed={setCollapsed} />
+                    </>
                   }
                   rightExtraContent={
                     <LayoutSetting />
                   }
                 >
                 </GlobalHeader>
-                <TabRoute />
+                {!isMobile && <TabRoute />}
                 <Layout.Content className="app-content">
                   {MemoPageRouter}
                 </Layout.Content>

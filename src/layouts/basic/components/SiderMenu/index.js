@@ -5,7 +5,7 @@ import BaseMenu from './BaseMenu';
 import LogoAndTitle from '../LogoAndTitle'
 import './index.less';
 
-const WebAppMenu = ({ authModel, siderWidth, collapsed, theme, layout }) => {
+const WebAppMenu = ({ authModel, siderWidth, collapsed, theme, layout, isMobile }) => {
   const { menuList, matchRoutes } = authModel;
   const [activeKeys, setActiveKeys] = useState([]);
   const [matchs, setMatchs] = useState([]);
@@ -23,9 +23,9 @@ const WebAppMenu = ({ authModel, siderWidth, collapsed, theme, layout }) => {
     setActiveKeys(activeKeys)
   }, [matchs])
 
-  const mode = useMemo(() => layout === 'top' ? 'horizontal' : 'inline', [layout])
+  const mode = useMemo(() => (layout === 'top' && !isMobile) ? 'horizontal' : 'inline', [layout, isMobile])
   const hasSiderMenu = useMemo(() => mode === 'inline', [mode])
-  
+
   return (
     hasSiderMenu
       ? (
@@ -78,7 +78,7 @@ const MobileAppMenu = ({ siderWidth, collapsed, setCollapsed, ...rest }) => {
 
 const SiderMenu = ({ isMobile, ...rest }) => {
   const MemoMenu = useMemo(() => isMobile ? MobileAppMenu : WebAppMenuWithModel, [isMobile])
-  return <MemoMenu {...rest} />
+  return <MemoMenu {...rest} isMobile={isMobile} />
 }
 
 export default SiderMenu;
