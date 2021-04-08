@@ -115,6 +115,7 @@ class Model {
 4. ` typescript ` 支持
 5. 路由监听 beforeLeaveHook
 6. checkPermissions
+7. TabContextMenu 渲染优化(只渲染一个)
 
 
 

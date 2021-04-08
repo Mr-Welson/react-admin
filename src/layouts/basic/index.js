@@ -114,7 +114,6 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
                     isMobile={isMobile}
                     collapsed={collapsed}
                     setCollapsed={setCollapsed}
-                    hasBreadcrumbs={false}
                   />
                 </GlobalHeader>
                 <Layout.Content className="app-content">
@@ -127,7 +126,6 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
             <>
               <SiderMenu
                 layout={layout}
-                fixedHeader={fixedHeader}
                 siderWidth={siderWidth}
                 theme={theme}
                 isMobile={isMobile}
@@ -138,6 +136,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
                 <GlobalHeader
                   layout={layout}
                   theme={theme}
+                  fixedHeader={fixedHeader}
                   hasBreadcrumb={true}
                   leftExtraContent={
                     <SiderTrigger collapsed={collapsed} setCollapsed={setCollapsed} />

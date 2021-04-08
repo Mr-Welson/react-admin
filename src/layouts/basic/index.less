@@ -43,6 +43,27 @@
   //   }
   // }
 
+  .app-logo {
+    height: 60px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    img {
+      background: #001529;
+      height: 32px;
+    }
+
+    h1 {
+      font-weight: 600;
+      font-size: 18px;
+      white-space: nowrap;
+      margin: 0 0 0 12px;
+    }
+    &.app-logo-dark h1 {
+      color: #fff;
+    }
+  }
+
   .app-tab-list {
     background: #fff;
     box-shadow: 2px 8px #f0f1f2;
@@ -51,18 +72,17 @@
 
     .ant-tabs-nav {
       margin-bottom: 0;
-    }
+      .ant-tabs-tab {
+        margin: 0 4px;
+        padding: 0;
 
-    .ant-tabs-tab {
-      margin: 0 4px;
-      padding: 0;
+        .app-tab-item {
+          padding: 12px;
 
-      .app-tab-item {
-        padding: 12px;
-
-        .anticon {
-          margin: 0;
-          margin-left: 4px;
+          .anticon {
+            margin: 0;
+            margin-left: 4px;
+          }
         }
       }
     }
@@ -71,11 +91,10 @@
   .app-content {
     padding: 24px;
     overflow: hidden auto;
+    .app-content-layout {
+      height: 100%;
+    }
   }
-}
-
-.app-content-layout {
-  height: 100%;
 }
 
 .tab-context-menu {
