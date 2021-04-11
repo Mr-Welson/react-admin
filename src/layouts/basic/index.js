@@ -28,25 +28,13 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   const { theme, settings, loading, disableMobile } = appModel;
   const { token, setUserStore } = userModel;
   const { indexRoute, flatRoutes, onPathNameChange, generateMenuList, setRouteList, setAuthList, setIndexRoute, setAuthStore } = authModel;
-
   const colSize = useAntdMediaQuery();
   const isMobile = (colSize === 'sm' || colSize === 'xs') && !disableMobile;
+  const { layout, fixedHeader } = settings;
 
   const [canRender, setCanRender] = useState(false);
   const [collapsed, setCollapsed] = useState(isMobile ? true : false);
   const [routes, setRoutes] = useState([]);
-
-  // 监听 resize 
-  useEffect(() => {
-    // colSize: "xs" | "sm" | "md" | "lg" | "xl" | "xxl"
-    ['xs', 'sm', 'md'].includes(colSize) && setCollapsed(true);
-    ['lg', 'xl', 'xxl'].includes(colSize) && setCollapsed(false)
-  }, [colSize])
-
-  // 监听 pathname 
-  useEffect(() => {
-    onPathNameChange(location.pathname, flatRoutes)
-  }, [location.pathname, flatRoutes])
 
   // 暂时使用这种方式在 mobx 中访问 history 对象
   const history = useHistory();
@@ -55,6 +43,27 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
     setTabStore({ history });
   }, [])
 
+  // 监听 resize 
+  useEffect(() => {
+    // colSize: "xs" | "sm" | "md" | "lg" | "xl" | "xxl"
+    if (['xs', 'sm', 'md'].includes(colSize)) {
+      setCollapsed(true)
+    }
+    if (['lg', 'xl', 'xxl'].includes(colSize)) {
+      setCollapsed(false)
+    }
+  }, [colSize])
+
+  useEffect(() => {
+    setTabStore({ showTab: layout !== 'top' && !isMobile })
+  }, [isMobile, layout]);
+
+  // 监听 pathname 
+  useEffect(() => {
+    onPathNameChange(location.pathname, flatRoutes)
+  }, [location.pathname, flatRoutes])
+  
+  // 数据初始化
   const initApp = useCallback(async () => {
     const [data] = await Service.user.getUserPermissionByToken();
     setAuthList(data.auth)
@@ -88,13 +97,12 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
 
   const MemoPageRouter = useMemo(() => {
     return <PageRouter key={refreshKey} indexRoute={indexRoute} routes={routes} />
-  }, [refreshKey, indexRoute, routes])
+  }, [refreshKey, indexRoute, routes]);
 
   if (!canRender) {
     return <Spin spinning={!canRender} size="large" wrapperClassName="global-spinning"></Spin>
   }
 
-  const { layout, fixedHeader } = settings;
   return (
     <Spin spinning={loading} size="large" wrapperClassName="global-spinning">
       <Layout className={classNames("app-layout", "screen-".concat(colSize), "theme-".concat(theme))}>
@@ -108,7 +116,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
                   fixedHeader={fixedHeader}
                   hasBreadcrumb={false}
                   leftExtraContent={
-                    <LogoAndTitle />
+                    <LogoAndTitle theme={theme} />
                   }
                   rightExtraContent={
                     <LayoutSetting />
