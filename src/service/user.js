@@ -10,6 +10,12 @@ const URL = {
 
 class UserService extends HttpRequest {
 
+  systemConfig() {
+    return this.$http({
+      url: `${process.env.PUBLIC_URL}/config/systemConfig.json?${Date.now()}`,
+    })
+  }
+
   async login(data) {
     const response = await this.$http({
       url: URL.login,

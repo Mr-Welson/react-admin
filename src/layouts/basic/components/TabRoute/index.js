@@ -54,7 +54,7 @@ const TabRoute = ({ authModel, tabModel }) => {
     contextMenuRef.current = item;
   }
 
-  const onRefresh = (e) => {
+  const onRefresh = () => {
     contextMenuRef.current = null;
     setRefreshKey(Utils.uuid())
     setTabStore({ refreshKey: Utils.uuid() })
