@@ -19,7 +19,7 @@ class UserModel extends StoreEnhancer {
     this._clearStore()
   }
 
-  setUserStore = (object) => {
+  updateUserStore = (object) => {
     this._setData(object)
   }
 }

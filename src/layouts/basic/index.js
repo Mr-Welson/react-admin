@@ -24,10 +24,10 @@ import './index.less';
  */
 
 const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => {
-  const { setTabStore, refreshKey } = tabModel;
+  const { updateTabStore, refreshKey } = tabModel;
   const { theme, settings, loading, disableMobile } = appModel;
-  const { token, setUserStore } = userModel;
-  const { indexRoute, flatRoutes, onPathNameChange, generateMenuList, setRouteList, setAuthList, setIndexRoute, setAuthStore } = authModel;
+  const { token, updateUserStore } = userModel;
+  const { indexRoute, flatRoutes, onPathNameChange, generateMenuList, updateRouteList, updateAuthList, updateIndexRoute, updateAuthStore } = authModel;
   const colSize = useAntdMediaQuery();
   const isMobile = (colSize === 'sm' || colSize === 'xs') && !disableMobile;
   const { layout, fixedHeader } = settings;
@@ -39,8 +39,8 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   // 暂时使用这种方式在 mobx 中访问 history 对象
   const history = useHistory();
   useEffect(() => {
-    setAuthStore({ history });
-    setTabStore({ history });
+    updateAuthStore({ history });
+    updateTabStore({ history });
   }, [])
 
   // 监听 resize 
@@ -55,7 +55,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   }, [colSize])
 
   useEffect(() => {
-    setTabStore({ showTab: layout !== 'top' && !isMobile })
+    updateTabStore({ showTab: layout !== 'top' && !isMobile })
   }, [isMobile, layout]);
 
   // 监听 pathname 
@@ -66,14 +66,14 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   // 数据初始化
   const initApp = useCallback(async () => {
     const [data] = await Service.user.getUserPermissionByToken();
-    setAuthList(data.auth)
-    const routeList = await setRouteList(data.menu);
+    updateAuthList(data.auth)
+    const routeList = await updateRouteList(data.menu);
     setRoutes(routeList)
     generateMenuList(routeList)
     const indexRoute = routeList.find(v => !v.hideInMenu && v.name);
     // console.log('== indexRoute ==', indexRoute);
     const { name, path, icon, key } = indexRoute
-    setIndexRoute({
+    updateIndexRoute({
       icon,
       key,
       name,
@@ -89,7 +89,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   // 验证 token
   useEffect(() => {
     if (!token) {
-      setUserStore({ token: undefined })
+      updateUserStore({ token: undefined })
       return history.replace('/login')
     }
     initApp()

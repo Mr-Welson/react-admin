@@ -7,7 +7,7 @@ import './login.less'
 
 
 const LoginForm = ({ history, userModel = {} }) => {
-  const { logout, systemConfig, setUserStore } = userModel;
+  const { logout, systemConfig, updateUserStore } = userModel;
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     logout();
@@ -22,7 +22,7 @@ const LoginForm = ({ history, userModel = {} }) => {
     setLoading(true)
     const [result, error] = await Service.user.login(values);
     if (!error) {
-      setUserStore({
+      updateUserStore({
         token: result.token,
         userInfo: result.userInfo
       });

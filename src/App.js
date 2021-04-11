@@ -28,7 +28,7 @@ const App = () => {
 
   useEffect(() => {
     Service.user.systemConfig().then(systemConfig => {
-      store.userModel.setUserStore({ systemConfig })
+      store.userModel.updateUserStore({ systemConfig })
       setCanRender(true)
     })
   }, [])

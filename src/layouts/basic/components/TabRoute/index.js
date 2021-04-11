@@ -15,7 +15,7 @@ const TabRoute = ({ authModel, tabModel }) => {
   const contextMenuRef = useRef();
   const [matchs, setMatchs] = useState([]);
   const { matchRoutes, indexRoute } = authModel;
-  const { tabList, activeTab, initTabList, addTab, closeTab, closeOther, closeAll, setTabStore } = tabModel;
+  const { tabList, activeTab, initTabList, addTab, closeTab, closeOther, closeAll, updateTabStore } = tabModel;
 
   useEffect(() => {
     initTabList()
@@ -40,7 +40,7 @@ const TabRoute = ({ authModel, tabModel }) => {
       location
     }
     addTab(tabItem)
-    setTabStore({ activeTab: tabItem })
+    updateTabStore({ activeTab: tabItem })
   }, [matchs])
 
   const onTabClose = (e, tabItem) => {
@@ -57,7 +57,7 @@ const TabRoute = ({ authModel, tabModel }) => {
   const onRefresh = () => {
     contextMenuRef.current = null;
     setRefreshKey(Utils.uuid())
-    setTabStore({ refreshKey: Utils.uuid() })
+    updateTabStore({ refreshKey: Utils.uuid() })
   }
 
   const onClose = () => {

@@ -121,7 +121,7 @@ class TabModel extends StoreEnhancer {
     this.history.push(indexRoute.pathname)
   }
 
-  setTabStore = (object) => {
+  updateTabStore = (object) => {
     this._setData(object)
   }
 }

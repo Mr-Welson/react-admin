@@ -32,7 +32,7 @@ class AppModel extends StoreEnhancer {
     this._setData({ settings: { ...this.settings, ...object } })
   }
 
-  setAppStore = (object) => {
+  updateAppStore = (object) => {
     console.log(object);
     this._setData(object)
   }

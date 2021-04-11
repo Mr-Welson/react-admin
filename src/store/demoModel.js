@@ -14,7 +14,7 @@ class DemoModel extends StoreEnhancer {
 
   @observable count = 0
 
-  setDemoStore = (object) => {
+  updateDemoStore = (object) => {
     this._setData(object)
   }
 }
