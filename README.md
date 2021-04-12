@@ -22,10 +22,19 @@
 
 ```
   layout: top,sider,mix
-
-
-
 ```
+
+
+
+ 移动端布局说明
+
+1. 顶部导航栏不生效
+
+2. 自动屏蔽面包屑和多页签
+
+3. Header 自动添加小Logo 和 SiderTrigger
+
+ 
 
 ### Route
 

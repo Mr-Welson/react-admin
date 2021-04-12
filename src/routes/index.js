@@ -100,7 +100,7 @@ export const pageRoutes = [
   {
     path: '/demo',
     key: 'demo',
-    name: 'demno',
+    name: 'demo',
     icon: 'VideoCameraOutlined',
     unAuth: true,
     component: Demo,

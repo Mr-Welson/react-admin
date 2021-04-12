@@ -55,6 +55,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
     setTabStore({ history });
   }, [])
 
+  // 初始化应用数据
   const initApp = useCallback(async () => {
     const [data] = await Service.user.getUserPermissionByToken();
     setAuthList(data.auth)
