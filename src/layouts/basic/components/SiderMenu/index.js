@@ -38,7 +38,7 @@ const WebAppMenu = ({ authModel, siderWidth, collapsed, theme, layout, isMobile 
           collapsed={collapsed}
         >
           <div className="app-sider-content">
-            <LogoAndTitle collapsed={collapsed} />
+            <LogoAndTitle collapsed={collapsed} theme={theme} />
             <BaseMenu
               mode={mode}
               theme={theme}

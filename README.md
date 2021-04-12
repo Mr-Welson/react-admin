@@ -160,6 +160,21 @@ https://procomponents.ant.design/components/water-mark
 
 ` use-media-antd-query `
 
+
+
+## Script
+
+### serve
+
+静态服务
+
+```
+npm install -g serve
+serve -s build
+```
+
+
+
 ## Create-React-App Docs
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
