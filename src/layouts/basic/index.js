@@ -12,53 +12,68 @@ import TabRoute from './components/TabRoute';
 import PageRouter from './components/PageRouter';
 import GlobalFooter from './components/GlobalFooter';
 import LayoutSetting from './components/LayoutSetting';
-import Logo from './components/Logo';
+import LogoAndTitle, { MLogo } from "./components/LogoAndTitle";
+import { siderWidth } from './defaultProps';
 import './index.less';
 
+/**
+ * 移动端布局说明：
+ * 1. 顶部导航栏不生效
+ * 2. 自动屏蔽面包屑和多页签
+ * 3. Header 自动添加小Logo 和 SiderTrigger
+ */
+
 const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => {
-  // console.log('=== BasicLayout ===');
-
-  const { setTabStore, refreshKey } = tabModel;
+  const { updateTabStore, refreshKey } = tabModel;
   const { theme, settings, loading, disableMobile } = appModel;
-  const { token, setUserStore } = userModel;
-  const { indexRoute, flatRoutes, onPathNameChange, generateMenuList, setRouteList, setAuthList, setIndexRoute, setAuthStore } = authModel;
-
+  const { token, updateUserStore } = userModel;
+  const { indexRoute, flatRoutes, onPathNameChange, generateMenuList, updateRouteList, updateAuthList, updateIndexRoute, updateAuthStore } = authModel;
   const colSize = useAntdMediaQuery();
   const isMobile = (colSize === 'sm' || colSize === 'xs') && !disableMobile;
+  const { layout, fixedHeader } = settings;
 
   const [canRender, setCanRender] = useState(false);
   const [collapsed, setCollapsed] = useState(isMobile ? true : false);
   const [routes, setRoutes] = useState([]);
 
+  // 暂时使用这种方式在 mobx 中访问 history 对象
+  const history = useHistory();
+  useEffect(() => {
+    updateAuthStore({ history });
+    updateTabStore({ history });
+  }, [])
+
   // 监听 resize 
   useEffect(() => {
     // colSize: "xs" | "sm" | "md" | "lg" | "xl" | "xxl"
-    ['xs', 'sm', 'md'].includes(colSize) && setCollapsed(true);
-    ['lg', 'xl', 'xxl'].includes(colSize) && setCollapsed(false)
+    if (['xs', 'sm', 'md'].includes(colSize)) {
+      setCollapsed(true)
+    }
+    if (['lg', 'xl', 'xxl'].includes(colSize)) {
+      setCollapsed(false)
+    }
   }, [colSize])
+
+  useEffect(() => {
+    updateTabStore({ showTab: layout !== 'top' && !isMobile })
+  }, [isMobile, layout]);
 
   // 监听 pathname 
   useEffect(() => {
     onPathNameChange(location.pathname, flatRoutes)
   }, [location.pathname, flatRoutes])
-
-  // 暂时使用这种方式在 mobx 中访问 history 对象
-  const history = useHistory();
-  useEffect(() => {
-    setAuthStore({ history });
-    setTabStore({ history });
-  }, [])
-
+  
+  // 初始化应用数据
   const initApp = useCallback(async () => {
     const [data] = await Service.user.getUserPermissionByToken();
-    setAuthList(data.auth)
-    const routeList = await setRouteList(data.menu);
+    updateAuthList(data.auth)
+    const routeList = await updateRouteList(data.menu);
     setRoutes(routeList)
     generateMenuList(routeList)
     const indexRoute = routeList.find(v => !v.hideInMenu && v.name);
     // console.log('== indexRoute ==', indexRoute);
     const { name, path, icon, key } = indexRoute
-    setIndexRoute({
+    updateIndexRoute({
       icon,
       key,
       name,
@@ -74,7 +89,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   // 验证 token
   useEffect(() => {
     if (!token) {
-      setUserStore({ token: undefined })
+      updateUserStore({ token: undefined })
       return history.replace('/login')
     }
     initApp()
@@ -82,7 +97,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
 
   const MemoPageRouter = useMemo(() => {
     return <PageRouter key={refreshKey} indexRoute={indexRoute} routes={routes} />
-  }, [refreshKey, indexRoute, routes])
+  }, [refreshKey, indexRoute, routes]);
 
   if (!canRender) {
     return <Spin spinning={!canRender} size="large" wrapperClassName="global-spinning"></Spin>
@@ -91,30 +106,31 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   return (
     <Spin spinning={loading} size="large" wrapperClassName="global-spinning">
       <Layout className={classNames("app-layout", "screen-".concat(colSize), "theme-".concat(theme))}>
-        {settings.layout === 'top'
+        {layout === 'top' && !isMobile
           ? (
             <>
               <Layout className="app-content-layout">
                 <GlobalHeader
+                  layout={layout}
+                  theme={theme}
+                  fixedHeader={fixedHeader}
                   hasBreadcrumb={false}
                   leftExtraContent={
-                    <Logo />
+                    <LogoAndTitle theme={theme} />
                   }
                   rightExtraContent={
                     <LayoutSetting />
                   }
                 >
                   <SiderMenu
-                    layout={settings.layout}
-                    siderWidth={256}
+                    layout={layout}
+                    siderWidth={siderWidth}
                     theme={theme}
                     isMobile={isMobile}
                     collapsed={collapsed}
                     setCollapsed={setCollapsed}
-                    hasBreadcrumbs={false}
                   />
                 </GlobalHeader>
-                {/* <TabRoute /> */}
                 <Layout.Content className="app-content">
                   {MemoPageRouter}
                 </Layout.Content>
@@ -124,8 +140,8 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
           ) : (
             <>
               <SiderMenu
-                layout={settings.layout}
-                siderWidth={256}
+                layout={layout}
+                siderWidth={siderWidth}
                 theme={theme}
                 isMobile={isMobile}
                 collapsed={collapsed}
@@ -133,18 +149,24 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
               />
               <Layout className="app-content-layout">
                 <GlobalHeader
+                  layout={layout}
+                  theme={theme}
+                  fixedHeader={fixedHeader}
+                  hasBreadcrumb={!isMobile}
                   leftExtraContent={
-                    <SiderTrigger collapsed={collapsed} setCollapsed={setCollapsed} />
+                    <>
+                      {isMobile && <MLogo />}
+                      <SiderTrigger collapsed={collapsed} setCollapsed={setCollapsed} />
+                    </>
                   }
                   rightExtraContent={
                     <LayoutSetting />
                   }
                 >
                 </GlobalHeader>
-                <TabRoute />
+                {!isMobile && <TabRoute />}
                 <Layout.Content className="app-content">
                   {MemoPageRouter}
-                  {/* <PageRouter key={refreshKey} indexRoute={indexRoute} routes={routes} /> */}
                 </Layout.Content>
                 <GlobalFooter />
               </Layout>

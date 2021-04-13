@@ -13,12 +13,13 @@ class UserModel extends StoreEnhancer {
 
   @observable token = null
   @observable userInfo = {}
+  @observable systemConfig = {}
 
   logout = () => {
     this._clearStore()
   }
 
-  setUserStore = (object) => {
+  updateUserStore = (object) => {
     this._setData(object)
   }
 }

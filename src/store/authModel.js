@@ -65,7 +65,7 @@ class AuthModel extends StoreEnhancer {
   }
 
   // 根据权限过滤路由
-  setRouteList = (remoteRouteList) => {
+  updateRouteList = (remoteRouteList) => {
     const flatRemoteRoutes = Utils.flattenRoutes(remoteRouteList, 'children')
     let routeList = [];
     pageRoutes.forEach(v => {
@@ -109,16 +109,16 @@ class AuthModel extends StoreEnhancer {
   }
 
   // 根据权限过滤路由
-  setAuthList = (remoteAuthList) => {
+  updateAuthList = (remoteAuthList) => {
     const authList = localAuthList.filter(v => remoteAuthList.find(x => v.authKey === x.action))
     this._setData({ authList })
   }
 
-  setIndexRoute = (indexRoute) => {
+  updateIndexRoute = (indexRoute) => {
     this._setData({ indexRoute })
   }
 
-  setAuthStore = (object) => {
+  updateAuthStore = (object) => {
     this._setData(object)
   }
 }

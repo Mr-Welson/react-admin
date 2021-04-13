@@ -1,22 +1,21 @@
 import React from 'react';
 import { Menu, Dropdown, Button } from 'antd';
-import { withModel, toJS } from '@/store/withModel'
+import { withModel } from '@/store/withModel'
 
 const LayoutSetting = ({ appModel }) => {
-  const { setAppStore } = appModel
-  const settings = toJS(appModel.settings)
+  const { updateSetting } = appModel
   return (
     <div className={'header-action'}>
       <Dropdown
         overlay={
           <Menu>
             <Menu.Item>
-              <div onClick={() => setAppStore({ settings: { ...settings, layout: 'side' } })}>
+              <div onClick={() => updateSetting({ layout: 'side' })}>
                 侧边菜单
           </div>
             </Menu.Item>
             <Menu.Item>
-              <div onClick={() => setAppStore({ settings: { ...settings, layout: 'top' } })}>
+              <div onClick={() => updateSetting({ layout: 'top' })}>
                 顶部菜单
           </div>
             </Menu.Item>

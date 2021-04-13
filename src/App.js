@@ -1,6 +1,16 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { HashRouter, BrowserRouter, Switch, Route } from 'react-router-dom'
-import { staticRoutes } from '@/routes'
+import { Provider } from 'mobx-react';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/lib/locale/zh_CN';
+import 'antd/dist/antd.css';
+import { staticRoutes } from '@/routes';
+import Service from '@/service';
+import store from '@/store'
+import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
+
+dayjs.locale('zh-cn')
 
 const getRouteType = (routeType) => {
   switch (routeType) {
@@ -13,17 +23,34 @@ const getRouteType = (routeType) => {
 
 const App = () => {
   const [routeType] = useState('browser')
-  const Router = useMemo(() => getRouteType(routeType), [routeType])
+  const [canRender, setCanRender] = useState(false)
+  const Router = useMemo(() => getRouteType(routeType), [routeType]);
+
+  useEffect(() => {
+    Service.user.systemConfig().then(systemConfig => {
+      store.userModel.updateUserStore({ systemConfig })
+      setCanRender(true)
+    })
+  }, [])
+
+  if (!canRender) {
+    return null
+  }
+
   return (
-    <Router>
-        <Switch>
-          {staticRoutes.map(route => (
-            <Route exact={route.exact} key={route.path} path={route.path} component={route.component} />
-          ))}
-          {/* <Route exact path='/login' component={Login} />
+    <ConfigProvider locale={zhCN}>
+      <Provider {...store}>
+        <Router basename="/exam">
+          <Switch>
+            {staticRoutes.map(route => (
+              <Route exact={route.exact} key={route.path} path={route.path} component={route.component} />
+            ))}
+            {/* <Route exact path='/login' component={Login} />
           <Route path='/' component={Layout} /> */}
-        </Switch>
-    </Router>
+          </Switch>
+        </Router>
+      </Provider>
+    </ConfigProvider>
   );
 }
 

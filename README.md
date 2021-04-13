@@ -22,10 +22,19 @@
 
 ```
   layout: top,sider,mix
-
-
-
 ```
+
+
+
+ 移动端布局说明
+
+1. 顶部导航栏不生效
+
+2. 自动屏蔽面包屑和多页签
+
+3. Header 自动添加小Logo 和 SiderTrigger
+
+ 
 
 ### Route
 
@@ -115,6 +124,7 @@ class Model {
 4. ` typescript ` 支持
 5. 路由监听 beforeLeaveHook
 6. checkPermissions
+7. TabContextMenu 渲染优化(只渲染一个)
 
 
 
@@ -149,6 +159,21 @@ https://procomponents.ant.design/components/water-mark
 ### 响应式
 
 ` use-media-antd-query `
+
+
+
+## Script
+
+### serve
+
+静态服务
+
+```
+npm install -g serve
+serve -s build
+```
+
+
 
 ## Create-React-App Docs
 

@@ -1,28 +1,25 @@
 import React from 'react';
 import { Layout } from 'antd';
-import style from './index.module.less';
-import BreadcrumbsView from './BreadcrumbsView';
-import ThemeMenu from './ThemeMenu'
-import HeaderDropdown from './HeaderDropdown';
+import classNames from 'classnames';
+import BreadcrumbsView from '../BreadcrumbsView';
+import HeaderActions from "./HeaderActions";
+import './index.less';
 
-const GlobalHeader = ({ hasBreadcrumb = true, leftExtraContent = null, rightExtraContent = null, children }) => {
+const GlobalHeader = ({ layout, fixedHeader, theme, hasBreadcrumb = true, leftExtraContent = null, rightExtraContent = null, children }) => {
 
   return (
-    <Layout.Header className={style['global-header']}>
-      <div className={style["left-content"]}>
-        {leftExtraContent}
-        {hasBreadcrumb && <BreadcrumbsView />}
-      </div>
-      <div className={style['middle-content']}>
-        {children}
-      </div>
-      <div className={style['right-content']}>
-        {rightExtraContent}
-        <div className={style['header-action']}>
-          <ThemeMenu />
+    <Layout.Header className={classNames("global-header", "global-header-".concat(theme), { "global-header-fixed": fixedHeader })}>
+      <div className={classNames({ 'root-header': layout === 'side' }, { 'top-nav-header': layout === 'top' })}>
+        <div className="left-content">
+          {leftExtraContent}
+          {hasBreadcrumb && <BreadcrumbsView />}
         </div>
-        <div className={style['header-action']}>
-          <HeaderDropdown />
+        <div className='middle-content'>
+          {children}
+        </div>
+        <div className='right-content'>
+          {rightExtraContent}
+          <HeaderActions />
         </div>
       </div>
     </Layout.Header>

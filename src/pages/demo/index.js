@@ -4,11 +4,11 @@ import { withModel } from '@/store/withModel'
 
 const Demo = ({ demoModel }) => {
 
-  const { count, setDemoStore } = demoModel
+  const { count, updateDemoStore } = demoModel
   useEffect(() => {
     const fetchData = async () => {
       const [result, error] = await Service.demo.fetchData()
-      setDemoStore({count: result})
+      updateDemoStore({count: result})
     }
     fetchData()
   }, [])

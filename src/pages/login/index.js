@@ -7,7 +7,7 @@ import './login.less'
 
 
 const LoginForm = ({ history, userModel = {} }) => {
-  const { logout, setUserStore } = userModel;
+  const { logout, systemConfig, updateUserStore } = userModel;
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     logout();
@@ -21,9 +21,8 @@ const LoginForm = ({ history, userModel = {} }) => {
     }
     setLoading(true)
     const [result, error] = await Service.user.login(values);
-    console.log(result);
     if (!error) {
-      setUserStore({
+      updateUserStore({
         token: result.token,
         userInfo: result.userInfo
       });
@@ -35,7 +34,7 @@ const LoginForm = ({ history, userModel = {} }) => {
   return (
     <div className="login-layout">
       <div className="logo-box">
-        <span className="logo-name">中台系统</span>
+        <span className="logo-name">{systemConfig.systemName}</span>
       </div>
       <Form className="login-form" name="login-form" onFinish={onFinish}>
         <Form.Item
