@@ -54,10 +54,6 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
     }
   }, [colSize])
 
-  useEffect(() => {
-    updateTabStore({ showTab: layout !== 'top' && !isMobile })
-  }, [isMobile, layout]);
-
   // 监听 pathname 
   useEffect(() => {
     onPathNameChange(location.pathname, flatRoutes)

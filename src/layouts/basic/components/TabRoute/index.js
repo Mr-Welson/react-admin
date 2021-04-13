@@ -17,6 +17,14 @@ const TabRoute = ({ authModel, tabModel }) => {
   const { matchRoutes, indexRoute } = authModel;
   const { tabList, activeTab, initTabList, addTab, closeTab, closeOther, closeAll, updateTabStore } = tabModel;
 
+  // 监听 TabRoute 渲染状态
+  useEffect(() => {
+    updateTabStore({ showTab: true })
+    return () => {
+      updateTabStore({ showTab: false })
+    }
+  }, [])
+
   useEffect(() => {
     initTabList()
   }, [])
