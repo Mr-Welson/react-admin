@@ -24,10 +24,9 @@ import './index.less';
  */
 
 const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => {
-  const { updateTabStore, refreshKey } = tabModel;
   const { theme, settings, loading, disableMobile } = appModel;
   const { token, updateUserStore } = userModel;
-  const { indexRoute, flatRoutes, onPathNameChange, generateMenuList, updateRouteList, updateAuthList, updateIndexRoute, updateAuthStore } = authModel;
+  const { pageKey, indexRoute, flatRoutes, onPathNameChange, generateMenuList, updateRouteList, updateAuthList, updateIndexRoute, updateAuthStore } = authModel;
   const colSize = useAntdMediaQuery();
   const isMobile = (colSize === 'sm' || colSize === 'xs') && !disableMobile;
   const { layout, fixedHeader } = settings;
@@ -40,7 +39,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   const history = useHistory();
   useEffect(() => {
     updateAuthStore({ history });
-    updateTabStore({ history });
+    tabModel.updateTabStore({ history });
   }, [])
 
   // 监听 resize 
@@ -92,8 +91,8 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   }, [token])
 
   const MemoPageRouter = useMemo(() => {
-    return <PageRouter key={refreshKey} indexRoute={indexRoute} routes={routes} />
-  }, [refreshKey, indexRoute, routes]);
+    return <PageRouter key={pageKey} indexRoute={indexRoute} routes={routes} />
+  }, [pageKey, indexRoute, routes]);
 
   if (!canRender) {
     return <Spin spinning={!canRender} size="large" wrapperClassName="global-spinning"></Spin>
