@@ -13,7 +13,7 @@ import PageRouter from './components/PageRouter';
 import GlobalFooter from './components/GlobalFooter';
 import LayoutSetting from './components/LayoutSetting';
 import LogoAndTitle, { MLogo } from "./components/LogoAndTitle";
-import { siderWidth } from './defaultProps';
+import { siderWidth, collapsedWidth } from './defaultProps';
 import './index.less';
 
 /**
@@ -57,7 +57,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   useEffect(() => {
     onPathNameChange(location.pathname, flatRoutes)
   }, [location.pathname, flatRoutes])
-  
+
   // 初始化应用数据
   const initApp = useCallback(async () => {
     const [data] = await Service.user.getUserPermissionByToken();
@@ -98,56 +98,49 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
     return <Spin spinning={!canRender} size="large" wrapperClassName="global-spinning"></Spin>
   }
 
+  const headerWidth = (isMobile || !fixedHeader) ? "100%" : `calc(100% - ${collapsed ? collapsedWidth : siderWidth}px)`
   return (
     <Spin spinning={loading} size="large" wrapperClassName="global-spinning">
       <Layout className={classNames("app-layout", "screen-".concat(colSize), "theme-".concat(theme))}>
         {layout === 'top' && !isMobile
           ? (
-            <>
-              <Layout className="app-content-layout">
-                <GlobalHeader
-                  layout={layout}
-                  theme={theme}
-                  fixedHeader={fixedHeader}
-                  hasBreadcrumb={false}
-                  leftExtraContent={
-                    <LogoAndTitle theme={theme} />
-                  }
-                  rightExtraContent={
-                    <LayoutSetting />
-                  }
-                >
-                  <SiderMenu
-                    layout={layout}
-                    siderWidth={siderWidth}
-                    theme={theme}
-                    isMobile={isMobile}
-                    collapsed={collapsed}
-                    setCollapsed={setCollapsed}
-                  />
-                </GlobalHeader>
-                <Layout.Content className="app-content">
-                  {MemoPageRouter}
-                </Layout.Content>
-                <GlobalFooter />
-              </Layout>
-            </>
+            <Layout className="app-content-layout">
+              <GlobalHeader
+                hasBreadcrumb={false}
+                headerWidth='100%'
+                leftExtraContent={
+                  <LogoAndTitle theme={theme} />
+                }
+                rightExtraContent={
+                  <LayoutSetting />
+                }
+              >
+                <SiderMenu
+                  isMobile={isMobile}
+                  collapsedWidth={collapsedWidth}
+                  siderWidth={siderWidth}
+                  collapsed={collapsed}
+                  setCollapsed={setCollapsed}
+                />
+              </GlobalHeader>
+              <Layout.Content className="app-content">
+                {MemoPageRouter}
+              </Layout.Content>
+              <GlobalFooter />
+            </Layout>
           ) : (
             <>
               <SiderMenu
-                layout={layout}
-                siderWidth={siderWidth}
-                theme={theme}
                 isMobile={isMobile}
+                collapsedWidth={collapsedWidth}
+                siderWidth={siderWidth}
                 collapsed={collapsed}
                 setCollapsed={setCollapsed}
               />
               <Layout className="app-content-layout">
                 <GlobalHeader
-                  layout={layout}
-                  theme={theme}
-                  fixedHeader={fixedHeader}
                   hasBreadcrumb={!isMobile}
+                  headerWidth={headerWidth}
                   leftExtraContent={
                     <>
                       {isMobile && <MLogo />}
@@ -157,8 +150,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
                   rightExtraContent={
                     <LayoutSetting />
                   }
-                >
-                </GlobalHeader>
+                />
                 {!isMobile && <TabRoute />}
                 <Layout.Content className="app-content">
                   {MemoPageRouter}

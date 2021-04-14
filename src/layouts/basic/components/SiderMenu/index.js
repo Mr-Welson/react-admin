@@ -5,8 +5,10 @@ import BaseMenu from './BaseMenu';
 import LogoAndTitle from '../LogoAndTitle'
 import './index.less';
 
-const WebAppMenu = ({ authModel, siderWidth, collapsed, theme, layout, isMobile }) => {
+const WebAppMenu = ({ appModel, authModel, siderWidth, collapsed, collapsedWidth, isMobile }) => {
   const { menuList, matchRoutes } = authModel;
+  const { theme, settings } = appModel;
+  const { layout } = settings;
   const [activeKeys, setActiveKeys] = useState([]);
   const [matchs, setMatchs] = useState([]);
 
@@ -32,6 +34,7 @@ const WebAppMenu = ({ authModel, siderWidth, collapsed, theme, layout, isMobile 
         <Layout.Sider
           className="app-sider"
           width={siderWidth}
+          collapsedWidth={collapsedWidth}
           theme={theme}
           trigger={null}
           collapsible
@@ -58,7 +61,7 @@ const WebAppMenu = ({ authModel, siderWidth, collapsed, theme, layout, isMobile 
   )
 }
 
-const WebAppMenuWithModel = withModel(WebAppMenu, 'authModel');
+const WebAppMenuWithModel = withModel(WebAppMenu, 'authModel', 'appModel');
 
 const MobileAppMenu = ({ siderWidth, collapsed, setCollapsed, ...rest }) => {
   return (

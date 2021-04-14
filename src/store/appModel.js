@@ -3,7 +3,7 @@ import StoreEnhancer from './StoreEnhancer';
 
 const layoutSettings = {
   layout: 'side', // side / top / mix
-  // fixedHeader: true, // 顶部是否置顶
+  fixedHeader: true, // 顶部是否置顶
   // fixSiderbar: true, // 设为 false 时, 侧边栏会跟随 content 一起滚动
   navTheme: "dark",
   primaryColor: "#1890ff",
@@ -23,7 +23,7 @@ class AppModel extends StoreEnhancer {
   }
 
   // 主题 light/dark
-  @observable theme = 'dark'
+  @observable theme = 'dark';
   @observable settings = layoutSettings;
   @observable loading = false;
   @observable disableMobile = false;
@@ -33,7 +33,6 @@ class AppModel extends StoreEnhancer {
   }
 
   updateAppStore = (object) => {
-    console.log(object);
     this._setData(object)
   }
 }
