@@ -13,7 +13,7 @@ import PageRouter from './components/PageRouter';
 import GlobalFooter from './components/GlobalFooter';
 import LayoutSetting from './components/LayoutSetting';
 import LogoAndTitle, { MLogo } from "./components/LogoAndTitle";
-import { siderWidth } from './defaultProps';
+import { siderWidth, collapsedWidth } from './defaultProps';
 import './index.less';
 
 /**
@@ -24,10 +24,9 @@ import './index.less';
  */
 
 const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => {
-  const { updateTabStore, refreshKey } = tabModel;
   const { theme, settings, loading, disableMobile } = appModel;
   const { token, updateUserStore } = userModel;
-  const { indexRoute, flatRoutes, onPathNameChange, generateMenuList, updateRouteList, updateAuthList, updateIndexRoute, updateAuthStore } = authModel;
+  const { pageKey, indexRoute, flatRoutes, onPathNameChange, generateMenuList, updateRouteList, updateAuthList, updateIndexRoute, updateAuthStore } = authModel;
   const colSize = useAntdMediaQuery();
   const isMobile = (colSize === 'sm' || colSize === 'xs') && !disableMobile;
   const { layout, fixedHeader } = settings;
@@ -40,7 +39,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   const history = useHistory();
   useEffect(() => {
     updateAuthStore({ history });
-    updateTabStore({ history });
+    tabModel.updateTabStore({ history });
   }, [])
 
   // 监听 resize 
@@ -54,15 +53,11 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
     }
   }, [colSize])
 
-  useEffect(() => {
-    updateTabStore({ showTab: layout !== 'top' && !isMobile })
-  }, [isMobile, layout]);
-
   // 监听 pathname 
   useEffect(() => {
     onPathNameChange(location.pathname, flatRoutes)
   }, [location.pathname, flatRoutes])
-  
+
   // 初始化应用数据
   const initApp = useCallback(async () => {
     const [data] = await Service.user.getUserPermissionByToken();
@@ -96,63 +91,56 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
   }, [token])
 
   const MemoPageRouter = useMemo(() => {
-    return <PageRouter key={refreshKey} indexRoute={indexRoute} routes={routes} />
-  }, [refreshKey, indexRoute, routes]);
+    return <PageRouter key={pageKey} indexRoute={indexRoute} routes={routes} />
+  }, [pageKey, indexRoute, routes]);
 
   if (!canRender) {
     return <Spin spinning={!canRender} size="large" wrapperClassName="global-spinning"></Spin>
   }
 
+  const headerWidth = (isMobile || !fixedHeader) ? "100%" : `calc(100% - ${collapsed ? collapsedWidth : siderWidth}px)`
   return (
     <Spin spinning={loading} size="large" wrapperClassName="global-spinning">
       <Layout className={classNames("app-layout", "screen-".concat(colSize), "theme-".concat(theme))}>
         {layout === 'top' && !isMobile
           ? (
-            <>
-              <Layout className="app-content-layout">
-                <GlobalHeader
-                  layout={layout}
-                  theme={theme}
-                  fixedHeader={fixedHeader}
-                  hasBreadcrumb={false}
-                  leftExtraContent={
-                    <LogoAndTitle theme={theme} />
-                  }
-                  rightExtraContent={
-                    <LayoutSetting />
-                  }
-                >
-                  <SiderMenu
-                    layout={layout}
-                    siderWidth={siderWidth}
-                    theme={theme}
-                    isMobile={isMobile}
-                    collapsed={collapsed}
-                    setCollapsed={setCollapsed}
-                  />
-                </GlobalHeader>
-                <Layout.Content className="app-content">
-                  {MemoPageRouter}
-                </Layout.Content>
-                <GlobalFooter />
-              </Layout>
-            </>
+            <Layout className="app-content-layout">
+              <GlobalHeader
+                hasBreadcrumb={false}
+                headerWidth='100%'
+                leftExtraContent={
+                  <LogoAndTitle theme={theme} />
+                }
+                rightExtraContent={
+                  <LayoutSetting />
+                }
+              >
+                <SiderMenu
+                  isMobile={isMobile}
+                  collapsedWidth={collapsedWidth}
+                  siderWidth={siderWidth}
+                  collapsed={collapsed}
+                  setCollapsed={setCollapsed}
+                />
+              </GlobalHeader>
+              <Layout.Content className="app-content">
+                {MemoPageRouter}
+              </Layout.Content>
+              <GlobalFooter />
+            </Layout>
           ) : (
             <>
               <SiderMenu
-                layout={layout}
-                siderWidth={siderWidth}
-                theme={theme}
                 isMobile={isMobile}
+                collapsedWidth={collapsedWidth}
+                siderWidth={siderWidth}
                 collapsed={collapsed}
                 setCollapsed={setCollapsed}
               />
               <Layout className="app-content-layout">
                 <GlobalHeader
-                  layout={layout}
-                  theme={theme}
-                  fixedHeader={fixedHeader}
                   hasBreadcrumb={!isMobile}
+                  headerWidth={headerWidth}
                   leftExtraContent={
                     <>
                       {isMobile && <MLogo />}
@@ -162,8 +150,7 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
                   rightExtraContent={
                     <LayoutSetting />
                   }
-                >
-                </GlobalHeader>
+                />
                 {!isMobile && <TabRoute />}
                 <Layout.Content className="app-content">
                   {MemoPageRouter}

@@ -25,6 +25,9 @@ class AuthModel extends StoreEnhancer {
   @observable menuList = []
   // 当前路径匹配的路由
   @observable matchRoutes = []
+  // 控制页面强制刷新
+  @observable pageKey = 1
+
 
   // 展开后的一维路由
   @computed

@@ -34,8 +34,11 @@
   }
 
   &.global-header-fixed {
+    width   : 100%;
     position: fixed;
-    top     : 0;
+    z-index : 19;
+    top     : 0px;
+    right   : 0px;
   }
 
   // 侧边导航栏布局
@@ -49,4 +52,11 @@
   .top-nav-header {
     padding: 0;
   }
+}
+
+.global-header-shadow {
+  height     : 60px;
+  line-height: 60px;
+  width      : 100%;
+  background : transparent;
 }

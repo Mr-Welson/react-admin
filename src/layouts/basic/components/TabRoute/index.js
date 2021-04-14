@@ -14,8 +14,16 @@ const TabRoute = ({ authModel, tabModel }) => {
   const [refreshKey, setRefreshKey] = useState(1);
   const contextMenuRef = useRef();
   const [matchs, setMatchs] = useState([]);
-  const { matchRoutes, indexRoute } = authModel;
+  const { matchRoutes, indexRoute, updateAuthStore } = authModel;
   const { tabList, activeTab, initTabList, addTab, closeTab, closeOther, closeAll, updateTabStore } = tabModel;
+
+  // 监听 TabRoute 渲染状态
+  useEffect(() => {
+    updateTabStore({ showTab: true })
+    return () => {
+      updateTabStore({ showTab: false })
+    }
+  }, [])
 
   useEffect(() => {
     initTabList()
@@ -57,7 +65,7 @@ const TabRoute = ({ authModel, tabModel }) => {
   const onRefresh = () => {
     contextMenuRef.current = null;
     setRefreshKey(Utils.uuid())
-    updateTabStore({ refreshKey: Utils.uuid() })
+    updateAuthStore({ pageKey: Utils.uuid() })
   }
 
   const onClose = () => {
