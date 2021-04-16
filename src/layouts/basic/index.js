@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import useAntdMediaQuery from 'use-media-antd-query';
 import classNames from 'classnames';
 import { withRouter, useHistory } from 'react-router-dom';
+import _ from 'lodash';
 import { Layout, Spin } from 'antd';
 import { withModel } from '@/store/withModel'
 import Service from '@/service';
@@ -63,8 +64,8 @@ const BasicLayout = ({ location, userModel, authModel, appModel, tabModel }) => 
     const [data] = await Service.user.getUserPermissionByToken();
     updateAuthList(data.auth)
     const routeList = await updateRouteList(data.menu);
-    setRoutes(routeList)
-    generateMenuList(routeList)
+    setRoutes(_.cloneDeep(routeList))
+    generateMenuList(_.cloneDeep(routeList))
     const indexRoute = routeList.find(v => !v.hideInMenu && v.name);
     // console.log('== indexRoute ==', indexRoute);
     const { name, path, icon, key } = indexRoute
