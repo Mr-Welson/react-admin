@@ -4,15 +4,13 @@
   padding    : 0;
   position   : relative;
 
-
   .left-content {
     display    : flex;
     align-items: center;
   }
 
   .middle-content {
-    flex    : 1;
-    overflow: hidden;
+    flex: 1;
   }
 
   .right-content {
@@ -50,7 +48,20 @@
 
   // 顶部导航栏布局
   .top-nav-header {
-    padding: 0;
+    padding   : 0;
+    box-shadow: 0 1px 4px 0 rgb(0 21 41 / 12%);
+    padding   : 0;
+
+    .ant-menu.ant-menu-horizontal {
+      border    : none;
+      height    : 100%;
+      background: transparent;
+    }
+
+    .ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item,
+    .ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-submenu {
+      margin: -1px 20px 0px;
+    }
   }
 }
 
