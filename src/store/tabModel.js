@@ -31,8 +31,8 @@ class TabModel extends StoreEnhancer {
   }
 
   // 保存路由的 history 对象
-  history = {}
-  @observable showTab = true;
+  history = undefined;
+  @observable showTab = false;
   @observable tabList = []
   @observable activeTab = {}
   @observable refreshKey = 1
@@ -87,7 +87,7 @@ class TabModel extends StoreEnhancer {
    * @params {object | undefined} 不传 tabItem 表示关闭当前
    */
   closeTab = (tabItem) => {
-    if (!this.showTab) {
+    if (!this.showTab && this.history) {
       return
     }
     tabItem = tabItem || this.activeTab;
