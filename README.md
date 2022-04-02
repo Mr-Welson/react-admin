@@ -101,7 +101,7 @@ export default new AppModel();
 
 ## To-Do
 
-1. mobx 中访问 history 的方式需优化，当前方式如下，并不美好
+- [ ] mobx 中访问 history 的方式需优化，当前方式如下，并不美好
 
 ```
 // 组件
@@ -119,12 +119,19 @@ class Model {
 }
 ```
 
-2. ` src/routes ` 中的组件采用懒加载方式
-3. 寻找更好的 `hooks` 方式的状态管理替代 `mobx`，当前采用的是 `mobx@4.15.7` (因为要考虑兼容 ie10+)
-4. ` typescript ` 支持
-5. 路由监听 beforeLeaveHook
-6. checkPermissions
-7. TabContextMenu 渲染优化(只渲染一个)
+- [x] ` src/routes ` 中的组件采用懒加载方式
+
+- [ ] 寻找更好的 `hooks` 方式的状态管理替代 `mobx`，当前采用的是 `mobx@4.15.7` (因为要考虑兼容 ie10+)
+
+- [ ] ` typescript ` 支持
+
+- [ ] 路由监听 beforeLeaveHook
+
+- [ ] checkPermissions
+
+- [ ] TabContextMenu 渲染优化(只渲染一个)
+
+- [ ] 首次加载一个模块时，会闪现一个 loading，体验不是很好 `@\src\layouts\basic\components\PageRouter\index.js`
 
 
 
@@ -162,9 +169,19 @@ https://procomponents.ant.design/components/water-mark
 use-media-antd-query 
 ```
 
-### 
+### 拖拽
 ```
 react-beautiful-dnd
+```
+
+### 代码分割
+
+👉 [See full documentation](https://loadable-components.com/)
+
+```
+
+@loadable/component
+
 ```
 
 ## Script
