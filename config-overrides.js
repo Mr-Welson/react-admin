@@ -80,11 +80,11 @@ module.exports = {
     // 使用less-loader对源码重的less的变量进行重新制定，设置antd自定义主题
     addLessLoader({
       javascriptEnabled: true,
-      // modifyVars:{
+      modifyVars:{
       //   'hack': `true;@import "${require.resolve('antd/lib/style/color/colorPalette.less')}";`,
       // ...darkThemeVars,
-      //   '@primary-color':'#6e41ff',
-      // },
+        '@primary-color':'#F53F3F',
+      },
       localIdentName: '[local]--[hash:base64:5]' // use less-modules
     }),
     addAntdDayjsWebpackPlugin(),

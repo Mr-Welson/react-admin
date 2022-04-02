@@ -60,15 +60,6 @@
             "id": "190c2b43bec6a5f7a4194a85db67d96a"
           },
           {
-            "path": "/system/menu",
-            "meta": {
-              "icon": "UserOutlined",
-              "title": "菜单管理"
-            },
-            "name": "systemMenu",
-            "id": "54dd5457a3190740005c1bfec55b1c34"
-          },
-          {
             "path": "/system/depart",
             "meta": {
               "icon": "UserOutlined",
@@ -76,15 +67,6 @@
             },
             "name": "systemDepart",
             "id": "45c966826eeff4c99b8f8ebfe74511fc"
-          },
-          {
-            "path": "/system/dict",
-            "meta": {
-              "icon": "UserOutlined",
-              "title": "字典管理"
-            },
-            "name": "systemDict",
-            "id": "f1cb187abf927c88b89470d08615f5ac"
           }
         ]
       }
