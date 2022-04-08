@@ -1,0 +1,41 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color: var(--color-text-2);
+  --font-size: var(--font-size-3); // 主字号 14px
+}
+
+// 定义滚动条
+body[theme='dark'],
+body[theme='light'] {
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+    background: transparent;
+  }
+
+  /* 滑块样式 */
+  ::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: 8px;
+    background-color: var(--color-text-4);
+    background-clip: padding-box;
+
+    &:hover {
+      background-color: var(--color-text-3);
+    }
+  }
+
+  /* 滚动条外层轨道样式 */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+}

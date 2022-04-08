@@ -1,0 +1,22 @@
+.app-sider {
+  min-height: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  &.app-sider-light {
+    background: var(--color-menu-light-bg);
+  }
+  &.app-sider-dark {
+    background: var(--color-menu-dark-bg);
+  }
+  .app-sider-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .app-menu {
+      flex: 1;
+      overflow: hidden auto;
+    }
+  }
+}

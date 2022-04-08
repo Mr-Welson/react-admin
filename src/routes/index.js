@@ -5,7 +5,7 @@
  * @param {?Boolean} exact true 是否严格匹配
  * @param {?ReactComponentElement} component 前端路由对应的组件路径
  * @param {?Array} routes 配置子路由
- * @param {String} name 路由标题
+ * @param {String} title 路由标题
  * @param {?String} icon 路由图标
  * @param {String} key 路由的唯一标识符(不能重复)
  * @param {?String} authKey 按钮权限(可以重复)
@@ -19,64 +19,60 @@
  * @param {?Boolean} unAuth 是否不需要通过权限校验，如 404 路由不需要权验证
  */
 import { lazy } from 'react';
-import Layout from '@/layouts/basic'
-import Login from '@/pages/login'
-// import Menu_1_1 from '@/pages/nested/menu-1/menu-1-1'
-// import Menu_1_2 from '@/pages/nested/menu-1/menu-1-2'
-// import Menu_2 from '@/pages/nested/menu-2'
+import Layout from '@/layouts';
+import Login from '@/pages/login';
 const P404 = lazy(() => import('@/pages/404'));
 const Home = lazy(() => import('@/pages/home'));
-const Test = lazy(() => import('@/pages/test'));
-const SystemLayout = lazy(() => import('@/layouts/system'));
-const User = lazy(() => import('@/pages/system/user'));
-const ViewUser = lazy(() => import('@/pages/system/user/viewUser'));
+// const SystemLayout = lazy(() => import('@/pages/system'));
+// const User = lazy(() => import('@/pages/system/user'));
+// const ViewUser = lazy(() => import('@/pages/system/user/viewUser'));
 // const EditUser = lazy(() => import('@/pages/system/user/editUser'));
-const AddUser = lazy(() => import('@/pages/system/user/addUser'));
-const Menu = lazy(() => import('@/pages/system/menu'));
-const Role = lazy(() => import('@/pages/system/role'));
-const Depart = lazy(() => import('@/pages/system/depart'));
-const Dict = lazy(() => import('@/pages/system/dict'));
-const Demo = lazy(() => import('@/pages/demo'));
+// const AddUser = lazy(() => import('@/pages/system/user/addUser'));
+const TableList = lazy(() => import('@/pages/list/table'));
+const CardList = lazy(() => import('@/pages/list/card'));
+const GroupForm = lazy(() => import('@/pages/form/group'));
+const StepForm = lazy(() => import('@/pages/form/step'));
+const BasicProfile = lazy(() => import('@/pages/profile/basic'));
 
 // 按钮权限
 export const localAuthList = [
   // ---- 用户管理 ----
   {
     key: 'user:view',
-    name: '查看用户按钮',
+    title: '查看用户按钮',
     authKey: 'user:view',
   },
   {
     key: 'user:edit',
-    name: '编辑用户',
+    title: '编辑用户',
     authKey: 'user:update',
   },
   // ---- 角色管理 ----
   {
     key: 'role:add',
-    name: '添加角色',
+    title: '添加角色',
     authKey: 'role:update',
   },
   {
     key: 'role:edit',
-    name: '编辑角色',
+    title: '编辑角色',
     authKey: 'role:update',
   },
-]
+];
 // 业务路由
 export const pageRoutes = [
   {
     // root路由必须排在第一个
     path: '/',
     key: 'root',
-    name: 'root',
+    title: 'root',
     unAuth: true,
     hideInMenu: true,
   },
   {
     path: '/404',
     key: '404',
-    name: '404',
+    title: '404',
     icon: 'UserOutlined',
     hideInMenu: true,
     unAuth: true,
@@ -85,135 +81,99 @@ export const pageRoutes = [
   {
     path: '/home',
     key: 'home',
-    name: '首页',
-    icon: 'UserOutlined',
+    title: '首页',
+    icon: 'HomeOutlined',
     component: Home,
   },
   {
-    path: '/test',
-    key: 'test',
-    isLocal: true,
-    name: '测试',
-    icon: 'VideoCameraOutlined',
-    component: Test,
-  },
-  {
-    path: '/demo',
-    key: 'demo',
-    name: 'demo',
-    icon: 'VideoCameraOutlined',
-    unAuth: true,
-    component: Demo,
-  },
-  {
-    path: '/system',
-    key: 'system',
-    name: '系统管理',
-    icon: 'UserOutlined',
-    component: SystemLayout,
+    path: '/list',
+    key: 'list',
+    title: '列表页',
+    icon: 'BarsOutlined',
     routes: [
       {
-        path: '/system/user',
-        key: 'systemUser',
-        name: '用户管理',
-        icon: 'UserOutlined',
-        component: User,
+        path: '/list/table',
+        key: 'tableList',
+        title: '查询表格',
+        component: TableList,
       },
       {
-        path: '/system/user/view/:id',
-        key: 'systemUserView',
-        name: '查看用户',
-        icon: 'UserOutlined',
-        hideInMenu: true,
-        authKey: 'user:view',
-        component: ViewUser,
+        path: '/list/card',
+        key: 'cardList',
+        title: '卡片列表',
+        component: CardList,
+      },
+    ],
+  },
+  {
+    path: '/form',
+    key: 'form',
+    title: '表单页',
+    icon: 'FormOutlined',
+    routes: [
+      {
+        path: '/form/group',
+        key: 'groupForm',
+        title: '分组表单',
+        component: GroupForm,
       },
       {
-        path: '/system/user/add',
-        key: 'systemUserAdd',
-        name: '添加用户',
-        icon: 'UserOutlined',
-        hideInMenu: true,
-        authKey: 'user:update',
-        component: AddUser,
+        path: '/form/step',
+        key: 'stepForm',
+        title: '分步表单',
+        component: StepForm,
       },
-      // {
-      //   path: '/system/user/edit',
-      //   key: 'systemUserEdit',
-      //   name: '编辑用户',
-      //   icon: 'UserOutlined',
-      //   hideInMenu: true,
-      //   authKey: 'user:update',
-      //   component: EditUser,
-      // },
+    ],
+  },
+  {
+    path: '/profile',
+    key: 'profile',
+    title: '详情页',
+    icon: 'ProfileOutlined',
+    routes: [
       {
-        path: '/system/role',
-        key: 'systemRole',
-        name: '角色管理',
-        icon: 'UserOutlined',
-        component: Role,
+        path: '/profile/basic',
+        key: 'basicProfile',
+        title: '基础详情页',
+        component: BasicProfile,
       },
-      {
-        path: '/system/menu',
-        key: 'systemMenu',
-        name: '菜单管理',
-        icon: 'UserOutlined',
-        component: Menu,
-      },
-      {
-        path: '/system/depart',
-        key: 'systemDepart',
-        component: Depart,
-        name: '部门管理',
-        icon: 'UserOutlined',
-      },
-      {
-        path: '/system/dict',
-        key: 'systemDict',
-        name: '字典管理',
-        icon: 'UserOutlined',
-        component: Dict,
-      },
-    ]
+    ],
   },
   // {
-  //   path: '/nested',
-  //   key: 'nested',
-  //   name: '一级菜单',
+  //   path: '/system',
+  //   key: 'system',
+  //   title: '系统管理',
   //   icon: 'UserOutlined',
+  //   component: SystemLayout,
   //   routes: [
   //     {
-  //       path: '/nested/menu-1',
-  //       key: 'menu-1',
-  //       name: '二级菜单01',
+  //       path: '/system/user',
+  //       key: 'systemUser',
+  //       title: '用户管理',
   //       icon: 'UserOutlined',
-  //       routes: [
-  //         {
-  //           path: '/nested/menu-1/menu-1-1',
-  //           key: 'menu-1-1',
-  //           name: '三级菜单01',
-  //           icon: 'UserOutlined',
-  //           component: Menu_1_1,
-  //         },
-  //         {
-  //           path: '/nested/menu-1/menu-1-2',
-  //           key: 'menu-1-2',
-  //           name: '三级菜单02',
-  //           icon: 'UserOutlined',
-  //           component: Menu_1_2,
-  //         }
-  //       ]
+  //       component: User,
   //     },
   //     {
-  //       path: '/nested/menu-2',
-  //       key: 'menu-2',
-  //       name: '二级菜单02',
+  //       path: '/system/user/view/:id',
+  //       key: 'systemUserView',
+  //       title: '查看用户',
   //       icon: 'UserOutlined',
-  //       component: Menu_2,
+  //       hideInMenu: true,
+  //       authKey: 'user:view',
+  //       component: ViewUser,
   //     },
-  //   ]
+  //     {
+  //       path: '/system/user/add',
+  //       key: 'systemUserAdd',
+  //       title: '添加用户',
+  //       icon: 'UserOutlined',
+  //       hideInMenu: true,
+  //       authKey: 'user:update',
+  //       component: AddUser,
+  //     },
+  //   ],
   // },
-]
+];
 
 // 静态路由和根路由
 export const staticRoutes = [
@@ -221,7 +181,7 @@ export const staticRoutes = [
     path: '/login',
     exact: true,
     key: 'login',
-    name: '登录',
+    title: '登录',
     hideInMenu: true,
     component: Login,
   },
@@ -229,8 +189,8 @@ export const staticRoutes = [
     path: '/',
     exact: false,
     key: 'root',
-    name: '布局',
+    title: '布局',
     hideInMenu: true,
     component: Layout,
-  }
-]
+  },
+];

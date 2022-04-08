@@ -1,11 +1,10 @@
 import { HttpRequest } from './request';
 import { pageRoutes } from '@/routes'
-
-const baseUrl = '/mock';
+import { mockApi } from "./config";
 
 const URL = {
-  login: `${baseUrl}/sysLogin.json`,
-  getUserPermissionByToken: `${baseUrl}/getUserPermissionByToken.json`,
+  login: `${mockApi}/sysLogin.json`,
+  getUserPermissionByToken: `${mockApi}/getUserPermissions.json`,
 }
 
 class UserService extends HttpRequest {

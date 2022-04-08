@@ -8,7 +8,7 @@ import authModel from './authModel'
   const indexRoute = {
     icon: 'UserOutlined',
     key: 'home',
-    name: '首页',
+    title: '首页',
     pathname: '/home',
     location: {
       pathname: '/home',

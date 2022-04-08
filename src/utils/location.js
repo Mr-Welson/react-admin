@@ -1,28 +1,28 @@
 import { matchPath } from 'react-router-dom';
 
 export function matchPathRoutes(pathname, flatRoutes) {
-  const matchRoutes = flatRoutes.filter(v => {
+  const matchRoutes = flatRoutes.filter((v) => {
     const matchInfo = matchPath(pathname, {
       path: v.path,
       exact: v.exact,
-      strict: v.strict
+      strict: v.strict,
     });
-    return matchInfo
-  })
-  return matchRoutes
+    return matchInfo;
+  });
+  return matchRoutes;
 }
 
 /**
  * 处理location.search的方法,将字符串转换成json
  * @param {string} search
  */
-export function queryToObject(search = "") {
+export function queryToObject(search = '') {
   let params = {};
-  if (typeof search === "string" && search !== "") {
-    search = search.indexOf("?") < 0 ? search : search.substr(search.indexOf("?") + 1);
-    let a = search.split("&");
-    let b = a.map(v => v.split("="));
-    b.map(v => (params[v[0]] = v[1]));
+  if (typeof search === 'string' && search !== '') {
+    search = search.indexOf('?') < 0 ? search : search.substr(search.indexOf('?') + 1);
+    let a = search.split('&');
+    let b = a.map((v) => v.split('='));
+    b.map((v) => (params[v[0]] = v[1]));
   }
   return params;
 }
@@ -37,9 +37,9 @@ export function objectToQuery(object, strict = true) {
   for (let key in object) {
     let value = object[key];
     if (value === undefined && !strict) {
-      continue
+      continue;
     }
-    arr.push(`${key}=${value}`)
+    arr.push(`${key}=${value}`);
   }
   return arr.join('&');
 }
@@ -54,3 +54,9 @@ export function crosCheck(path) {
   return regCros.test(path);
 }
 
+export function getPublicPath(path) {
+  if (!path) {
+    return process.env.PUBLIC_URL;
+  }
+  return `${process.env.PUBLIC_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+}

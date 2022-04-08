@@ -1,21 +1,18 @@
 import { HttpRequest } from './request';
-
-const baseUrl = '/mock';
+import { mockApi } from './config';
 
 const URL = {
-  login: `${baseUrl}/sysLogin.json`,
-  getUserPermissionByToken: `${baseUrl}/getUserPermissionByToken.json`,
-}
+  login: `${mockApi}/sysLogin.json`,
+};
 
 class DemoService extends HttpRequest {
-
   fetchData() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       setTimeout(() => {
-        resolve([111, false])
-      }, 300)
-    })
+        resolve([111, false]);
+      }, 300);
+    });
   }
 }
 
-export default new DemoService()
+export default new DemoService();

@@ -14,12 +14,12 @@ const AuthComponent = ({
   let hasAuth;
   if (Array.isArray(authName)) {
     if (matchAll) {
-      hasAuth = authName.every(v => authList.find(x => x.name === v))
+      hasAuth = authName.every(v => authList.find(x => x.key === v))
     } else {
-      hasAuth = !!authName.find(v => authList.find(x => x.name === v))
+      hasAuth = !!authName.find(v => authList.find(x => x.key === v))
     }
   } else {
-    hasAuth = !!authList.find(v => v.name === authName)
+    hasAuth = !!authList.find(v => v.key === authName)
   }
 
   return hasAuth ? children : noAuthComponent

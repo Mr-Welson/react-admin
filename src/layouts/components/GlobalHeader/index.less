@@ -1,0 +1,70 @@
+@globalHeaderHeight: 60px;
+
+.global-header-shadow {
+  height: @globalHeaderHeight;
+  line-height: @globalHeaderHeight;
+  width: 100%;
+  flex: 0 0 auto;
+  background: transparent;
+  transition: width 0.2s;
+}
+
+.global-header-wrapper {
+  position: relative;
+  height: @globalHeaderHeight;
+  line-height: @globalHeaderHeight;
+  padding: 0;
+  transition: width 0.2s;
+  color: var(--color-text-2);
+  background-color: var(--color-bg-2);
+  border-bottom: 1px solid var(--color-border);
+
+  &.global-header-wrapper-fixed {
+    width: 100%;
+    position: fixed;
+    z-index: 19;
+    top: 0px;
+    right: 0px;
+  }
+
+  .global-header {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    .left-content {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .middle-content {
+      flex: 1;
+    }
+
+    .right-content {
+      display: flex;
+      float: right;
+      margin-left: auto;
+      overflow: hidden;
+      height: 100%;
+    }
+  }
+
+  // // 顶部导航栏布局
+  // .top-nav-header {
+  //   box-shadow: 0 1px 4px 0 rgb(0 21 41 / 12%);
+  //   padding: 0;
+
+  //   .ant-menu.ant-menu-horizontal {
+  //     border: none;
+  //     height: 100%;
+  //     background: transparent;
+  //   }
+
+  //   .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item,
+  //   .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu {
+  //     margin: -1px 20px 0px;
+  //   }
+  // }
+}

@@ -1,0 +1,10 @@
+{
+  "layout": "side",
+  "theme": "light",
+  "primaryColor": "#1890ff",
+  "footer": true,
+  "routeType": "browser",
+  "showTags": true,
+  "siderWidth": 220,
+  "collapsedWidth": 80
+}

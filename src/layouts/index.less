@@ -1,0 +1,61 @@
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-bg-1);
+}
+
+// 全局 loading
+.global-spinning,
+.ant-spin-container {
+  height: 100%;
+  width: 100%;
+}
+
+body .ant-layout {
+  background: transparent;
+}
+.ant-layout.app-layout {
+  height: 100%;
+  width: 100%;
+  // overflow: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-1);
+
+  // 顶部导航
+  &.app-top-layout {
+    .ant-menu-horizontal {
+      border-bottom: none;
+      height: 100%;
+      line-height: 58px;
+    }
+  }
+
+  // 混合布局
+  &.app-mix-layout {
+    .app-mix-layout-content {
+      flex-direction: row;
+      .app-content-wrapper {
+        // overflow: auto;
+      }
+    }
+  }
+
+  // 侧边通栏
+  &.app-side-layout {
+    .app-sider {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 99;
+      border-right: 1px solid var(--color-border);
+      .ant-menu {
+        border-right: none !important;
+      }
+    }
+    .app-side-layout-content {
+      transition: all 0.2s;
+    }
+  }
+}
