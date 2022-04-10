@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.c9bec295.css",
-    "main.js": "/static/js/main.0eb24c18.js",
+    "main.js": "/static/js/main.a33bae59.js",
     "vendors~main.css": "/static/css/vendors~main.df463b40.chunk.css",
     "vendors~main.js": "/static/js/vendors~main.6eefa16d.chunk.js",
     "static/css/2.4444f990.chunk.css": "/static/css/2.4444f990.chunk.css",
@@ -24,13 +24,13 @@
     "static/js/11.6ae52697.chunk.js.gz": "/static/js/11.6ae52697.chunk.js.gz",
     "static/js/2.f94e31e4.chunk.js.gz": "/static/js/2.f94e31e4.chunk.js.gz",
     "static/js/3.51c0bcae.chunk.js.gz": "/static/js/3.51c0bcae.chunk.js.gz",
-    "static/js/main.0eb24c18.js.gz": "/static/js/main.0eb24c18.js.gz",
+    "static/js/main.a33bae59.js.gz": "/static/js/main.a33bae59.js.gz",
     "static/js/vendors~main.6eefa16d.chunk.js.gz": "/static/js/vendors~main.6eefa16d.chunk.js.gz"
   },
   "entrypoints": [
     "static/css/vendors~main.df463b40.chunk.css",
     "static/js/vendors~main.6eefa16d.chunk.js",
     "static/css/main.c9bec295.css",
-    "static/js/main.0eb24c18.js"
+    "static/js/main.a33bae59.js"
   ]
 }
