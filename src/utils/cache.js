@@ -1,5 +1,8 @@
 import Cookie from 'js-cookie';
 
+function getStorageKey(key) {
+  return `RA_${key}`;
+}
 /**
  * 获取缓存数据
  * @param {string} key
@@ -9,10 +12,10 @@ export function getCache(key, type = 'local') {
   let data;
   switch (type) {
     case 'cookie':
-      data = Cookie.get(key);
+      data = Cookie.get(getStorageKey(key));
       break;
     case 'session':
-      let strS = sessionStorage.getItem(key);
+      let strS = sessionStorage.getItem(getStorageKey(key));
       try {
         data = JSON.parse(strS);
       } catch (e) {
@@ -20,7 +23,7 @@ export function getCache(key, type = 'local') {
       }
       break;
     default:
-      let strL = localStorage.getItem(key);
+      let strL = localStorage.getItem(getStorageKey(key));
       try {
         data = JSON.parse(strL);
       } catch (e) {
@@ -40,13 +43,13 @@ export function getCache(key, type = 'local') {
 export function setCache(key, value, type = 'local') {
   switch (type) {
     case 'cookie':
-      Cookie.set(key, value, { expires: 7 });
+      Cookie.set(getStorageKey(key), value, { expires: 7 });
       break;
     case 'session':
-      sessionStorage.setItem(key, JSON.stringify(value));
+      sessionStorage.setItem(getStorageKey(key), JSON.stringify(value));
       break;
     default:
-      localStorage.setItem(key, JSON.stringify(value));
+      localStorage.setItem(getStorageKey(key), JSON.stringify(value));
       break;
   }
 }
@@ -59,7 +62,7 @@ export function setCache(key, value, type = 'local') {
  */
 export function setStorage(key, value, limitErrorAction) {
   try {
-    localStorage.setItem(key, value);
+    localStorage.setItem(getStorageKey(key), value);
   } catch (oException) {
     console.error(oException);
     if (oException.name === 'QuotaExceededError') {
@@ -75,4 +78,3 @@ export function setStorage(key, value, limitErrorAction) {
     }
   }
 }
-
