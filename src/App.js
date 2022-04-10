@@ -39,7 +39,7 @@ const App = () => {
   return (
     <ConfigProvider locale={zhCN}>
       <Provider {...store}>
-        <Router basename='/build'>
+        <Router basename=''>
           <Switch>
             {staticRoutes.map((route) => (
               <Route exact={route.exact} key={route.path} path={route.path} component={route.component} />

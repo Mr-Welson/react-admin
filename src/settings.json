@@ -3,7 +3,7 @@
   "theme": "light",
   "primaryColor": "#1890ff",
   "footer": true,
-  "routeType": "browser",
+  "routeType": "hash",
   "showTags": true,
   "siderWidth": 220,
   "collapsedWidth": 80

@@ -29,7 +29,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://mr-welson.github.io/react-admin/build",
+  "homepage": "/demo/react-admin/",
   "eslintConfig": {
     "extends": [
       "react-app",
