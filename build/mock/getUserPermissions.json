@@ -1,0 +1,54 @@
+{
+  "success": true,
+  "message": "查询成功",
+  "code": 200,
+  "result": {
+    "auth": [
+      {
+        "action": "user:view",
+        "describe": "查看用户按钮",
+        "type": "1"
+      }
+    ],
+    "menu": [
+      {
+        "meta": {
+          "icon": "UserOutlined",
+          "title": "首页"
+        },
+        "name": "home"
+      },
+      {
+        "name": "list",
+        "children": [
+          {
+            "name": "tableList"
+          },
+          {
+            "name": "cardList"
+          }
+        ]
+      },
+      {
+        "name": "form",
+        "children": [
+          {
+            "name": "groupForm"
+          },
+          {
+            "name": "stepForm"
+          }
+        ]
+      },
+      {
+        "name": "profile",
+        "children": [
+          {
+            "name": "basicProfile"
+          }
+        ]
+      }
+    ]
+  },
+  "timestamp": 1611621678293
+}

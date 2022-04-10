@@ -1,0 +1,909 @@
+{
+  "success": true,
+  "message": "登录成功",
+  "code": 200,
+  "result": {
+    "multi_depart": 1,
+    "userInfo": {
+      "id": "e9ca23d68d884d4ebb19d07889727dae",
+      "username": "admin",
+      "realname": "管理员",
+      "avatar": "temp/avatar2_1601294345772.jpg",
+      "birthday": "2018-12-05",
+      "sex": 2,
+      "email": "jeecg@163.com",
+      "phone": "18611111111",
+      "orgCode": "A04",
+      "status": 1,
+      "delFlag": 0,
+      "workNo": "00001",
+      "post": "7",
+      "telephone": null,
+      "createBy": null,
+      "createTime": "2038-06-21 17:54:10",
+      "updateBy": "admin",
+      "updateTime": "2021-02-02 14:13:34",
+      "activitiSync": 1,
+      "userIdentity": 2,
+      "departIds": "ad0bae1fccab487e80cf09cdda4bd836",
+      "securityGrade": "0",
+      "thirdId": null,
+      "thirdType": null
+    },
+    "sysAllDictItems": {
+      "user_type": [
+        {
+          "value": "333",
+          "text": "333",
+          "title": "333"
+        }
+      ],
+      "area_type": [
+        {
+          "value": "0",
+          "text": "普及教育管理",
+          "title": "普及教育管理"
+        },
+        {
+          "value": "1",
+          "text": "专业培训管理",
+          "title": "专业培训管理"
+        }
+      ],
+      "priority": [
+        {
+          "value": "H",
+          "text": "高",
+          "title": "高"
+        },
+        {
+          "value": "M",
+          "text": "中",
+          "title": "中"
+        },
+        {
+          "value": "L",
+          "text": "低",
+          "title": "低"
+        }
+      ],
+      "dict_item_status": [
+        {
+          "value": "1",
+          "text": "启用",
+          "title": "启用"
+        },
+        {
+          "value": "0",
+          "text": "不启用",
+          "title": "不启用"
+        }
+      ],
+      "user_post": [
+        {
+          "value": "1",
+          "text": "副科级",
+          "title": "副科级"
+        },
+        {
+          "value": "2",
+          "text": "正科级",
+          "title": "正科级"
+        },
+        {
+          "value": "3",
+          "text": "副处级",
+          "title": "副处级"
+        },
+        {
+          "value": "4",
+          "text": "正处级",
+          "title": "正处级"
+        },
+        {
+          "value": "5",
+          "text": "副厅级",
+          "title": "副厅级"
+        },
+        {
+          "value": "6",
+          "text": "正厅级",
+          "title": "正厅级"
+        },
+        {
+          "value": "7",
+          "text": "副部级",
+          "title": "副部级"
+        },
+        {
+          "value": "8",
+          "text": "正部级",
+          "title": "正部级"
+        }
+      ],
+      "activiti_sync": [
+        {
+          "value": "1",
+          "text": "同步",
+          "title": "同步"
+        },
+        {
+          "value": "0",
+          "text": "不同步",
+          "title": "不同步"
+        }
+      ],
+      "msgSendStatus": [
+        {
+          "value": "0",
+          "text": "未发送",
+          "title": "未发送"
+        },
+        {
+          "value": "1",
+          "text": "发送成功",
+          "title": "发送成功"
+        },
+        {
+          "value": "2",
+          "text": "发送失败",
+          "title": "发送失败"
+        }
+      ],
+      "msg_type": [
+        {
+          "value": "USER",
+          "text": "指定用户",
+          "title": "指定用户"
+        },
+        {
+          "value": "ALL",
+          "text": "全体用户",
+          "title": "全体用户"
+        }
+      ],
+      "eoa_plan_type": [
+        {
+          "value": "1",
+          "text": "日常记录",
+          "title": "日常记录"
+        },
+        {
+          "value": "2",
+          "text": "本周工作",
+          "title": "本周工作"
+        },
+        {
+          "value": "3",
+          "text": "下周计划",
+          "title": "下周计划"
+        }
+      ],
+      "status": [
+        {
+          "value": "1",
+          "text": "正常",
+          "title": "正常"
+        },
+        {
+          "value": "2",
+          "text": "冻结",
+          "title": "冻结"
+        }
+      ],
+      "exam_certification_state": [
+        {
+          "value": "1",
+          "text": "有效",
+          "title": "有效"
+        },
+        {
+          "value": "2",
+          "text": "即将过期",
+          "title": "即将过期"
+        },
+        {
+          "value": "3",
+          "text": "过期",
+          "title": "过期"
+        }
+      ],
+      "info_type": [
+        {
+          "value": "0",
+          "text": "通知公告",
+          "title": "通知公告"
+        },
+        {
+          "value": "1",
+          "text": "工作动态",
+          "title": "工作动态"
+        },
+        {
+          "value": "2",
+          "text": "宣传教育",
+          "title": "宣传教育"
+        },
+        {
+          "value": "3",
+          "text": "保密科技",
+          "title": "保密科技"
+        }
+      ],
+      "msgType": [
+        {
+          "value": "4",
+          "text": "系统",
+          "title": "系统"
+        },
+        {
+          "value": "1",
+          "text": "短信",
+          "title": "短信"
+        },
+        {
+          "value": "2",
+          "text": "邮件",
+          "title": "邮件"
+        },
+        {
+          "value": "3",
+          "text": "微信",
+          "title": "微信"
+        }
+      ],
+      "eoa_plan_status": [
+        {
+          "value": "0",
+          "text": "未开始",
+          "title": "未开始"
+        },
+        {
+          "value": "1",
+          "text": "进行中",
+          "title": "进行中"
+        },
+        {
+          "value": "2",
+          "text": "已完成",
+          "title": "已完成"
+        }
+      ],
+      "exam_paper_generate": [
+        {
+          "value": "1",
+          "text": "手工组卷",
+          "title": "手工组卷"
+        },
+        {
+          "value": "2",
+          "text": "固定随机组卷",
+          "title": "固定随机组卷"
+        },
+        {
+          "value": "3",
+          "text": "随机组卷",
+          "title": "随机组卷"
+        }
+      ],
+      "annex_type": [
+        {
+          "value": "0",
+          "text": "区域任务",
+          "title": "区域任务"
+        },
+        {
+          "value": "1",
+          "text": "NPC对话",
+          "title": "NPC对话"
+        }
+      ],
+      "work_task_status": [
+        {
+          "value": "0",
+          "text": "未开始",
+          "title": "未开始"
+        },
+        {
+          "value": "1",
+          "text": "进行中",
+          "title": "进行中"
+        },
+        {
+          "value": "2",
+          "text": "已结束",
+          "title": "已结束"
+        }
+      ],
+      "work_complete_status": [
+        {
+          "value": "0",
+          "text": "未上报",
+          "title": "未上报"
+        },
+        {
+          "value": "1",
+          "text": "已上报",
+          "title": "已上报"
+        }
+      ],
+      "database_type": [
+        {
+          "value": "1",
+          "text": "MySQL",
+          "title": "MySQL"
+        },
+        {
+          "value": "2",
+          "text": "Oracle",
+          "title": "Oracle"
+        },
+        {
+          "value": "3",
+          "text": "SQLServer",
+          "title": "SQLServer"
+        }
+      ],
+      "display_type": [
+        {
+          "value": "0",
+          "text": "图片",
+          "title": "图片"
+        },
+        {
+          "value": "1",
+          "text": "图文结合",
+          "title": "图文结合"
+        },
+        {
+          "value": "2",
+          "text": "视频",
+          "title": "视频"
+        },
+        {
+          "value": "3",
+          "text": "网页",
+          "title": "网页"
+        },
+        {
+          "value": "4",
+          "text": "技术演示组合①",
+          "title": "技术演示组合①"
+        },
+        {
+          "value": "5",
+          "text": "技术演示组合②",
+          "title": "技术演示组合②"
+        },
+        {
+          "value": "6",
+          "text": "技术演示组合③",
+          "title": "技术演示组合③"
+        }
+      ],
+      "times": [
+        {
+          "value": "1",
+          "text": "一次",
+          "title": "一次"
+        },
+        {
+          "value": "2",
+          "text": "二次",
+          "title": "二次"
+        },
+        {
+          "value": "3",
+          "text": "三次",
+          "title": "三次"
+        },
+        {
+          "value": "4",
+          "text": "四次",
+          "title": "四次"
+        },
+        {
+          "value": "5",
+          "text": "五次",
+          "title": "五次"
+        }
+      ],
+      "log_type": [
+        {
+          "value": "2",
+          "text": "操作日志",
+          "title": "操作日志"
+        },
+        {
+          "value": "1",
+          "text": "登录日志",
+          "title": "登录日志"
+        }
+      ],
+      "training_type": [
+        {
+          "value": "0",
+          "text": "学习模式",
+          "title": "学习模式"
+        },
+        {
+          "value": "1",
+          "text": "考核模式",
+          "title": "考核模式"
+        },
+        {
+          "value": "2",
+          "text": "学考结合",
+          "title": "学考结合"
+        }
+      ],
+      "send_status": [
+        {
+          "value": "0",
+          "text": "未发布",
+          "title": "未发布"
+        },
+        {
+          "value": "1",
+          "text": "已发布",
+          "title": "已发布"
+        },
+        {
+          "value": "2",
+          "text": "已撤销",
+          "title": "已撤销"
+        }
+      ],
+      "activity_range": [
+        {
+          "value": "1",
+          "text": "区直",
+          "title": "区直"
+        },
+        {
+          "value": "2",
+          "text": "市直",
+          "title": "市直"
+        },
+        {
+          "value": "3",
+          "text": "市保密局",
+          "title": "市保密局"
+        },
+        {
+          "value": "4",
+          "text": "其他",
+          "title": "其他"
+        }
+      ],
+      "eoa_cms_menu_type": [
+        {
+          "value": "1",
+          "text": "列表",
+          "title": "列表"
+        },
+        {
+          "value": "2",
+          "text": "链接",
+          "title": "链接"
+        }
+      ],
+      "bpm_process_type": [
+        {
+          "value": "test",
+          "text": "测试流程",
+          "title": "测试流程"
+        },
+        {
+          "value": "oa",
+          "text": "OA办公",
+          "title": "OA办公"
+        },
+        {
+          "value": "business",
+          "text": "业务办理",
+          "title": "业务办理"
+        }
+      ],
+      "form_perms_type": [
+        {
+          "value": "1",
+          "text": "可见(未授权不可见)",
+          "title": "可见(未授权不可见)"
+        },
+        {
+          "value": "2",
+          "text": "可编辑(未授权禁用)",
+          "title": "可编辑(未授权禁用)"
+        }
+      ],
+      "compliance_status": [
+        {
+          "value": "0",
+          "text": "不合规",
+          "title": "不合规"
+        },
+        {
+          "value": "1",
+          "text": "合规",
+          "title": "合规"
+        },
+        {
+          "value": "2",
+          "text": "无需操作",
+          "title": "无需操作"
+        }
+      ],
+      "valid_status": [
+        {
+          "value": "0",
+          "text": "无效",
+          "title": "无效"
+        },
+        {
+          "value": "1",
+          "text": "有效",
+          "title": "有效"
+        }
+      ],
+      "urgent_level": [
+        {
+          "value": "1",
+          "text": "一般",
+          "title": "一般"
+        },
+        {
+          "value": "2",
+          "text": "重要",
+          "title": "重要"
+        },
+        {
+          "value": "3",
+          "text": "紧急",
+          "title": "紧急"
+        }
+      ],
+      "user_status": [
+        {
+          "value": "1",
+          "text": "正常",
+          "title": "正常"
+        },
+        {
+          "value": "2",
+          "text": "冻结",
+          "title": "冻结"
+        }
+      ],
+      "operate_type": [
+        {
+          "value": "1",
+          "text": "查询",
+          "title": "查询"
+        },
+        {
+          "value": "2",
+          "text": "添加",
+          "title": "添加"
+        },
+        {
+          "value": "3",
+          "text": "修改",
+          "title": "修改"
+        },
+        {
+          "value": "4",
+          "text": "删除",
+          "title": "删除"
+        },
+        {
+          "value": "5",
+          "text": "导入",
+          "title": "导入"
+        },
+        {
+          "value": "6",
+          "text": "导出",
+          "title": "导出"
+        }
+      ],
+      "quartz_status": [
+        {
+          "value": "0",
+          "text": "正常",
+          "title": "正常"
+        },
+        {
+          "value": "-1",
+          "text": "停止",
+          "title": "停止"
+        }
+      ],
+      "menu_type": [
+        {
+          "value": "2",
+          "text": "按钮权限",
+          "title": "按钮权限"
+        },
+        {
+          "value": "1",
+          "text": "子菜单",
+          "title": "子菜单"
+        },
+        {
+          "value": "0",
+          "text": "一级菜单",
+          "title": "一级菜单"
+        }
+      ],
+      "exam_point_grade": [
+        {
+          "value": "0",
+          "text": "不及格",
+          "title": "不及格"
+        },
+        {
+          "value": "1",
+          "text": "及格",
+          "title": "及格"
+        },
+        {
+          "value": "2",
+          "text": "良好",
+          "title": "良好"
+        },
+        {
+          "value": "3",
+          "text": "优秀",
+          "title": "优秀"
+        }
+      ],
+      "sex": [
+        {
+          "value": "1",
+          "text": "男",
+          "title": "男"
+        },
+        {
+          "value": "2",
+          "text": "女",
+          "title": "女"
+        }
+      ],
+      "exam_que_level": [
+        {
+          "value": "1",
+          "text": "简单",
+          "title": "简单"
+        },
+        {
+          "value": "2",
+          "text": "中等",
+          "title": "中等"
+        },
+        {
+          "value": "3",
+          "text": "困难",
+          "title": "困难"
+        }
+      ],
+      "perms_type": [
+        {
+          "value": "1",
+          "text": "显示",
+          "title": "显示"
+        },
+        {
+          "value": "2",
+          "text": "禁用",
+          "title": "禁用"
+        }
+      ],
+      "global_perms_type": [
+        {
+          "value": "1",
+          "text": "可见/可访问(授权后可见/可访问)",
+          "title": "可见/可访问(授权后可见/可访问)"
+        },
+        {
+          "value": "2",
+          "text": "可编辑(未授权时禁用)",
+          "title": "可编辑(未授权时禁用)"
+        }
+      ],
+      "release_status": [
+        {
+          "value": "0",
+          "text": "未发布",
+          "title": "未发布"
+        },
+        {
+          "value": "1",
+          "text": "已发布",
+          "title": "已发布"
+        }
+      ],
+      "online_graph_type": [
+        {
+          "value": "bar",
+          "text": "柱状图",
+          "title": "柱状图"
+        },
+        {
+          "value": "line",
+          "text": "曲线图",
+          "title": "曲线图"
+        },
+        {
+          "value": "pie",
+          "text": "饼图",
+          "title": "饼图"
+        },
+        {
+          "value": "table",
+          "text": "数据列表",
+          "title": "数据列表"
+        }
+      ],
+      "link_type": [
+        {
+          "value": "0",
+          "text": "图片",
+          "title": "图片"
+        },
+        {
+          "value": "1",
+          "text": "视频",
+          "title": "视频"
+        },
+        {
+          "value": "2",
+          "text": "网页",
+          "title": "网页"
+        },
+        {
+          "value": "3",
+          "text": "模型",
+          "title": "模型"
+        },
+        {
+          "value": "4",
+          "text": "对话",
+          "title": "对话"
+        },
+        {
+          "value": "5",
+          "text": "文件",
+          "title": "文件"
+        }
+      ],
+      "security_code": [
+        {
+          "value": "0",
+          "text": "核心",
+          "title": "核心"
+        },
+        {
+          "value": "1",
+          "text": "重要",
+          "title": "重要"
+        },
+        {
+          "value": "2",
+          "text": "一般",
+          "title": "一般"
+        },
+        {
+          "value": "3",
+          "text": "非涉密",
+          "title": "非涉密"
+        }
+      ],
+      "bpm_status": [
+        {
+          "value": "1",
+          "text": "待提交",
+          "title": "待提交"
+        },
+        {
+          "value": "2",
+          "text": "处理中",
+          "title": "处理中"
+        },
+        {
+          "value": "3",
+          "text": "已完成",
+          "title": "已完成"
+        },
+        {
+          "value": "4",
+          "text": "已作废",
+          "title": "已作废"
+        }
+      ],
+      "secret_level": [
+        {
+          "value": "0",
+          "text": "核心",
+          "title": "核心"
+        },
+        {
+          "value": "1",
+          "text": "重要",
+          "title": "重要"
+        },
+        {
+          "value": "2",
+          "text": "一般",
+          "title": "一般"
+        },
+        {
+          "value": "3",
+          "text": "非涉密",
+          "title": "非涉密"
+        }
+      ],
+      "depart_status": [
+        {
+          "value": "0",
+          "text": "不启用",
+          "title": "不启用"
+        },
+        {
+          "value": "1",
+          "text": "启用",
+          "title": "启用"
+        }
+      ],
+      "exam_state": [
+        {
+          "value": "1",
+          "text": "未发布",
+          "title": "未发布"
+        },
+        {
+          "value": "2",
+          "text": "已发布",
+          "title": "已发布"
+        },
+        {
+          "value": "3",
+          "text": "进行中",
+          "title": "进行中"
+        },
+        {
+          "value": "4",
+          "text": "已结束",
+          "title": "已结束"
+        }
+      ]
+    },
+    "departs": [
+      {
+        "id": "cf23943bf9fa4aa4baf21c0ffd99f1e9",
+        "parentId": "",
+        "departName": "武汉市保密局",
+        "departNameEn": null,
+        "departNameAbbr": null,
+        "departOrder": 1,
+        "description": null,
+        "orgCategory": "3",
+        "orgType": "1",
+        "orgCode": "A04",
+        "mobile": null,
+        "fax": null,
+        "address": "",
+        "memo": null,
+        "status": null,
+        "delFlag": "0",
+        "createBy": "admin",
+        "createTime": "2020-08-29 17:13:14",
+        "updateBy": "admin",
+        "updateTime": "2021-01-28 14:34:29",
+        "children": null
+      }
+    ],
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTU5Njk5OTYsInVzZXJuYW1lIjoiYWRtaW4ifQ.xQVa8sMSLU-2pu5XmdQ2VFr9i3o9HTWLKgxp2DSZ-l4"
+  },
+  "timestamp": 1615969096160
+}
